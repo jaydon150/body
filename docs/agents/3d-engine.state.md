@@ -3,12 +3,37 @@
 Append-only state log. Most recent at top.
 
 **Initialized:** 2026-05-11
-**Last invocation:** 2026-05-11 (P1.10)
+**Last invocation:** 2026-05-11 (P1.11)
 
 ---
 
 ## Open items
 
+- **Pick-through-transparency.** P1.11 picks the front-most raycaster hit
+  only. Once organs/skin layers are added in later phases, selecting a
+  bone through translucent tissue requires walking the intersection list
+  past transparent hits (or splitting picking by render order). Deferred
+  to Phase 2.
+- **Per-side selection of paired bones.** P1.11 ships Option A from the
+  dispatch — clicking either half of a paired bone selects the whole
+  UBERON entry; both halves outline together. Per-side ("left femur"
+  distinct from "right femur") needs the BP3D source to carry side
+  metadata and a sub-mesh id convention. Deferred to Phase 2+.
+- **True GPU picking via colour-buffer render target.** Agent hard rule
+  #2 mandates GPU picking for production; P1.11 uses Three.js's CPU
+  raycaster (which is what R3F's pointer events ride on). Acceptable at
+  current scale (79 meshes, hover/click latency is fine) but should be
+  upgraded before the full anatomy ships. Render-to-id-target picker is
+  the standard path; tag every sub-mesh with a unique colour, render to
+  offscreen FBO, read back at the pointer pixel.
+- **Accessibility — keyboard selection.** P1.11 ships pointer-only.
+  Selecting a structure with the keyboard (tab through entries,
+  arrow-keys to step, Enter to select) is P1.13's responsibility (UI
+  agent owns focus management); the store already supports the API the
+  keyboard handler will need (`select(id, { mode })`).
+- **GPU picking precision when nerves run through bone.** Agent
+  escalation trigger — flagged for future dispatch when nerve meshes are
+  added.
 - **Composite-entry rendering** (ADR 0008): the registry currently has 0
   composite entries; the sternum composite (UBERON:0000975 → manubrium,
   body of sternum, xiphoid process) is a deferred Asset-Pipeline bake.
@@ -38,6 +63,88 @@ Append-only state log. Most recent at top.
   fiber dominate; code-split deferred to a perf-focused dispatch.
 
 ## Decisions log
+
+### P1.11 — picking + selection state machine + outline (2026-05-11)
+
+**Picking implementation: R3F pointer events on React-owned `<mesh>` JSX.**
+P1.10's `EntryMesh` mounted a cloned drei `gltf.scene` via `<primitive>`,
+which is opaque to React children — drei's `<Outlines>` needs to be a
+child of a `<mesh>` so it can read `parent.geometry` in
+`useLayoutEffect`. The P1.11 rewrite traverses the loaded glb scene once
+in `extractSubMeshes`, pulls out each `THREE.Mesh`'s baked-world matrix
++ geometry, then mounts them as React-owned `<mesh>` elements with
+`matrixAutoUpdate=false`. Pointer events attach naturally and outlines
+can be conditional children. The shared bone material stays shared
+(one instance across all 79 entries) since outlining lives outside the
+material.
+
+**Selection event transport: state IS the event, no side channel.**
+Dispatch instructions are explicit — "the state IS the event" for Phase
+1. The `selectionStore` is the single source of truth; UI subscribes via
+`useSelectionStore(selector)`. `engine/selectionEvent.ts` ships a typed
+`buildSelectionEvent()` whose output conforms to
+`selection-event-schema.json` (validated five sample event shapes against
+the schema during P1.11 dev — all pass), but it is NOT called from the
+runtime path. Future expansion (worker dispatch, analytics, server
+mirror) wraps store mutations in `buildSelectionEvent()` calls without
+changing the store's public surface.
+
+**Outline implementation: drei `<Outlines>` (inverted-hull, screenspace).**
+Chosen over Three.js post-process `OutlinePass`:
+  - Already a dependency; zero bundle delta on the EffectComposer path.
+  - Lives as a child of the highlighted mesh — no global render-pass
+    pipeline to wire into the R3F scene.
+  - `screenspace: true` + `thickness: 0.02` gives the requested ~2 px
+    constant outline regardless of camera distance.
+  - The drei mesh has `raycast: () => null` semantics (an empty
+    BackSide shell), so it doesn't pollute the picker.
+  - `OutlinePass` would have been the right call if peel-mode required
+    cross-system outlining or LOD-aware silhouette compositing —
+    revisit when those land.
+
+**Outline color: saturated cyan `#3aa5d9`.**
+On the warm-dark background `#1c1816` and warm off-white bone material
+`#ebe0c9`, a cool-cyan outline gives clean figure-ground separation.
+The alternative warm-orange `#e08c3c` was rejected — too close in hue
+to the bone material, the outline blurs into the silhouette at distance.
+Selection outline opacity 1.0, thickness 0.02 (screenspace ≈ 2 px).
+
+**Hover treatment: dimmer + thinner outline in the same cyan.**
+Unified visual language (one accent colour for "engine pays attention to
+this thing"), with the selected outline dominant. Hover thickness 0.012
+(~60% of selection), opacity 0.55, transparent on. The alternative —
+material emissive bump — was rejected because hover would force per-
+entry material clones just for the hover frame; outlines-only keeps the
+shared bone material truly shared.
+
+**Paired-bone selection rule: Option A (whole entry).**
+When the user clicks ONE sub-mesh of a paired bone (e.g. one half of
+the mandible or one rib), the whole `entry.id` selects and both sub-
+meshes outline together. Both sub-meshes carry the same UBERON id on
+`userData.entryId`, so they are indistinguishable to the picker — the
+schema's `entry.id` is the unit of selection. Per-side selection ("left
+femur" distinct from "right femur") deferred to Phase 2 (open item).
+
+**Modifier-key → selection mode mapping.**
+  - no modifiers → `replace` (single-select)
+  - shift → `add` (extend selection)
+  - ctrl / meta → `toggle` (add or remove)
+Lives in `engine/picking.ts:modeFromModifiers()`. P1.13 UI may override
+when surfacing a "compare" mode; the store API takes the mode
+explicitly so a future caller can drive any mapping.
+
+**Background-click deselects.**
+`<group>`'s `onPointerMissed` handler clears selection on primary-button
+empty-space click. Standard 3D-viewer UX; matches the schema's `clear`
+event-type.
+
+**StructurePanel rewritten to read the new store shape.**
+P1.10's `AnatomicalSelection { id, label, latinLabel, materialHint,
+status }` is retained as a deprecated exported type (one-release
+back-compat for anything still importing it). The runtime store keys
+selection by UBERON id only; label resolution against the ontology is
+P1.13's job. The panel now shows first-selected id + multi-select count
++ hover read-out.
 
 ### P1.10 — registry-driven SkeletalScene (2026-05-11)
 
@@ -96,7 +203,58 @@ zero runtime cost.
 
 ## Handoffs
 
-### To 3D Engine, P1.11 — picking + selection + outline
+### To 3D Engine, P1.12 — peel mode + dive camera
+
+- **Peel mode hides meshes via `visible: false`.** The picker already
+  respects this — `resolveEntryIdFromObject` in `engine/picking.ts` walks
+  the parent chain checking `visible !== false`. A hidden sub-mesh
+  cannot be picked even if the raycaster intersects it (defensive: also
+  protects against bounds-overlap with hidden organs).
+- **Dive camera reads `selectFirstSelectedId` from the store.** The
+  store exposes `selectFirstSelectedId(state)` as a stable selector;
+  `lastClickAt` is wall-clock-timestamped on every selection mutation so
+  a double-click detector (two `lastClickAt` deltas under ~300 ms with
+  the same `firstSelectedId`) can fire a `camera_intent: 'dive'`.
+- **Selection-driven camera reframe.** The agent's hard rule is animated
+  reframe, not snap. `CameraRig` already exposes `controlsRef`; a
+  `useEffect` on `selectFirstSelectedId` change can lerp
+  `controls.target` toward the selected entry's centroid (computable
+  from the registry bounds + scene transforms). Not yet wired.
+- **Selection-event camera intent.** `buildSelectionEvent({ cameraIntent:
+  'dive' | 'frame' | 'orbit' })` is the typed surface for dive/reframe
+  intents when P1.12 starts emitting events.
+
+### To UI agent, P1.13 — wire selection store into the UI
+
+- **Store shape** (`app/web/src/state/selectionStore.ts`):
+    - `hovered: { id: string | null }`
+    - `selected: { ids: Set<string> }`
+    - `lastClickAt: number`
+    - Actions: `setHovered`, `clearHover`, `select(id, { mode })`,
+      `clearSelection`
+- **Named selectors** ship for stable references in components:
+  `selectHoveredId`, `selectSelectedIds`, `selectFirstSelectedId`,
+  `selectIsSelected(id)`.
+- **Label resolution is UI's job.** The store only knows UBERON ids.
+  Resolve to label / latin / definition via the ontology nodes file
+  (`data/canonical/ontology/nodes.json`) — that lookup is what the
+  panel + sidebar both need. A small `useEntryLabel(id)` hook is the
+  natural shape; engine doesn't ship it because nodes resolution is
+  a UI/ontology concern.
+- **`AnatomicalSelection` interface is now deprecated** but still
+  exported for one cycle. Replace with direct id usage + the label hook.
+- **Keyboard accessibility** is unimplemented (open item). The store
+  API supports it — `select(id, { mode: 'replace' | 'add' | 'toggle' })`
+  is the entry point for an Enter / Space keyboard handler.
+- **Empty-space click clears selection** at the canvas level. UI may
+  want to expose a "deselect" button for keyboard users; calls
+  `clearSelection()`.
+- **Sidebar highlight on hover** — `useSelectionStore(selectHoveredId)`
+  gives the currently hovered entry id; sidebar items can compare to
+  themselves to add a highlight class. Mirrors what `SkeletalScene`
+  already does for the outline.
+
+### To 3D Engine, P1.11 — picking + selection + outline (HISTORICAL — completed)
 
 - **selectionStore is intact** and ready to receive selection events.
   The store's `AnatomicalSelection.status` is currently typed as
@@ -126,6 +284,66 @@ zero runtime cost.
   structures." Coordinate with UI before a future dispatch tweaks it.
 
 ## Invocation history
+
+### 2026-05-11 — P1.11 (second invocation)
+
+Wired GPU picking (via R3F pointer events on React-owned `<mesh>` JSX,
+backed by Three.js's Raycaster — production GPU-FBO upgrade flagged as
+open item), extended the selectionStore into a real state machine with
+hover + multi-select + last-click-at, and lit selected entries with
+drei `<Outlines>` in saturated cyan. Hover gets a thinner, dimmer
+outline in the same hue. Background-click deselects; shift/ctrl
+modifiers map to add/toggle selection modes. Paired-bone clicks select
+the whole UBERON entry (Option A).
+
+**Files added**:
+  - `app/web/src/engine/picking.ts` — entry-id resolution, modifier
+    extraction, intersection picking, modifier → mode mapping
+  - `app/web/src/engine/outline.ts` — outline + hover-treatment color/
+    thickness/opacity constants
+  - `app/web/src/engine/selectionEvent.ts` — typed event builder
+    conforming to `selection-event-schema.json` (state IS the event in
+    Phase 1; this is the typed surface for future side-channel emission)
+
+**Files updated**:
+  - `app/web/src/state/selectionStore.ts` — full rewrite to the new
+    state-machine shape (`hovered`, `selected.ids`, `lastClickAt`,
+    `setHovered`/`clearHover`/`select`/`clearSelection`) +
+    named selectors (`selectHoveredId`, `selectSelectedIds`,
+    `selectFirstSelectedId`, `selectIsSelected`). `AnatomicalSelection`
+    kept as a deprecated export for one-cycle UI back-compat.
+  - `app/web/src/scene/SkeletalScene.tsx` — `EntryMesh` rewritten to
+    extract glb sub-meshes into a flat list, render each as React-
+    owned `<mesh>` with the shared bone material; `<Outlines>` mounts
+    conditionally as a child when the entry is selected/hovered.
+    `SkeletonGroup` wires pointer handlers (onPointerOver/Out/Down,
+    onPointerMissed) that read intersections, resolve entry ids, and
+    dispatch to the store.
+  - `app/web/src/ui/StructurePanel.tsx` — rewritten to read the new
+    store shape (first-selected id + multi-select count + hover); no
+    longer references the deprecated label/latin fields, those are
+    P1.13's resolution to make against the ontology.
+
+**Verification**:
+  - `npm run verify` → all green (`typecheck` clean, `validate:schemas`
+    11/11 passed, `build` succeeded — 1,066 KB raw / 298 KB gzipped JS,
+    ~7 KB delta from P1.10 for drei `Outlines`).
+  - Out-of-band schema sanity: built five sample event shapes
+    (`hover`, `select`, `multi_select_add`, `clear`, `deselect`) via
+    `buildSelectionEvent()`-equivalent JSON and validated each against
+    `selection-event-schema.json` with Ajv 2020 — all five pass.
+  - Dev-server smoke test: `npm run dev` came up in 315 ms; four GETs:
+    - `GET /` → HTTP 200, valid index.html
+    - `GET /src/main.tsx` → HTTP 200, 2,336 B
+    - `GET /src/scene/SkeletalScene.tsx` → HTTP 200, 40,136 B
+    - `GET /src/state/selectionStore.ts` → HTTP 200, 9,106 B
+    - `GET /registry.json` → HTTP 200, 105,707 B
+  - Dev log clean — no warnings, no errors.
+
+**Visual verification note**: as in P1.10, no headless-browser harness
+is available from inside this dispatch. The curl-level assertions cover
+module transformation + registry serving; canvas-side picking + outline
+rendering requires a manual `npm run dev` + click-test by the user.
 
 ### 2026-05-11 — P1.10 (first invocation)
 

@@ -1,35 +1,53 @@
-import { useSelectionStore } from '../state/selectionStore';
+import {
+  selectFirstSelectedId,
+  selectHoveredId,
+  selectSelectedIds,
+  useSelectionStore,
+} from '../state/selectionStore';
 
 /**
  * Detail panel for the currently selected anatomical structure.
  *
- * P1.10 ships the registry-driven scene but does NOT emit selection events
- * yet (per agent hard rules — selection is a state machine, wired in P1.11).
- * The panel renders a "no selection" placeholder until then.
+ * P1.11 ships the picking + selection state machine; the engine emits
+ * `setHovered` and `select` into the store. This panel renders a minimal
+ * read-out of those signals — UBERON id + multi-select cardinality + hover
+ * indicator. Rich label / latin-name / definition rendering is P1.13's
+ * job (UI agent owns label resolution against the ontology graph).
  *
- * The selection store is preserved as the single source of truth (per the
- * P1.10 dispatch); P1.11 wires GPU picking events into it.
+ * The panel is intentionally read-only: clicks here do NOT change selection
+ * (that comes from the canvas picker). Wiring this panel into a structure
+ * list / sidebar is P1.13.
  */
 export function StructurePanel() {
-  const selected = useSelectionStore((state) => state.selected);
+  const firstSelectedId = useSelectionStore(selectFirstSelectedId);
+  const selectedIds = useSelectionStore(selectSelectedIds);
+  const hoveredId = useSelectionStore(selectHoveredId);
+  const selectionCount = selectedIds.size;
 
-  if (!selected) {
+  if (!firstSelectedId) {
     return (
       <aside className="structure-panel" aria-label="Selected structure">
         <span className="panel-eyebrow">No selection</span>
-        <strong>Drag to orbit</strong>
-        <span>Picking arrives in P1.11</span>
+        <strong>Click a structure</strong>
+        <span>
+          {hoveredId
+            ? `Hover: ${hoveredId}`
+            : 'Drag to orbit. Shift-click to multi-select. Background-click to deselect.'}
+        </span>
       </aside>
     );
   }
 
   return (
     <aside className="structure-panel is-selected" aria-label="Selected structure">
-      <span className="panel-eyebrow">{selected.id}</span>
-      <strong>{selected.label}</strong>
-      <span>{selected.latinLabel}</span>
+      <span className="panel-eyebrow">
+        {selectionCount > 1 ? `${selectionCount} selected` : 'Selected'}
+      </span>
+      <strong>{firstSelectedId}</strong>
       <span>
-        {selected.materialHint} · {selected.status.replace('_', ' ')}
+        {hoveredId && hoveredId !== firstSelectedId
+          ? `Hover: ${hoveredId}`
+          : 'Label resolution arrives in P1.13'}
       </span>
     </aside>
   );
