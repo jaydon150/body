@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.09)
-**Current phase:** Phase 1 in progress. **P1.01–P1.09 complete.** Application side begins next with P1.10 (3D Engine wires registry to canvas).
+**Last updated:** 2026-05-11 (late evening, post-P1.10)
+**Current phase:** Phase 1 in progress. **P1.01–P1.10 complete.** `npm run dev` now renders the full 79-mesh BP3D skeleton. P1.11 (GPU picking + selection + outline) ready to dispatch.
 **Overall health:** Green
 
 ---

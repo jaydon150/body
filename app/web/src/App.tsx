@@ -1,9 +1,11 @@
-import { FemurScene } from './scene/FemurScene';
+import { SkeletalScene } from './scene/SkeletalScene';
 import { StructurePanel } from './ui/StructurePanel';
 
 /**
- * First vertical model seed: a selectable, UBERON-keyed procedural femur proxy.
- * Imported BodyParts3D meshes replace this once the asset pipeline is ready.
+ * Phase 1 vertical slice: 79 BP3D-derived skeletal meshes loaded from the
+ * canonical registry (`data/derived/mesh-registry.json`) and rendered with
+ * a shared bone material. GPU picking and selection wiring arrives in
+ * P1.11 — the StructurePanel slot remains for the next dispatch.
  */
 export function App() {
   return (
@@ -11,12 +13,12 @@ export function App() {
       <header className="app-header">
         <div>
           <h1>body</h1>
-          <p>First skeletal proxy — selectable femur seed</p>
+          <p>Phase 1 vertical slice — 79 skeletal structures</p>
         </div>
         <StructurePanel />
       </header>
       <main className="app-canvas">
-        <FemurScene />
+        <SkeletalScene />
       </main>
     </div>
   );
