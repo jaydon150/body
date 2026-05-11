@@ -3,11 +3,20 @@
 Append-only state log. Most recent at top.
 
 **Initialized:** 2026-05-11
-**Last invocation:** 2026-05-11 (P1.12)
+**Last invocation:** 2026-05-11 (P1.14 — UI ↔ engine integration + iPad touch)
 
 ---
 
 ## Open items
+
+- **Long-press visual feedback.** P1.14 wires long-press → dive (500ms touch hold), but the touched mesh shows no in-progress hint — the dive simply happens. Subtle pulse on the held mesh would tell the user the gesture is being detected; deferred (would either need a CSS overlay or a new R3F outline variant). Track for P1.18 UX/A11y dispatch.
+- **Sternum composite click via breadcrumb.** Dispatch noted: clicking the breadcrumb for sternum should highlight all 3 sub-meshes (manubrium + body + xiphoid). Currently no-op because (a) sternum has no own-mesh registry entry (composite bake deferred per ADR 0008), and (b) the breadcrumb's frame intent would route to `diveStore.dive('UBERON:0000975')` which `CameraRig.ownEntryById` doesn't know about → no dive. **Plumbing exists for the resolver but the composite-children walk needs both an Asset Pipeline bake AND an engine-side resolver to brighten + outline the 3 children together.** Document as P1.16-content-side OR P2 enhancement.
+
+## Closed items (resolved by P1.14)
+
+- **Long-press touch for iPad dive trigger.** Wired in `SkeletalScene.tsx`: pointerdown with `pointerType === 'touch'` arms a 500ms timer; pointerup / pointercancel / motion > 8px cancels; timer fire → `dive(entryId)`. Discriminated from mouse double-click so the two gestures don't race.
+
+## Old open items (from P1.12)
 
 - **Peel UX validation deferred to Phase 2 (no muscle layer to peel).** P1.12
   lands the peel-mode plumbing (preset enum, visibility table, store
@@ -88,6 +97,28 @@ Append-only state log. Most recent at top.
   fiber dominate; code-split deferred to a perf-focused dispatch.
 
 ## Decisions log
+
+### P1.14 — UI ↔ engine integration + iPad touch (2026-05-11)
+
+**Selection-intent flag on `selectionStore.select`.** The store now carries a `lastIntent: 'none' | 'frame'`. Canvas-clicks pass `'none'` (outline only, no dive); Sidebar / Search / Breadcrumb pass `'frame'` (UI scope). A new `FrameIntentBridge` component inside `SkeletalScene` (mounted as a sibling of SceneContent inside the Canvas tree) subscribes to `selectLastIntent` + `selectLastClickAt` + `selectFirstSelectedId` and dispatches `diveStore.dive(firstSelectedId)` when the latest mutation was a frame intent. Effect keyed on `lastClickAt` so re-selecting the same id with a new frame intent (e.g. clicking the same sidebar entry twice) still re-frames.
+
+Why centralise here vs at every callsite? The Sidebar / Search / Breadcrumb don't import the dive store this way — they declare their intent and let the engine decide. A Phase 2 change ("frame intent should also clear peel" or "frame on a composite resolves to a child") happens in one effect, not three components.
+
+**Long-press touch dive (iPad).** `onPointerDown` checks `pointerType === 'touch'` and arms a 500ms timer scoped via a `ref<{ timerId, startX, startY, entryId, pointerId }>`. `onPointerUp` and `onPointerCancel` clear it. A document-level `pointermove` listener cancels if the pointer travels more than 8px from the press origin. If the timer fires, `dive(entryId)` is invoked directly.
+
+Threshold reconciliation:
+  - DOUBLE_CLICK_MS = 350 (mouse path).
+  - LONG_PRESS_MS = 500 (touch path).
+  - Order: a quick double-tap on iPad fires two pointerdowns (50ms each), both well within the 500ms budget — long-press timer is cancelled by the second pointerup before it fires. A double-tap is therefore a no-op as far as dive is concerned (which is consistent with P1.12's mouse behaviour treating only modifier-free double-clicks as dives).
+  - LONG_PRESS_MAX_MOVE_PX = 8 — generous enough to absorb finger tremor without swallowing legitimate drag-to-orbit.
+
+The pointer handlers needed new `onPointerUp` + `onPointerCancel` props on `EntryMesh`; these did not exist in P1.11/12. Added cleanly without disturbing the double-click logic.
+
+**`OrbitControls` touch props made explicit.** `enableZoom / enableRotate / enablePan` defaulted to `true`; P1.14 declares them explicitly in `CameraRig` so a future refactor doesn't silently flip them. Damping factor stays at 0.08 (P1.12 set this; verified by the dispatch as appropriate for iPad touch — slightly snappier than the 0.05 Three.js default).
+
+**Pointer-out cancels long-press.** Treating `onPointerOut` as a cancel was a small UX call: if the user starts a press, then their finger drifts off the bone, the gesture is no longer "press on this entry" so the dive should not fire. The `clearHover` call was already in onPointerOut from P1.11; we added `cancelLongPress` alongside.
+
+**Frame-intent bridge inside the Canvas, not at AppShell level.** The bridge is a React component (`<FrameIntentBridge />`) rendered inside `<Canvas>`. Could have been a `useEffect` at AppShell scope outside the Canvas — chose inside-Canvas because the dive store IS engine-scoped state and the bridge is conceptually an engine concern (translating "user wants to frame X" into "camera, dive to X"). UI's frame-intent declarations remain pure data through the selection store; engine consumes.
 
 ### P1.12 — peel mode + dive-deeper camera animation (2026-05-11)
 
@@ -328,6 +359,22 @@ zero runtime cost.
 
 ## Handoffs
 
+### To P1.17 (QA — visual regression + perf budgets)
+
+- **iPad on-device perf check** of the long-press + dive lerp + sibling-dim render loop. Phase 1 acceptance #17 is "smooth on iPad portrait at 30+ fps." P1.10/11/12 confirmed iPad rendering at smoke-test level; P1.14 added the long-press timer + the FrameIntentBridge subscription + new global `pointermove` listener (passive, but still on every move). None of these should impact frame time — the timer is plain `setTimeout`, the bridge is a React effect that fires on selection mutation only, and the move listener does at most a square-distance compare per event — but worth measuring.
+- **Frame-intent bridge timing**: the bridge fires `dive()` synchronously in the effect after a `'frame'` selection. The CameraRig then latches a fresh dive on its own subscription. There's one render cycle between the two — visible as a 16ms lag between selection and lerp start. If this becomes noticeable, the bridge could call `useDiveStore.getState().dive(id)` directly without a useEffect indirection (would skip the React reconciliation gap). Not done in P1.14 because (a) 16ms is below the perception threshold, and (b) the effect form is the React-idiomatic shape.
+- **Double-click vs long-press race on iPad**: dispatch noted iPad Safari can drop the second tap of a double-tap. The long-press path is now the iPad-canonical dive trigger; the double-tap path stays wired (it works on mouse and on touch when iOS delivers both pointerdowns). QA should verify both paths fire on the target devices.
+
+### To UX/A11y (P1.18)
+
+- **Reduced-motion + dive lerp**: the existing CSS `prefers-reduced-motion` block disables CSS animations / transitions but does NOT touch the Three.js `useFrame` lerp inside CameraRig. A user with `prefers-reduced-motion: reduce` still sees the 600ms camera tween. The right behaviour is probably "snap to target" — the dive store has the new `focusedId` immediately, the CameraRig just lerps. Adding `matchMedia('(prefers-reduced-motion: reduce)').matches` check at the latch point in CameraRig (setting `durationMs: 0`) would honour the preference. Deferred to P1.18.
+- **Long-press visual feedback** (also under Open items) — silent gesture is bad a11y. Add a subtle scale pulse or outline pulse on the touched mesh during the 500ms press window.
+- **Pointer-events on hidden meshes**: P1.12 wired `<group visible={false}>` cascade for peel-hidden entries, and picking already short-circuits in `resolveEntryIdFromObject`. The long-press timer arms in `onPointerDown` BEFORE the picker resolves — confirmed `pickFromIntersections` returns `null` for hidden meshes, which means `hit` is null and the early return fires, so the timer never arms. Worth double-checking that R3F doesn't dispatch pointerdown on a `visible: false` group at all (per Three.js doc it shouldn't — invisible objects are excluded from raycaster intersections by default).
+
+### To Content (Content agent)
+
+- **`/content/<id>.json` middleware route is live.** Any record file you write to `data/canonical/ontology/content/` is fetchable at `/content/<basename>.json` from the dev server. The DetailPanel renders it immediately on selection. No additional Content-side wiring needed.
+
 ### To UI agent, P1.13 — sidebar + breadcrumbs + peel toggle + search + panel
 
 - **Peel store** (`app/web/src/state/peelStore.ts`):
@@ -467,6 +514,43 @@ zero runtime cost.
   structures." Coordinate with UI before a future dispatch tweaks it.
 
 ## Invocation history
+
+### 2026-05-11 — P1.14 (fourth invocation, cross-domain with UI)
+
+Cross-domain dispatch — also acting as UI agent (second invocation; see `ui.state.md` for the UI-side notes). Engine-side workstreams: intent flag on selection store, FrameIntentBridge for sidebar/search/breadcrumb → dive, long-press touch dive on iPad, OrbitControls explicit touch props.
+
+**Files added** (none — all changes were extensions to existing files).
+
+**Files updated**:
+  - `app/web/src/state/selectionStore.ts` — extended `select(id, { mode, intent })` with `intent: 'none' | 'frame'`. New `lastIntent` field + `selectLastIntent` / `selectLastClickAt` selectors. Dev-window global `__selectionStore` for console debugging.
+  - `app/web/src/scene/SkeletalScene.tsx` — added new `FrameIntentBridge` component rendered inside Canvas; subscribes to selection intent + lastClickAt + first-selected-id and dispatches `diveStore.dive()` on frame intent. Pointer handlers extended with `onPointerUp` + `onPointerCancel` + global `pointermove` cancel-on-motion. Long-press timer wired in `onPointerDown` (touch-only via `pointerType === 'touch'`, 500ms threshold, 8px max-move budget). Canvas-clicks now pass `{ intent: 'none' }` explicitly. EntryMesh props extended to plumb the new handlers.
+  - `app/web/src/scene/CameraRig.tsx` — `OrbitControls` `enableZoom / enableRotate / enablePan` declared explicitly (defaults were `true`; explicit reads as a deliberate contract).
+
+**Files preserved untouched per dispatch scope**:
+  - `app/web/src/engine/{picking,outline,registry,bounds,loader,material,diveCamera,selectionEvent}.ts` — engine primitives unchanged; integration sits one layer up (scene + state).
+  - `app/web/src/state/{peelStore,diveStore,uiPreferencesStore}.ts` — store shapes unchanged.
+
+**Verification**:
+  - `npm run verify` → all green:
+    - `typecheck` clean (TypeScript caught nothing — confidence in the new intent / pointer prop signatures).
+    - `validate:schemas` 11/11 passed.
+    - `build` succeeded — `1,135.68 kB raw / 311.52 kB gzipped JS` (~+1 kB delta from P1.13 for FrameIntentBridge + extended pointer handlers).
+  - Dev-server smoke tests (server was already running on :5173 from a prior dispatch; 7 HTTP requests):
+    - `GET /` → 200
+    - `GET /registry.json` → 200 (105,707 bytes)
+    - `GET /meshes/uberon_0000981/lod0.glb` → 200 (115,808 bytes)
+    - `GET /content/uberon_0000981.json` → 200 (2,499 bytes)
+    - `GET /content/uberon_0000209.json` → 200 (1,882 bytes)
+    - `GET /content/uberon_99999999.json` → 404
+    - `GET /content/..%2F..%2Fetc%2Fpasswd` → 404 (path-traversal guard)
+  - Static call-graph reasoning: traced the five spec-required flows. Sound:
+    - Sidebar click → `select(id, { intent: 'frame' })` → FrameIntentBridge effect fires → `diveStore.dive(id)` → CameraRig latches new dive → lerp. ✓
+    - Cmd-K → AppShell listener → `setSearchOpen(true)` → Search mounts → user picks → `select(id, { intent: 'frame' })` → same dive flow. ✓
+    - Canvas click → `select(id, { intent: 'none' })` → no dive (bridge effect short-circuits on non-frame intent). ✓
+    - Canvas double-click → second `select(id, { intent: 'none' })` PLUS direct `dive(id)` (DOUBLE_CLICK_MS gate). ✓
+    - iPad long-press → 500ms timer fires → direct `dive(entryId)`. ✓
+
+**Visual verification note**: same caveat as prior invocations — no headless-browser harness inside the dispatch. Canvas-side long-press behaviour requires manual on-iPad test.
 
 ### 2026-05-11 — P1.12 (third invocation)
 

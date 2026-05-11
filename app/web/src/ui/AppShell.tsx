@@ -1,4 +1,4 @@
-import { type ReactNode } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { Sidebar } from './Sidebar';
 import { Breadcrumbs } from './Breadcrumbs';
 import { Search } from './Search';
@@ -42,6 +42,28 @@ export function AppShell({ children }: AppShellProps) {
   const setSidebarOpen = useUiPreferencesStore((s) => s.setSidebarOpen);
   const setSearchOpen = useUiPreferencesStore((s) => s.setSearchOpen);
   const setAttributionOpen = useUiPreferencesStore((s) => s.setAttributionOpen);
+
+  // Global Cmd/Ctrl+K + "/" shortcut to open the search palette.
+  // Lives at AppShell level (P1.14) so it works even when <Search/> is
+  // unmounted (which it is by default — Search only mounts when open).
+  // Form-input targets are excluded so typing "/" in a textarea or
+  // Ctrl+K inside an input doesn't hijack the user.
+  useEffect(() => {
+    const onGlobalKey = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const inFormInput =
+        target?.matches('input, textarea, select, [contenteditable="true"]') ?? false;
+      const isCmdK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k';
+      const isSlash =
+        e.key === '/' && !e.metaKey && !e.ctrlKey && !e.altKey && !inFormInput;
+      if (isCmdK || isSlash) {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener('keydown', onGlobalKey);
+    return () => window.removeEventListener('keydown', onGlobalKey);
+  }, [setSearchOpen]);
 
   return (
     <div className="shell">

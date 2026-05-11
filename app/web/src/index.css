@@ -401,6 +401,24 @@ button {
   color: var(--text-secondary);
   transition: background 120ms ease, color 120ms ease;
   min-height: 1.8rem;
+  /* Visually the breadcrumb stays dense; touch hit area is pushed via an
+     invisible pseudo-element so the chrome doesn't grow to 44px on
+     desktop. The hit-area extends 8px above/below the visible box —
+     ~36px tall hit area combined with finger forgiveness covers the
+     44px WCAG target for adjacent segments without forcing the visual
+     to grow. Pure tap-target padding via the `before` pseudo-element. */
+  position: relative;
+}
+
+@media (pointer: coarse) {
+  /* Touch devices: enforce the full 44px hit area via a transparent
+     overlay so the visual chrome stays dense but taps are forgiving. */
+  .breadcrumbs__link::before {
+    content: '';
+    position: absolute;
+    inset: -10px -4px;
+    /* No background — just an enlarged hit area. */
+  }
 }
 
 .breadcrumbs__link:hover {
@@ -637,6 +655,47 @@ button {
   margin: 0.4rem 0;
   color: var(--text-secondary);
   line-height: 1.55;
+}
+
+.detail-panel__longform-paragraph {
+  margin: 0 0 0.55rem;
+}
+
+.detail-panel__longform-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.detail-panel__citations {
+  list-style: decimal inside;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.detail-panel__citation {
+  padding-left: 0.2rem;
+}
+
+.detail-panel__citation-text {
+  color: var(--text-secondary);
+}
+
+.detail-panel__citation-link {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.detail-panel__citation-link:hover {
+  text-decoration: underline;
+}
+
+.detail-panel__hint--error {
+  color: var(--accent-warn);
 }
 
 .detail-panel__pill {

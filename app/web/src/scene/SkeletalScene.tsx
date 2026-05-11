@@ -24,6 +24,8 @@ import { HOVER_OUTLINE, SELECTION_OUTLINE } from '../engine/outline';
 import {
   selectFirstSelectedId,
   selectHoveredId,
+  selectLastClickAt,
+  selectLastIntent,
   selectSelectedIds,
   useSelectionStore,
 } from '../state/selectionStore';
@@ -99,27 +101,14 @@ interface EntryMeshProps {
   onPointerOver: (e: ThreeEvent<PointerEvent>) => void;
   onPointerOut: (e: ThreeEvent<PointerEvent>) => void;
   onPointerDown: (e: ThreeEvent<PointerEvent>) => void;
+  onPointerUp: (e: ThreeEvent<PointerEvent>) => void;
+  onPointerCancel: (e: ThreeEvent<PointerEvent>) => void;
 }
 
 /**
- * Renders one own-mesh entry.
- *
- * --- Sibling dimming technique (P1.12) ---
- *
- * The shared bone material is a single instance reused across all 79 entries
- * (P1.10 decision; P1.11 outlines live outside the material so they didn't
- * disturb this). Dimming siblings requires per-entry opacity, which means
- * either (a) cloning the material per entry, or (b) using a dedicated
- * "dim" material instance toggled at render time.
- *
- * We chose (b) — TWO shared materials (`bright`, `dim`), swapped via the
- * `material` prop on each render. This keeps the bone material count flat
- * regardless of how many entries are in the scene (vs cloning, which is
- * O(N)) and works with R3F's declarative model without per-frame material
- * allocation. The dim material is a clone of the bright one with
- * `transparent: true` + `opacity: SIBLING_DIM_OPACITY` + `depthWrite: false`
- * to avoid the standard transparent-sorting issues without ditching depth
- * test entirely.
+ * Renders one own-mesh entry. See the comment block in SkeletonGroup for
+ * the per-frame pointer flow + the sibling-dim technique (two shared
+ * materials, swapped via prop).
  */
 function EntryMesh({
   entry,
@@ -130,6 +119,8 @@ function EntryMesh({
   onPointerOver,
   onPointerOut,
   onPointerDown,
+  onPointerUp,
+  onPointerCancel,
 }: EntryMeshProps) {
   const url = lodUrl(entry, 0);
   const gltf = useGLTF(url);
@@ -170,6 +161,8 @@ function EntryMesh({
           onPointerOver={onPointerOver}
           onPointerOut={onPointerOut}
           onPointerDown={onPointerDown}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerCancel}
         >
           {isSelected && (
             <Outlines
@@ -200,21 +193,42 @@ function EntryMesh({
 }
 
 /**
- * --- Double-click detection (P1.12) ---
+ * --- Double-click + long-press thresholds (P1.12 + P1.14) ---
  *
- * `selectionStore.select(id)` already stamps `lastClickAt = Date.now()` on
- * every selection mutation. To detect a double-click we compare the
- * pre-click `lastClickAt` and the pre-click `firstSelectedId` against the
- * current event: if the same entry was the previous selection AND the
- * previous click was within DOUBLE_CLICK_MS, we trigger a dive instead of
- * a fresh select.
+ * Double-click (mouse) — P1.12: `selectionStore.select(id)` stamps
+ * `lastClickAt = Date.now()` on every mutation. The double-click test
+ * compares the PRE-CLICK `lastClickAt` and `firstSelectedId` against the
+ * new event: same entry + within DOUBLE_CLICK_MS = trigger dive.
  *
- * The threshold is 350 ms (the dispatch's stated value) — a touch slower
- * than the OS default (250 ms on Win/macOS) because users navigating a 3D
- * scene tend to chord clicks with orbit drags, and a tighter threshold
- * dropped legitimate double-clicks in informal testing.
+ * Long-press (touch) — P1.14: pointerdown starts a LONG_PRESS_MS timer
+ * scoped to the entry; pointerup or pointercancel cancels it; if the
+ * timer fires AND the pointer hasn't moved more than a few pixels, we
+ * trigger `dive(entryId)` directly. Touch-only — we discriminate on
+ * `pointerType === 'touch'` so the mouse path stays untouched.
+ *
+ * Threshold reconciliation:
+ *   - DOUBLE_CLICK_MS = 350 (mouse): a touch slower than the OS default
+ *     (250) because 3D-scene users intermix clicks with orbit drag.
+ *   - LONG_PRESS_MS  = 500 (touch): the standard iOS long-press budget;
+ *     longer than DOUBLE_CLICK_MS so a quick double-tap (which on touch
+ *     iPad Safari can also surface as two pointerdowns) still has time
+ *     to register as two distinct events before the long-press timer
+ *     fires. Order: tap (50ms down + up) → tap → both events resolved
+ *     well within the 500ms budget.
+ *   - LONG_PRESS_MAX_MOVE_PX = 8: if the pointer moves more than 8px
+ *     during the press, treat it as a drag-to-orbit and cancel the
+ *     long-press. Generous enough to absorb shake / finger tremor.
+ *
+ * The two paths do not race because long-press is gated on
+ * `pointerType === 'touch'` and double-click on a mouse moves through
+ * the same select() mutation. A double-tap on iPad is intentionally a
+ * no-op (it'll register as two selects + long-press timer cancelled by
+ * the second pointerup) — long-press is the iPad equivalent of
+ * double-click.
  */
 const DOUBLE_CLICK_MS = 350;
+const LONG_PRESS_MS = 500;
+const LONG_PRESS_MAX_MOVE_PX = 8;
 
 interface SkeletonGroupProps {
   entries: OwnMeshEntry[];
@@ -238,6 +252,36 @@ function SkeletonGroup({ entries, bounds }: SkeletonGroupProps) {
   const focusedId = useDiveStore(selectFocusedId);
   const dive = useDiveStore((s) => s.dive);
 
+  // -- Long-press timer state (touch only) ----------------------------------
+  //
+  // The timer + its start position + the entry being pressed live in a ref
+  // so closures don't capture stale state. Cancel the timer on pointerup,
+  // pointercancel, pointerout, or motion > MAX_MOVE.
+  const longPressStateRef = useRef<{
+    timerId: number | null;
+    startX: number;
+    startY: number;
+    entryId: string | null;
+    pointerId: number | null;
+  }>({ timerId: null, startX: 0, startY: 0, entryId: null, pointerId: null });
+
+  const cancelLongPress = useMemo(
+    () => () => {
+      const s = longPressStateRef.current;
+      if (s.timerId !== null) {
+        window.clearTimeout(s.timerId);
+      }
+      s.timerId = null;
+      s.entryId = null;
+      s.pointerId = null;
+    },
+    [],
+  );
+
+  // Clear any pending timer on unmount so we don't fire a dive against a
+  // dead scene.
+  useEffect(() => cancelLongPress, [cancelLongPress]);
+
   // -- Pointer handlers -------------------------------------------------
 
   const onPointerOver = useMemo(
@@ -253,8 +297,11 @@ function SkeletonGroup({ entries, bounds }: SkeletonGroupProps) {
   const onPointerOut = useMemo(
     () => (_e: ThreeEvent<PointerEvent>) => {
       clearHover();
+      // Treat pointer-leave-mesh as a long-press cancel — the user is no
+      // longer pressing this entry.
+      cancelLongPress();
     },
-    [clearHover],
+    [clearHover, cancelLongPress],
   );
 
   const onPointerDown = useMemo(
@@ -278,10 +325,15 @@ function SkeletonGroup({ entries, bounds }: SkeletonGroupProps) {
 
       const mods = modifierKeysFromEvent(e);
       const mode = modeFromModifiers(mods);
-      select(hit.entryId, { mode });
+      // Canvas-pick selections pass intent: 'none' — outline only, do not
+      // dive. Diving is reserved for double-click (mouse) and long-press
+      // (touch). Sidebar / Search / Breadcrumb pass 'frame' from their
+      // own callsites.
+      select(hit.entryId, { mode, intent: 'none' });
 
-      // Trigger dive on a double-click. Skip the dive if a modifier is
-      // held (the user explicitly meant multi-select / toggle, not dive).
+      // Trigger dive on a double-click (mouse path). Skip the dive if a
+      // modifier is held (the user explicitly meant multi-select / toggle,
+      // not dive).
       if (
         sameEntry &&
         withinThreshold &&
@@ -292,17 +344,78 @@ function SkeletonGroup({ entries, bounds }: SkeletonGroupProps) {
       ) {
         dive(hit.entryId);
       }
+
+      // Touch path: arm a long-press timer. If the user holds for
+      // LONG_PRESS_MS without moving > LONG_PRESS_MAX_MOVE_PX, dive.
+      // Modifier suppression isn't relevant here (touch has no
+      // shift/ctrl natively).
+      if (native.pointerType === 'touch') {
+        cancelLongPress();
+        const state = longPressStateRef.current;
+        state.startX = native.clientX;
+        state.startY = native.clientY;
+        state.entryId = hit.entryId;
+        state.pointerId = native.pointerId;
+        state.timerId = window.setTimeout(() => {
+          // The id was captured at press-start; safe even if the user
+          // released a different finger in the meantime (pointerup clears).
+          const targetId = state.entryId;
+          state.timerId = null;
+          state.entryId = null;
+          state.pointerId = null;
+          if (targetId) dive(targetId);
+        }, LONG_PRESS_MS);
+      }
     },
-    [select, dive],
+    [select, dive, cancelLongPress],
+  );
+
+  const onPointerUp = useMemo(
+    () => (_e: ThreeEvent<PointerEvent>) => {
+      // Whether or not the long-press timer fired, release cancels it.
+      // (If it already fired, the state was zeroed in the timer callback.)
+      cancelLongPress();
+    },
+    [cancelLongPress],
+  );
+
+  const onPointerCancel = useMemo(
+    () => (_e: ThreeEvent<PointerEvent>) => cancelLongPress(),
+    [cancelLongPress],
   );
 
   const onPointerMissed = useMemo(
     () => (e: MouseEvent) => {
+      // Clearing selection on background-click is a standard 3D-viewer
+      // pattern; also cancel any pending long-press if the gesture
+      // wandered off-mesh.
+      cancelLongPress();
       if ((e as MouseEvent).button !== 0) return;
       clearSelection();
     },
-    [clearSelection],
+    [clearSelection, cancelLongPress],
   );
+
+  // -- Long-press cancel on motion (PointerEvent listener) ------------------
+  //
+  // R3F doesn't dispatch pointermove on the mesh unless the pointer is
+  // still over it; we want a global listener so even a quick lateral drag
+  // off-bone cancels the long-press. The window-level handler reads the
+  // ref state, no React re-render involved.
+  useEffect(() => {
+    const onMove = (ev: PointerEvent) => {
+      const s = longPressStateRef.current;
+      if (s.timerId === null) return;
+      if (s.pointerId !== null && ev.pointerId !== s.pointerId) return;
+      const dx = ev.clientX - s.startX;
+      const dy = ev.clientY - s.startY;
+      if (dx * dx + dy * dy > LONG_PRESS_MAX_MOVE_PX * LONG_PRESS_MAX_MOVE_PX) {
+        cancelLongPress();
+      }
+    };
+    window.addEventListener('pointermove', onMove, { passive: true });
+    return () => window.removeEventListener('pointermove', onMove);
+  }, [cancelLongPress]);
 
   // Pre-compute peel visibility per entry. Phase 1 has only `bone` entries
   // so this is the same boolean across all 79 — kept in the per-entry loop
@@ -328,6 +441,8 @@ function SkeletonGroup({ entries, bounds }: SkeletonGroupProps) {
                 onPointerOver={onPointerOver}
                 onPointerOut={onPointerOut}
                 onPointerDown={onPointerDown}
+                onPointerUp={onPointerUp}
+                onPointerCancel={onPointerCancel}
               />
             </Suspense>
           );
@@ -370,6 +485,46 @@ function SceneContent({ registry }: SceneContentProps) {
       <SkeletonGroup entries={ownEntries} bounds={bounds} />
     </>
   );
+}
+
+/**
+ * --- Selection-intent → dive bridge (P1.14) ---
+ *
+ * Subscribes to `lastIntent` + `lastClickAt` + first-selected-id. When
+ * the most recent selection mutation carried `intent: 'frame'`, this
+ * triggers a `diveStore.dive()` against the new selection so the
+ * CameraRig lerps toward it.
+ *
+ * Why a bridge effect rather than calling `dive()` inline at every
+ * `select(..., {intent: 'frame'})` callsite? Centralising the rule in
+ * one place means:
+ *   - Sidebar / Search / Breadcrumb don't need to import the dive store
+ *     or know that 'frame' means dive (they just declare their intent).
+ *   - A future change ("frame intent should also call clearPeel()" or
+ *     "frame intent on a composite should resolve to its first child")
+ *     happens in one effect, not three components.
+ *
+ * Keyed on `lastClickAt` so a re-selection of the same id with a fresh
+ * 'frame' intent still triggers the dive (the id alone wouldn't change).
+ */
+function FrameIntentBridge() {
+  const intent = useSelectionStore(selectLastIntent);
+  const lastClickAt = useSelectionStore(selectLastClickAt);
+  const firstSelectedId = useSelectionStore(selectFirstSelectedId);
+  const dive = useDiveStore((s) => s.dive);
+
+  useEffect(() => {
+    if (intent !== 'frame') return;
+    if (!firstSelectedId) return;
+    dive(firstSelectedId);
+    // intent + lastClickAt change together on every frame-intent select,
+    // so this effect fires exactly once per call. id-only deps would
+    // miss re-selections of the same id (e.g. clicking the same
+    // breadcrumb ancestor twice).
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [intent, lastClickAt]);
+
+  return null;
 }
 
 /**
@@ -456,6 +611,7 @@ export function SkeletalScene() {
         <Suspense fallback={null}>
           <SceneContent registry={registry} />
         </Suspense>
+        <FrameIntentBridge />
       </Canvas>
     </div>
   );

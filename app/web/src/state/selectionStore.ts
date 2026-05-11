@@ -34,6 +34,27 @@ export interface AnatomicalSelection {
 
 export type SelectionMode = 'replace' | 'add' | 'toggle';
 
+/**
+ * Selection "intent" — tells downstream observers what triggered the change.
+ *
+ * Added in P1.14 to distinguish programmatic selections from canvas-pick
+ * selections so the camera framing decision is centralised in the store
+ * rather than re-derived at every callsite:
+ *
+ *   - `'none'`  → outline only, no camera change. Canvas-click uses this
+ *                 because the user is already framing things by orbiting;
+ *                 dive is reserved for explicit double-click / long-press.
+ *   - `'frame'` → bring the entry into view (the CameraRig dives toward it
+ *                 with the standard ease-in-out lerp). Sidebar, Search, and
+ *                 Breadcrumb (click an ancestor) pass this because the user
+ *                 is navigating to a structure they may not currently see.
+ *
+ * The store also exposes `lastIntent` so the CameraRig (or any other
+ * observer) can read what kind of selection just happened without having
+ * to wrap every `select(...)` call into a custom event channel.
+ */
+export type SelectionIntent = 'none' | 'frame';
+
 interface SelectionState {
   /** Currently hovered entry, or null if the pointer is not over a pickable mesh. */
   hovered: { id: string | null };
@@ -52,9 +73,17 @@ interface SelectionState {
    */
   lastClickAt: number;
 
+  /**
+   * Intent that accompanied the most recent `select()` call. Observers
+   * (e.g. CameraRig wrapper / DetailPanel) read this to decide whether to
+   * frame the camera on the new selection. Reset to `'none'` whenever the
+   * selection is cleared.
+   */
+  lastIntent: SelectionIntent;
+
   setHovered: (id: string | null) => void;
   clearHover: () => void;
-  select: (id: string, options?: { mode?: SelectionMode }) => void;
+  select: (id: string, options?: { mode?: SelectionMode; intent?: SelectionIntent }) => void;
   clearSelection: () => void;
 }
 
@@ -62,6 +91,7 @@ export const useSelectionStore = create<SelectionState>((set) => ({
   hovered: { id: null },
   selected: { ids: new Set<string>() },
   lastClickAt: 0,
+  lastIntent: 'none',
 
   setHovered: (id) =>
     set((state) => {
@@ -78,6 +108,7 @@ export const useSelectionStore = create<SelectionState>((set) => ({
   select: (id, options) =>
     set((state) => {
       const mode: SelectionMode = options?.mode ?? 'replace';
+      const intent: SelectionIntent = options?.intent ?? 'none';
       const next = new Set(state.selected.ids);
       switch (mode) {
         case 'replace':
@@ -98,6 +129,7 @@ export const useSelectionStore = create<SelectionState>((set) => ({
       return {
         selected: { ids: next },
         lastClickAt: Date.now(),
+        lastIntent: intent,
       };
     }),
 
@@ -105,7 +137,11 @@ export const useSelectionStore = create<SelectionState>((set) => ({
     set((state) =>
       state.selected.ids.size === 0
         ? state
-        : { selected: { ids: new Set<string>() }, lastClickAt: Date.now() },
+        : {
+            selected: { ids: new Set<string>() },
+            lastClickAt: Date.now(),
+            lastIntent: 'none',
+          },
     ),
 }));
 
@@ -127,3 +163,16 @@ export const selectFirstSelectedId = (s: SelectionState): string | null => {
   const it = s.selected.ids.values().next();
   return it.done ? null : (it.value as string);
 };
+export const selectLastIntent = (s: SelectionState): SelectionIntent => s.lastIntent;
+export const selectLastClickAt = (s: SelectionState): number => s.lastClickAt;
+
+// -- Global window hook (dev convenience, parity with peelStore / diveStore) --
+declare global {
+  interface Window {
+    __selectionStore?: typeof useSelectionStore;
+  }
+}
+
+if (typeof window !== 'undefined' && import.meta.env?.DEV) {
+  window.__selectionStore = useSelectionStore;
+}

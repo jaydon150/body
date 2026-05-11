@@ -20,38 +20,21 @@ import { t } from './i18n';
  * any label (TA2 English, Latin, UBERON comparative, FMA alias, or the
  * raw id). Up/Down to navigate results; Enter to select; Esc to close.
  *
- * Global keyboard handler: P1.14 wires the Cmd/Ctrl+K listener at the
- * document level. For this dispatch, the component registers its own
- * keydown listener while mounted — that's enough for the smoke test. The
- * listener is idempotent across remounts (the registered fn is stable via
- * useCallback) so a Phase 2 GlobalShortcut layer can override without
- * conflict.
+ * Global keyboard handler (P1.14): the Cmd/Ctrl+K + "/" shortcut now
+ * lives at AppShell level so it works even when this component is not
+ * mounted. This component is the consumer of `searchOpen` and renders
+ * the modal when it flips true.
+ *
+ * Picking a result (Enter or mousedown on a row):
+ *   - Calls `selectionStore.select(id, { intent: 'frame' })` so the
+ *     CameraRig frames the structure (the user was searching for it; bring
+ *     it into view).
+ *   - Closes the palette and restores focus to the invoker.
  */
 export function Search() {
   const open = useUiPreferencesStore(selectSearchOpen);
   const setOpen = useUiPreferencesStore((s) => s.setSearchOpen);
   const selectId = useSelectionStore((s) => s.select);
-
-  // Register global Cmd/Ctrl+K + "/" shortcut to OPEN the palette.
-  useEffect(() => {
-    const onGlobalKey = (e: KeyboardEvent) => {
-      const isCmdK = (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k';
-      // "/" but ignore when typing in an input.
-      const isSlash =
-        e.key === '/' &&
-        !e.metaKey &&
-        !e.ctrlKey &&
-        !e.altKey &&
-        !(e.target instanceof HTMLInputElement) &&
-        !(e.target instanceof HTMLTextAreaElement);
-      if (isCmdK || isSlash) {
-        e.preventDefault();
-        setOpen(true);
-      }
-    };
-    window.addEventListener('keydown', onGlobalKey);
-    return () => window.removeEventListener('keydown', onGlobalKey);
-  }, [setOpen]);
 
   if (!open) return null;
 
@@ -59,7 +42,10 @@ export function Search() {
     <SearchPalette
       onClose={() => setOpen(false)}
       onPick={(id) => {
-        selectId(id);
+        // Search picks pass intent='frame' so the CameraRig dives toward
+        // the chosen entry — searching is a navigation gesture, not a
+        // browse-without-camera-change gesture.
+        selectId(id, { intent: 'frame' });
         setOpen(false);
       }}
     />

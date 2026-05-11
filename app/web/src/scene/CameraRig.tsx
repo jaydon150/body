@@ -190,12 +190,23 @@ export function CameraRig({ bounds, entries }: CameraRigProps) {
         far={initialFrame.far}
         position={[initialFrame.position.x, initialFrame.position.y, initialFrame.position.z]}
       />
+      {/*
+        OrbitControls: enableZoom + touch rotate/pan/zoom defaults are
+        already true; we set them explicitly so the contract is clear at
+        the callsite and a future refactor doesn't silently flip them.
+        Damping factor 0.08 was chosen (P1.14) for iPad touch
+        responsiveness — slightly snappier than the Three.js default 0.05
+        without overshooting. See 3d-engine.state.md for the trade-off.
+      */}
       <OrbitControls
         ref={controlsRef}
         makeDefault
         target={initialFrame.target}
         enableDamping
         dampingFactor={0.08}
+        enableZoom
+        enableRotate
+        enablePan
         minDistance={initialFrame.near * 4}
         maxDistance={initialFrame.far * 0.6}
       />

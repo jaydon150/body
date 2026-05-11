@@ -25,11 +25,18 @@ import { t } from './i18n';
  * tabindex — only one item is in the tab order at a time, arrow keys move
  * focus.
  *
- * Selection wiring: clicking a row dispatches `select(id)`. The
- * selectionStore reconciles which entries are highlighted in the 3D
- * canvas; the canvas reconciles back into this tree via subscribing to
- * `selected`. (For Phase 1 the engine treats the store as the source of
- * truth — see selectionStore.ts.)
+ * Selection wiring: clicking a row dispatches `select(id, { intent:
+ * 'frame' })`. The `'frame'` intent tells the engine to camera-dive
+ * toward the new selection (sidebar/search navigations want to bring the
+ * structure into view); canvas-click selections pass `'none'` and stay
+ * still until the user explicitly double-clicks / long-presses. See
+ * selectionStore.ts and SkeletalScene.tsx for the consumer side.
+ *
+ * Bidirectional sync (P1.14): when the selection changes from OUTSIDE
+ * the sidebar (i.e. the user clicked a mesh in the canvas), the tree
+ * (a) auto-expands the ancestor path and (b) scrolls the selected row
+ * into view so the user doesn't lose context. The expansion was P1.13;
+ * the scroll-into-view was P1.14.
  *
  * iPad portrait: the rail becomes a slide-over driven by
  * `uiPreferencesStore.sidebarOpen`. CSS handles the breakpoint; no JS
@@ -88,6 +95,28 @@ export function Sidebar() {
     el?.focus();
   }, [focusedId]);
 
+  // -- Scroll selected row into view when the selection changes from
+  // outside the sidebar (e.g. canvas click). Runs AFTER the expansion
+  // effect above so the row actually exists in the flat list.
+  //
+  // Note: we don't want to fight `focus()` calls triggered by keyboard
+  // navigation (which already scroll their own targets). The effect keys
+  // on `selectedId` only — if the user keyboard-navigates to a row, the
+  // row.focus() call in the focused-id effect handles the scroll; this
+  // hook only fires when selectedId itself transitions.
+  useEffect(() => {
+    if (!selectedId) return;
+    // Defer one tick so the auto-expansion above has reconciled and the
+    // target row exists in the DOM.
+    const id = window.setTimeout(() => {
+      const el = itemRefs.current.get(selectedId);
+      if (!el) return;
+      // 'nearest' avoids jumping if the row is already visible.
+      el.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }, 0);
+    return () => window.clearTimeout(id);
+  }, [selectedId]);
+
   const toggleExpand = useCallback((id: string) => {
     setExpanded((prev) => {
       const next = new Set(prev);
@@ -135,7 +164,10 @@ export function Sidebar() {
         case 'Enter':
         case ' ': {
           e.preventDefault();
-          select(item.node.id);
+          // Sidebar/keyboard navigation passes `intent: 'frame'` so the
+          // CameraRig dives toward the structure — the user is browsing
+          // the hierarchy and wants the chosen entry in view.
+          select(item.node.id, { intent: 'frame' });
           break;
         }
         case 'Escape': {
@@ -196,7 +228,9 @@ export function Sidebar() {
             onToggle={() => toggleExpand(item.node.id)}
             onClick={() => {
               setFocusedId(item.node.id);
-              select(item.node.id);
+              // Sidebar click → camera-frame intent. Distinguishes from
+              // canvas pick (which passes 'none' to keep the orbit free).
+              select(item.node.id, { intent: 'frame' });
             }}
             onKeyDown={(e) => onItemKeyDown(e, item, idx)}
           />

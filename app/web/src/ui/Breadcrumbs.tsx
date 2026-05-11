@@ -19,10 +19,21 @@ import { t } from './i18n';
  *      `ancestorTrail` so the user still sees their structural location.
  *
  * Per phase-1-spec acceptance criterion #10 every segment is clickable to
- * ascend. The actual ascend wiring (which calls `diveStore.ascend()` /
- * sets the selection) is left to P1.14 (engine-UI integration) — for now
- * the click handler calls `select(id)`. P1.14 will replace this with a
- * combined ascend + reframe.
+ * ascend. P1.14 wires the ascent properly:
+ *
+ *   - Clicking an ancestor segment sets selection to that ancestor with
+ *     `intent: 'frame'`. The frame-intent bridge in SkeletalScene
+ *     translates that to `diveStore.dive(ancestorId)`, which:
+ *       * Pushes the previous focus onto the ascendStack (or starts the
+ *         stack if there wasn't one).
+ *       * Triggers the CameraRig lerp toward the ancestor's bounds.
+ *     Net effect: the user sees the camera glide outward to encompass
+ *     the ancestor's bounding box.
+ *
+ *   - There's a separate "Reset" affordance — the canvas itself clears
+ *     dive when the user clicks empty space (`onPointerMissed`). We
+ *     don't add a duplicate clear button here to keep the breadcrumb
+ *     focused on the navigation trail.
  */
 export function Breadcrumbs() {
   const selectedId = useSelectionStore(selectFirstSelectedId);
@@ -68,7 +79,13 @@ export function Breadcrumbs() {
                   <button
                     type="button"
                     className="breadcrumbs__link"
-                    onClick={() => select(node.id)}
+                    onClick={() =>
+                      // Ascend to the clicked ancestor with frame intent
+                      // so the engine dives outward to it. The current
+                      // dive (if any) ascends; the new ancestor becomes
+                      // the new focus.
+                      select(node.id, { intent: 'frame' })
+                    }
                     aria-label={`${preferredLabel(node)} (${t('breadcrumbs.ascend')})`}
                   >
                     {preferredLabel(node)}
