@@ -1,0 +1,10 @@
+{
+  "name": "p1-04-validate-ontology",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Phase 1 step P1.07 — validate-ontology cross-check. Read-only validation of canonical store + ontology + gap report. Zero npm dependencies (Node built-ins only).",
+  "scripts": {
+    "validate": "node validate.mjs"
+  }
+}

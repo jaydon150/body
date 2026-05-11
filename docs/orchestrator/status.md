@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.06 + ADR 0007)
-**Current phase:** Phase 1 in progress. Steps P1.01–P1.06 complete; P1.07 (validate-ontology) ready to dispatch.
+**Last updated:** 2026-05-11 (late evening, post-P1.07)
+**Current phase:** Phase 1 in progress. Steps P1.01–P1.07 complete; P1.08 (bake-registry) ready to dispatch.
 **Overall health:** Green
 
 ---
@@ -18,8 +18,7 @@
 
 ## Active work
 
-- **P1.07 (validate-ontology cross-check) ready to dispatch.** Cross-checks the 79 mesh directories × 3 LODs against the ontology + crosswalk + gap report. Surfaces drift before the registry bakes in P1.08. Independent of Blender.
-- **P1.08 (bake-registry) after P1.07.** Walks `data/canonical/meshes/` + ontology to produce the canonical `mesh-asset-manifest.json`. Includes sternum composite synthesis (the P1.04-flagged opportunity).
+- **P1.08 (bake-registry) ready to dispatch.** Walks `data/canonical/meshes/` + ontology to produce the canonical `mesh-asset-manifest.json`. Synthesizes the sternum composite. Supersedes the user's procedural-femur-proxy seed entry. Last asset-side step before the project crosses to the application side (P1.09 schema upgrade, P1.10+ 3D Engine + UI + Content).
 
 ## Blockers
 
@@ -28,7 +27,7 @@
 
 ## Next milestone
 
-**P1.07 dispatch.** Asset Pipeline + Anatomy Domain cross-check the canonical mesh set against the ontology + P1.01 crosswalk + P1.04 gap report. Surfaces any drift (orphaned glbs, ontology nodes without meshes, broken provenance chains) before P1.08 bakes the registry.
+**P1.08 dispatch.** Asset Pipeline bakes the canonical `mesh-asset-manifest.json` from the validated canonical store + ontology. Asset side closes here; application-side begins next.
 
 ## Upcoming gates (user approval required)
 

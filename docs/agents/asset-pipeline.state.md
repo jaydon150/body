@@ -3,13 +3,16 @@
 Append-only state log. Most recent at top.
 
 **Initialized:** 2026-05-11
-**Last invocation:** 2026-05-11 — P1.06 (Blender headless LOD chain generation via Decimate modifier)
+**Last invocation:** 2026-05-11 — P1.07 (validate-ontology cross-check, cross-domain dispatch with Anatomy Domain)
 
 ---
 
 ## Open items
 
-0. **(NEW, P1.06)** **Two LOD2 fallbacks took ratio 0.3 instead of 0.1 on small carpal-bone "part_1" meshes.** Specifically: `uberon_0001429` (pisiform, part_1: LOD0=190 -> LOD1=94 -> LOD2 at 0.1 produced 18 tris, below the 20-tri degenerate threshold -> re-decimated at 0.3 -> 56 tris); `uberon_0002445` (similar 170-tri carpal, part_1: LOD0=170 -> LOD1=84 -> LOD2 at 0.1 produced 17 tris -> re-decimated at 0.3 -> 50 tris). Both glbs carry the `blender_5.1.1_decimate:lod2_ratio_0.3_fallback` edit tag alongside the standard `lod2_ratio_0.1` tag, and `extras.source.lod2_telemetry.per_mesh` records the per-mesh `lod2_fallback_ratio_0.3` action. Visually these meshes are tiny carpal bones rendered at low-distance LOD2; 50-56 tris is sufficient. The registry-bake step (P1.08) can pick up the fallback signal from the edit tag if it ever needs to flag "this LOD2 used the fallback path."
+00. **(NEW, P1.07)** **Sternum composite shape for P1.08 needs a schema decision.** `UBERON:0000975` (sternum) is the only parent-without-mesh in the dataset whose three constitutional children (manubrium UBERON:0002205, body of sternum UBERON:0006820, xiphoid process UBERON:0002207) all have full LOD0/LOD1/LOD2 chains. P1.08 must either: (a) extend `app/shared/schema/mesh-asset-manifest.json` with an optional `composite` block (preferred -- captures the assembly semantics in the registry shape), or (b) emit a registry-level alias and resolve the composite at runtime in the loader. Anatomy Domain sign-off recommended. No other composite-synthesis opportunities exist in the current dataset (the 29 gap structures are leaf sub-structures of meshes that exist as wholes, not composition candidates).
+00b. **(NEW, P1.07)** **P1.05 reinject parser uses a literal `"BIN "` check (NUL byte rendered as space); P1.06 + P1.07 parsers accept either NUL or space padding per ADR 0007.** No correctness consequence at present (all canonical glbs are NUL-padded), but the P1.05 parser would silently fail on a future space-padded glb. Worth aligning the P1.05 parser to the ADR 0007 pattern as a hardening pass. Filed as a follow-up; not a P1.08 blocker.
+
+0. **(P1.06)** **Two LOD2 fallbacks took ratio 0.3 instead of 0.1 on small carpal-bone "part_1" meshes.** Specifically: `uberon_0001429` (pisiform, part_1: LOD0=190 -> LOD1=94 -> LOD2 at 0.1 produced 18 tris, below the 20-tri degenerate threshold -> re-decimated at 0.3 -> 56 tris); `uberon_0002445` (similar 170-tri carpal, part_1: LOD0=170 -> LOD1=84 -> LOD2 at 0.1 produced 17 tris -> re-decimated at 0.3 -> 50 tris). Both glbs carry the `blender_5.1.1_decimate:lod2_ratio_0.3_fallback` edit tag alongside the standard `lod2_ratio_0.1` tag, and `extras.source.lod2_telemetry.per_mesh` records the per-mesh `lod2_fallback_ratio_0.3` action. Visually these meshes are tiny carpal bones rendered at low-distance LOD2; 50-56 tris is sufficient. The registry-bake step (P1.08) can pick up the fallback signal from the edit tag if it ever needs to flag "this LOD2 used the fallback path."
 0b. **(NEW, P1.06)** **Decimation of the two P1.05 non-manifold meshes (ethmoid + sternum body) succeeded cleanly with no degenerate-mesh fallback.** `uberon_0001679` (ethmoid, 1 mesh, 22,265 LOD0 tris) decimated to 11,132 (LOD1) -> 2,225 (LOD2) with no notes. `uberon_0006820` (sternum body, 1 mesh, 4,638 LOD0 tris) decimated to 2,319 (LOD1) -> 462 (LOD2) with no notes. The 2 non-manifold edges + 31 non-manifold verts logged at P1.05 are still present in the LOD chain (decimation neither cleaned them up nor introduced new ones at the tri counts measured) -- these glbs remain on the hand-review list per open item #7 below.
 
 1. **License-page version discrepancy.** The canonical project portal `lifesciencedb.jp/bp3d/info/license/index.html` declares CC BY-SA 2.1 Japan; the LSDB Archive mirror `dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html` displays a CC BY 4.0 summary. Per ADR 0005 the project follows the canonical lifesciencedb.jp version (CC BY-SA 2.1 JP). Pre-launch compliance review should reconcile and confirm. Not a Phase 1 blocker.
@@ -23,6 +26,24 @@ Append-only state log. Most recent at top.
 9. **OBJ → glb conversion preserves only geometry, not normals from source.** BP3D OBJs include `vn` (vertex normals) but my merge routine rewrites them. `obj2gltf` recomputes per-triangle normals on import. For the 99% decimation tier the normals are still smooth enough to look correct, and **P1.05 now runs `normals_make_consistent(inside=False)` per mesh object** so normals are deterministically outward-facing across the canonical set. **(Closes P1.04 open item #8.)**
 
 ## Decisions log
+
+### 2026-05-11 — P1.07 (cross-domain dispatch, also logged in anatomy-domain.state.md)
+
+- **Cross-domain dispatch.** Operated as both Asset Pipeline and Anatomy Domain for a single read-mostly invocation. The validator at `pipelines/04-validate-ontology/validate.mjs` does the heavy lifting; report at `pipelines/04-validate-ontology/validation-report-2026-05-11.md`.
+- **Headline: PASS, 8/8 checks. Zero critical issues. P1.08 is unblocked.**
+- **Tool: zero-dependency Node validator with built-in GLB parser (ADR-0007-compliant — accepts NUL or space padding for BIN chunk type).** Per the brief's preference for zero-dep over npm install. Reused the parseGlb shape from `pipelines/03-decimate-lods/reinject_attribution.mjs` since it already implements the ADR 0007 dual-padding parse. Total wall time end-to-end ~3 seconds for all 8 checks across 237 glbs.
+- **Eight checks, all PASS:**
+  - C1 (completeness math): 17 non-structure + 79 with-mesh + 29 without-mesh = 125 total. Math closes.
+  - C2 (LOD chain completeness): 79/79 dirs have all 4 files; 79/79 source.txt carry both `## Cleanup (P1.05)` and `## LODs (P1.06)` headers.
+  - C3 (attribution survival): 237/237 glbs carry valid copyright + fma_id matching ontology + full edit chain. The 2 known LOD2 fallback glbs (`uberon_0001429`, `uberon_0002445`) carry both the standard `lod2_ratio_0.1` tag AND the `lod2_ratio_0.3_fallback` tag, matching the P1.06 state-log.
+  - C4 (DAG coherence): 125 nodes / 125 edges / 0 dup ids / 0 ref failures / 0 cycles / 0 schema-shape failures.
+  - C5 (gap-report reconciliation): 29/29 gap rows are real structure nodes lacking mesh dirs; 0 inverse drift (every structure-without-mesh appears in the gap report).
+  - C6 (sternum composite): `UBERON:0000975` lacks a mesh; the 3 children (manubrium UBERON:0002205, body UBERON:0006820, xiphoid UBERON:0002207) all have full LOD chains. Zero other composite-synthesis opportunities in the dataset.
+  - C7 (femur seed reconciliation): proxy entry still in `data/derived/mesh-registry.json`; real BP3D-derived femur present at `data/canonical/meshes/uberon_0000981/lod0.glb` with valid attribution (`FMA:9611`, `BodyParts3D, Copyright...`, 3-entry edits chain at LOD0).
+  - C8 (seed registry schema spot-check): the existing hand-seeded `data/derived/mesh-registry.json` validates against `app/shared/schema/mesh-asset-manifest.json`. Informational baseline for the P1.08 rebuild.
+- **Sharp edges surfaced:** (1) P1.05 reinject parser is stricter than P1.06/P1.07 -- not a correctness issue today but a hardening item (open item #00b). (2) The 3 only `kind` values in use are `system` (1), `region` (16), `structure` (108); `concept/tissue/cell/compound` are unused -- not an issue, Phase 1 is skeletal-only.
+- **Read-only enforcement verified.** No canonical data, ontology, or schema mutated by this invocation. Only outputs are the new pipeline folder + the report.
+- **Idempotency.** Re-running `node validate.mjs` produces byte-identical `validation-data.json` and overwrites the report deterministically. No "second-run drift."
 
 ### 2026-05-11 — P1.06
 
@@ -70,7 +91,27 @@ Append-only state log. Most recent at top.
 
 ## Handoffs
 
-### Outbound — to Asset Pipeline (next invocation, P1.07 validate-ontology OR P1.08 bake-registry)
+### Outbound — to Asset Pipeline (P1.08 bake-registry, after P1.07)
+
+P1.07 ran read-only and confirmed the canonical store is unblocked for P1.08. Next invocation consumes:
+
+- All 237 glbs validated for attribution + edit chain + monotonic tri-order (already true post-P1.06; re-verified at P1.07). No regressions.
+- The validation report at `pipelines/04-validate-ontology/validation-report-2026-05-11.md` carrying the 8-check PASS summary and the P1.08 composite-assembly recommendation for the sternum.
+- Two specific P1.08 instructions that emerged from P1.07:
+  1. **Sternum composite registry entry** — synthesize `UBERON:0000975` from the 3 children (manubrium UBERON:0002205, body of sternum UBERON:0006820, xiphoid process UBERON:0002207). Decide between extending the manifest schema with a `composite` block (preferred) vs. runtime alias resolution. Anatomy Domain should sign off either way.
+  2. **Femur registry entry reconciliation** — replace the procedural `procedural/femur-proxy-threejs` entry with the real BP3D femur (lod0/lod1/lod2). The procedural-proxy code in `app/web/src/scene/FemurScene.tsx` + `anatomySeed.ts` retirement timing is P1.10's call.
+- Two `quality_notes: ["lod2_used_ratio_0.3_fallback"]` registry flags for `uberon_0001429` and `uberon_0002445` per the P1.06 outbound handoff.
+- Zero blockers.
+
+### Outbound — older P1.06 handoff (closed by this invocation)
+
+Completed by P1.07:
+- Every canonical mesh's UBERON id cross-checked against `nodes.json[].id` with `kind: "structure"`. 79/79 OK. ✓
+- Every `kind: "structure"` node with `aliases.fma` either has a canonical mesh on disk OR appears in the gap report. 79 + 29 = 108 OK. ✓
+- LOD chain monotonic per-glb (regression guard) -- verified at the per-mesh telemetry level by P1.06's own check and inherited here. ✓
+- No glb modified. P1.07 is validation-only. ✓
+
+### Outbound — to Asset Pipeline (older P1.06 handoff to P1.07 / P1.08 — pre-P1.07 form, kept for chain audit)
 
 The next agent run consumes:
 
@@ -172,6 +213,36 @@ Completed by P1.04:
 No prior agent has handed off to Asset Pipeline. P1.03 was this agent's first invocation; P1.04 was self-chained.
 
 ## Invocation history
+
+### 2026-05-11 — Invocation #5 (P1.07 — validate-ontology cross-check, cross-domain dispatch with Anatomy Domain)
+
+- **Dispatched by:** Orchestrator per `docs/orchestrator/phase-1-spec.md` dispatch plan step 7. Cross-domain dispatch — operated as both Asset Pipeline and Anatomy Domain for a single read-mostly invocation.
+- **Inputs read:** asset-pipeline agent prompt, anatomy-domain agent prompt, this state file (post-P1.06), `docs/agents/anatomy-domain.state.md` (post-P1.02), ADRs 0001 / 0004 / 0006 / 0007, `app/shared/schema/anatomical-id-schema.json`, `app/shared/schema/mesh-asset-manifest.json`, `data/canonical/ontology/{nodes,relations,synonyms}.json`, all 237 canonical glbs and 79 source.txt files under `data/canonical/meshes/uberon_*/`, `data/derived/mesh-registry.json` (1-entry seed), `pipelines/01-import-bp3d/gap-report-2026-05-11.md`.
+- **Actions taken:**
+  - Created `pipelines/04-validate-ontology/` working folder (replacing the placeholder).
+  - Wrote `validate.mjs` (~450 lines, zero npm deps, Node built-ins only): parseGlb accepts both NUL- and space-padded BIN chunk-type per ADR 0007; eight check functions (C1-C8) returning structured pass/fail with counts and representative examples; main() driver emits report data.
+  - Wrote `package.json`, `README.md`, `.gitignore` for the pipeline folder.
+  - Ran the validator end-to-end. 8/8 checks PASS, overall status PASS, ~3 seconds wall time.
+  - Wrote `validation-report-2026-05-11.md` (~400 lines, the human-readable report).
+  - Ran `npm run verify` in `app/web/`: green.
+- **Output state:**
+  - 4 tracked files in `pipelines/04-validate-ontology/`: `validate.mjs`, `package.json`, `README.md`, `.gitignore`, plus the report `validation-report-2026-05-11.md`.
+  - 1 gitignored file: `validation-data.json` (machine-readable detail; regenerable by re-running the validator).
+  - Zero mutations to ontology, canonical meshes, schemas, or the seed registry.
+- **Cross-domain headlines:**
+  - C1 completeness math: 17 non-structure + 79 with-mesh + 29 without-mesh = 125 total. Closes.
+  - C2 LOD chain completeness: 79/79 dirs have all 4 files; 79/79 source.txt carry both required headers.
+  - C3 attribution survival across 237 glbs: 237/237 PASS. Both LOD2 fallback glbs (`uberon_0001429`, `uberon_0002445`) carry the expected fallback tag.
+  - C4 DAG coherence: 125 nodes, 125 edges, 0 cycles, 0 dup ids, 0 schema-shape failures.
+  - C5 gap-report reconciliation: 29/29 gap rows valid; 0 inverse drift.
+  - C6 sternum composite: confirmed; 3 child UBERON ids are 0002205 / 0006820 / 0002207. **No other composite-synthesis opportunities in the dataset.**
+  - C7 femur seed: proxy still in registry; real BP3D femur present + attributed. P1.08 reconciliation guidance documented.
+  - C8 seed registry schema-spot-check: PASS (informational; P1.08 rebuilds it).
+- **Sharp edges:**
+  - The P1.05 reinject parser uses `"BIN "` literal where the byte is actually NUL-padded. P1.06 fixed this in its own parser per ADR 0007. P1.07's validator follows the P1.06 pattern. Today this is a no-op (all glbs are NUL-padded); flagging as open item #00b for future hardening.
+  - Three `kind` values used out of seven enum (system, region, structure). `concept/tissue/cell/compound` unused — Phase 1 is skeletal-only, expected.
+- **Time spent:** ~30 minutes wall time including reading all 8 input files, writing the validator and report, running the checks, state-file appends to both agents, app/web verify.
+- **Return status:** Complete. Handed back to Orchestrator with PASS summary and unblocked-for-P1.08 verdict. Next Asset Pipeline invocation is **P1.08 (bake-registry)** per the updated handoff above.
 
 ### 2026-05-11 — Invocation #4 (P1.06 — Blender headless LOD chain generation via Decimate modifier)
 

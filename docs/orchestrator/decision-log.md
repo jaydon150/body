@@ -124,6 +124,14 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **P1.05 attribution-discipline pattern held cleanly across P1.06.** Two consecutive empirical confirmations across two distinct Blender operations (cleanup + decimation). The pattern is canonicalized via ADR 0007 rather than left as per-pipeline trial-and-error rediscovery.
 
+- **P1.07 dispatched and returned PASS on all 8 checks.** Cross-domain validation (single subagent acting as both Asset Pipeline and Anatomy Domain) walked 237 glbs + 125 ontology nodes + 125 relations + the 29-entry gap report. Math reconciled: 17 non-structure + 79 with-mesh + 29 without-mesh = 125 total. All 237 glbs carry verbatim BodyParts3D attribution, correct fma_id binding, and the full edits[] pipeline chain through their LOD level. Ontology DAG: 0 cycles, 0 duplicate ids, 0 schema-shape failures. Gap report: 0 drift in either direction. *Reason:* user dispatched.
+
+- **P1.07 confirmed: sternum is the only composite-synthesis opportunity** in the 125-node Phase 1 dataset. The 29 BP3D-side gaps are leaf sub-structures (femur head/neck/shaft, scapula glenoid/coracoid, phalanges, etc.) — not composition candidates. P1.08 needs only one composite-synthesis case: `UBERON:0000975` (sternum) → references its 3 children `UBERON:0002205` (manubrium) + `UBERON:0006820` (body) + `UBERON:0002207` (xiphoid) via `constitutional_part_of` edges.
+
+- **P1.07 surfaced a hardening item.** P1.05's `reinject_attribution.mjs` parser uses the strict `"BIN "` literal for GLB chunk-type matching, while P1.06's and P1.07's parsers use the ADR-0007-compliant dual NUL-or-space accept. Works today because all glbs produced by `obj2gltf` and Blender are NUL-padded, so the strict match still succeeds. Not a correctness issue today. Backport opportunity: align P1.05's parser to the dual-parse pattern as a small follow-up commit. Filed for a future small dispatch.
+
+- **First cross-domain subagent dispatch ran clean.** ADR 0003's file-backed Task-subagent pattern was tested operating across two agent scopes (Asset Pipeline + Anatomy Domain) within a single invocation. The subagent appended to both state files correctly. The pattern extends cleanly; future cross-cutting validation dispatches (e.g. pre-launch compliance review) can follow the same shape.
+
 ---
 
 ## Conventions

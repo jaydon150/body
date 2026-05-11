@@ -1,0 +1,4 @@
+node_modules/
+package-lock.json
+validation-data.json
+p1.07-run.log
