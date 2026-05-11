@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001676",
+  "summary": "The occipital bone (os occipitale) is an unpaired bone at the posteroinferior part of the cranium. It surrounds the foramen magnum and articulates with the atlas (C1) at the atlanto-occipital joints.",
+  "long_form": "The occipital bone (Latin: os occipitale) forms the posterior and most of the inferior wall of the cranium. It is conventionally divided into four parts arranged around the foramen magnum: the squamous part posteriorly, the two lateral (condylar) parts on either side, and the basilar part anteriorly. These parts are separate at birth and fuse during childhood.\n\nThe foramen magnum transmits the medulla oblongata as it becomes continuous with the spinal cord, the vertebral arteries, and the spinal accessory nerves. On either side of the foramen, the lateral parts bear the occipital condyles, which articulate with the superior articular facets of the atlas; nodding movements of the head occur at these atlanto-occipital joints. The hypoglossal canal pierces the lateral part above each condyle and transmits the hypoglossal nerve (CN XII).\n\nThe external surface of the squamous part bears the external occipital protuberance and the superior nuchal line, marking the attachments of the trapezius, occipitofrontalis (occipital belly), and other posterior cervical muscles. The internal surface shows the cruciate eminence, with grooves for the superior sagittal sinus and transverse sinuses; the basilar part fuses anteriorly with the body of the sphenoid in early adulthood to form the clivus.",
+  "ta_latin_name": "os occipitale",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, cranium section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

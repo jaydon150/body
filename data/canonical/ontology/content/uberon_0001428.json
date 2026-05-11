@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001428",
+  "summary": "The lunate (os lunatum) is a crescent-shaped bone of the proximal carpal row. It articulates proximally with the radius and articular disc and distally with the capitate, contributing to the mid-carpal joint.",
+  "long_form": "The lunate (Latin: os lunatum, moon-shaped) is a crescent-shaped bone occupying the centre of the proximal carpal row. Its palmar surface is broader than its dorsal surface, so the bone is wedge-shaped on lateral view, with the apex directed dorsally.\n\nThe lunate articulates proximally with the distal articular surface of the radius and, when the wrist is in ulnar deviation, with the triangular fibrocartilage articular disc that bridges the radius and ulna. Laterally it articulates with the scaphoid and medially with the triquetral; distally it articulates principally with the head of the capitate and, on its medial corner, with the hamate.\n\nIts curved distal surface combined with the convex proximal surface of the capitate forms the central pillar of the mid-carpal joint and contributes to the characteristic rotation of carpal bones during wrist flexion and extension. The lunate is the most commonly dislocated carpal bone. Avascular necrosis of the lunate (Kienböck disease) is a recognised disorder of the wrist that can follow disruption of its blood supply.",
+  "ta_latin_name": "os lunatum",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Pectoral girdle and upper limb chapter, carpal bones section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

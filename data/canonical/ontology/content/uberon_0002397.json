@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0002397",
+  "summary": "The maxilla is a paired bone of the facial skeleton. The two maxillae fuse in the midline to form the upper jaw, the floor of the orbits, the lateral walls and floor of the nasal cavity, and most of the hard palate.",
+  "long_form": "The maxilla (Latin: maxilla) is the largest paired bone of the facial skeleton. The right and left maxillae meet at the intermaxillary suture and together form the upper jaw and contribute to the orbital, nasal, and oral cavities.\n\nEach maxilla has a body and four processes: frontal, zygomatic, palatine, and alveolar. The body is roughly pyramidal and contains the maxillary sinus (antrum of Highmore), the largest of the paranasal sinuses, which drains into the middle meatus of the nasal cavity. The frontal process extends superiorly to articulate with the frontal bone; the zygomatic process projects laterally to meet the zygomatic bone; the palatine process extends medially and meets its fellow in the midline to form the anterior two thirds of the hard palate; and the alveolar process bears the maxillary teeth.\n\nThe orbital surface of the body forms most of the floor of the orbit and is grooved by the infraorbital canal, which transmits the infraorbital nerve (a branch of the maxillary nerve, V2) and vessels to emerge anteriorly at the infraorbital foramen. The nasal surface forms the lateral wall of the nasal cavity and bears the maxillary hiatus. The maxilla articulates with nine bones: the frontal, ethmoid, nasal, zygomatic, lacrimal, inferior nasal concha, palatine, vomer, and the maxilla of the opposite side.",
+  "ta_latin_name": "maxilla",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, facial skeleton section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

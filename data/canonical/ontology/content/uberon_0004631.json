@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004631",
+  "summary": "The sixth thoracic vertebra (T6) is a typical mid-thoracic vertebra. It has a heart-shaped body bearing two demifacets on each side for the heads of the corresponding ribs, a circular vertebral foramen, and a long, steeply inclined spinous process.",
+  "long_form": "The sixth thoracic vertebra (Latin: vertebra thoracica VI) is a representative mid-thoracic vertebra. The body is roughly heart-shaped in superior view and bears, on each lateral surface, two demifacets: a superior demifacet articulating with the head of the sixth rib and an inferior demifacet articulating with the head of the seventh rib. The vertebral foramen is small and circular.\n\nThe transverse processes are long and project posterolaterally; each bears an oval costal facet on its anterior surface for the tubercle of the corresponding rib (the sixth in this case). The superior articular facets face posteriorly and slightly laterally; the inferior facets face anteriorly and slightly medially — this orientation determines the prominent rotational and limited flexion-extension movements of the mid-thoracic spine. The spinous process is long, thin, and inclined steeply downward, so that its tip overlaps the laminae of T7 or T8.\n\nThe pedicles arise from the upper part of the body and are short, so the superior vertebral notch is shallow while the inferior notch is deep — a feature shared by all thoracic vertebrae.",
+  "ta_latin_name": "vertebra thoracica VI",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, thoracic vertebrae section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0006849",
+  "summary": "The scapula is a large, flat, triangular bone that overlies the posterolateral aspect of the upper thorax. It articulates with the humerus at the glenohumeral joint and with the clavicle at the acromioclavicular joint, and serves as the attachment site for many of the muscles that move the shoulder.",
+  "long_form": "The scapula (Latin: scapula, shoulder blade) is a flat triangular bone that lies across the posterolateral aspect of the upper thorax, typically overlying ribs two through seven. It is suspended from the axial skeleton by muscles and articulates with the clavicle at the acromioclavicular joint and with the humerus at the glenohumeral joint.\n\nThe scapula has two surfaces (costal and posterior), three borders (medial, lateral, and superior), and three angles (superior, inferior, and lateral). The costal (anterior) surface is concave and contains the subscapular fossa, occupied by subscapularis. The posterior surface is divided by the spine of the scapula into a smaller superior supraspinous fossa (occupied by supraspinatus) and a larger inferior infraspinous fossa (occupied by infraspinatus and teres minor).\n\nThe spine of the scapula projects from the posterior surface and ends laterally as the broad, flattened acromion, which overhangs the glenohumeral joint and articulates with the lateral end of the clavicle. The lateral angle bears the shallow, pear-shaped glenoid cavity (glenoid fossa), which articulates with the head of the humerus. Above the glenoid lies the supraglenoid tubercle (origin of the long head of biceps brachii); below the glenoid lies the infraglenoid tubercle (origin of the long head of triceps brachii). The coracoid process projects anteriorly from the upper border of the neck and gives attachment to coracobrachialis, the short head of biceps brachii, and pectoralis minor.",
+  "ta_latin_name": "scapula",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Pectoral girdle and upper limb chapter, scapula section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 3 (Upper Limb), scapula"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

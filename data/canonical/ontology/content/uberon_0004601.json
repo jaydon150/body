@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0004601",
+  "summary": "The first rib (costa I) is the shortest, broadest, and most sharply curved of the ribs. It is a true rib whose costal cartilage articulates directly with the manubrium and forms part of the floor of the superior thoracic aperture.",
+  "long_form": "The first rib (Latin: costa I) is an atypical rib distinguished by its short length, broad flat surfaces, and steep curvature. Unlike the typical ribs, its head bears only a single articular facet, which articulates with the side of the body of the first thoracic vertebra (T1).\n\nThe rib's surfaces are orientated superiorly and inferiorly rather than externally and internally, so its borders face inwards and outwards. The superior surface bears two shallow grooves: anteriorly the groove for the subclavian vein and, separated from it by the scalene tubercle (of Lisfranc), the groove for the subclavian artery and the lower trunk of the brachial plexus. The scalene tubercle on the medial border of the upper surface gives insertion to scalenus anterior. Scalenus medius inserts further posteriorly on the rough area between the artery groove and the tubercle of the rib.\n\nAnteriorly the costal cartilage of the first rib articulates with the manubrium of the sternum at a synchondrosis (no joint cavity) — it is therefore a true (vertebrosternal) rib but its sternocostal articulation is, uniquely among the true ribs, immobile. The first rib forms part of the boundary of the superior thoracic aperture and lies above the apex of the lung.",
+  "ta_latin_name": "costa I",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, ribs section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 4 (Thorax), ribs"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

@@ -1,0 +1,10 @@
+{
+  "name": "p1-06-validate-content",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Phase 1 step P1.15 - validate every content record under data/canonical/ontology/content/ against app/shared/schema/content-record-schema.json. Reuses ajv from app/web/node_modules via relative import (zero npm deps in this pipeline).",
+  "scripts": {
+    "validate": "node validate.mjs"
+  }
+}

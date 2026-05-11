@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001679",
+  "summary": "The ethmoid bone (os ethmoidale) is an unpaired bone of the cranial base between the orbits. It contributes to the medial wall of each orbit, the roof and lateral wall of the nasal cavity, and the floor of the anterior cranial fossa.",
+  "long_form": "The ethmoid bone (Latin: os ethmoidale) is a light, spongy bone situated between the two orbits and at the roof of the nasal cavity. It consists of four parts: a horizontal cribriform plate, a vertical perpendicular plate, and two lateral ethmoidal labyrinths.\n\nThe cribriform plate forms part of the roof of the nasal cavity and the floor of the anterior cranial fossa. Numerous foramina perforate it and transmit the olfactory nerve filaments (CN I) from the olfactory mucosa to the olfactory bulb. The midline crista galli projects superiorly from the cribriform plate and serves as the anterior attachment of the falx cerebri.\n\nThe perpendicular plate descends from the cribriform plate and contributes to the superior part of the nasal septum. Each lateral labyrinth contains the ethmoidal air cells (anterior, middle, and posterior), which open into the superior and middle meatuses of the nasal cavity. The medial wall of each labyrinth gives rise to the superior and middle nasal conchae, which project into the nasal cavity, while the lateral wall forms the orbital plate (lamina papyracea) — a thin sheet that constitutes most of the medial wall of the orbit.",
+  "ta_latin_name": "os ethmoidale",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, cranium section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

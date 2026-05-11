@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001681",
+  "summary": "The nasal bone (os nasale) is a small, paired bone of the facial skeleton. The two nasal bones meet in the midline to form the bony bridge of the nose.",
+  "long_form": "The nasal bone (Latin: os nasale) is one of a pair of small, oblong bones that together form the bridge of the nose. Each is roughly rectangular, with the long axis directed inferiorly and slightly laterally.\n\nEach nasal bone articulates superiorly with the nasal part of the frontal bone, laterally with the frontal process of the maxilla, medially with its fellow at the internasal suture, and posteriorly with the perpendicular plate of the ethmoid. Inferiorly, the nasal bones meet the upper lateral nasal cartilages and contribute to the nasal aperture.\n\nThe external surface is convex from side to side and gives attachment to the procerus and a portion of nasalis. The internal surface is concave and grooved longitudinally to accommodate the anterior ethmoidal nerve. Because of their prominent superficial position, the nasal bones are among the most commonly fractured bones of the face.",
+  "ta_latin_name": "os nasale",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, facial skeleton section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

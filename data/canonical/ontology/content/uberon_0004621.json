@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0004621",
+  "summary": "The fifth lumbar vertebra (L5) is the most inferior of the lumbar vertebrae. Its body is the largest of any vertebra and is taller anteriorly than posteriorly, producing the characteristic wedge shape that contributes to the lumbosacral angle.",
+  "long_form": "The fifth lumbar vertebra (Latin: vertebra lumbalis V) is the largest of the moveable vertebrae and lies between L4 and the sacrum. Its body is massive and wedge-shaped — taller anteriorly than posteriorly — which together with the wedge-shaped intervertebral disc contributes to the lumbosacral angle, the abrupt forward inclination of the lumbar column on the sacrum.\n\nThe transverse processes of L5 are short, thick, and conical, arising from both the pedicle and the body itself; they give attachment to the iliolumbar ligaments, which anchor L5 to the iliac crests. The mammillary processes are prominent on the superior articular processes. The vertebral foramen is triangular.\n\nThe inferior articular facets are widely spaced and face laterally and anteriorly to articulate with the sacrum at the lumbosacral zygapophyseal joints. The pars interarticularis (the segment between superior and inferior articular processes) of L5 is the most common site of spondylolysis, particularly in adolescents engaged in repetitive lumbar hyperextension. The body of L5 lies just below the level of the umbilicus, and its lower border lies opposite the bifurcation of the inferior vena cava and the iliocrestal plane.",
+  "ta_latin_name": "vertebra lumbalis V",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, lumbar vertebrae section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 2 (Back), lumbar vertebrae"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

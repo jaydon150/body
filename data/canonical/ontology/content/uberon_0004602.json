@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0004602",
+  "summary": "The second rib (costa II) is a true rib of the thoracic cage. It is longer than the first rib and articulates anteriorly with the sternum at the sternal angle, a constant surface landmark for counting ribs.",
+  "long_form": "The second rib (Latin: costa II) is the second of the twelve paired ribs of the thoracic cage and is a true rib (costa vera), meaning its costal cartilage articulates directly with the sternum.\n\nThe head of the second rib bears two articular facets that articulate with the inferior demifacet of T1 and the superior demifacet of T2 across the intervening intervertebral disc. The neck is short and the tubercle articulates with the transverse process of T2 at a costotransverse joint. The body is longer and less sharply curved than that of the first rib; its external surface bears a roughened oval area near the angle of the rib for the origin of the serratus anterior muscle.\n\nAnteriorly the costal cartilage of the second rib articulates with the sternum at the sternal angle of Louis, the palpable transverse ridge at the junction of the manubrium and the body of the sternum. This makes the second rib the most reliable surface landmark for counting ribs and identifying intercostal spaces during clinical examination.",
+  "ta_latin_name": "costa II",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, ribs section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 4 (Thorax), ribs"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

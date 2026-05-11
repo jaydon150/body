@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004612",
+  "summary": "The third cervical vertebra (C3) is a typical cervical vertebra. Like its neighbours C4-C6 it has a small wide body, a triangular vertebral foramen, a bifid spinous process, and transverse processes pierced by the foramen transversarium.",
+  "long_form": "The third cervical vertebra (Latin: vertebra cervicalis III) is the first of the typical cervical vertebrae, lying immediately below the axis (C2) and above C4. Its features are characteristic of the cervical region: a small, wide body whose superior surface bears uncinate processes (lateral lips) and whose inferior surface is reciprocally bevelled; a triangular vertebral foramen that accommodates the cervical enlargement of the spinal cord; a short, bifid spinous process; and transverse processes that are perforated by the foramen transversarium.\n\nThe foramen transversarium of C3 transmits the vertebral artery, vertebral venous plexus, and sympathetic nerve fibres. Each transverse process ends laterally in anterior and posterior tubercles separated by a groove for the corresponding spinal nerve. The superior articular facets face superoposteriorly and the inferior facets inferoanteriorly, allowing the substantial flexion, extension, and rotation characteristic of the cervical spine.\n\nThe small intervertebral disc between C3 and the bodies above and below contributes to the cervical lordotic curvature; the uncinate processes meet the bevelled inferior surface of the body above at the uncovertebral joints of Luschka.",
+  "ta_latin_name": "vertebra cervicalis III",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, cervical vertebrae section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0006820",
+  "summary": "The body of the sternum (corpus sterni) is the long, flat middle part of the sternum. Its lateral margins articulate with the costal cartilages of ribs two through seven and it transmits force from the anterior thoracic wall to the manubrium and xiphoid process.",
+  "long_form": "The body of the sternum (Latin: corpus sterni), sometimes called the mesosternum, is the longest of the three parts of the sternum. It forms by the fusion of four sternebrae during late childhood and adolescence; three faint transverse ridges on the anterior surface of the adult bone mark the lines of former segmentation.\n\nThe superior border articulates with the manubrium at the manubriosternal joint (the sternal angle of Louis). The inferior border articulates with the xiphoid process at the xiphisternal joint. Each lateral border presents a series of articular facets and demifacets: a demifacet at its upper end for the lower part of the second costal cartilage, complete facets for the third, fourth, fifth, and sixth costal cartilages, and a demifacet at its lower end for the upper part of the seventh costal cartilage.\n\nThe anterior surface gives origin to the sternocostal head of pectoralis major. The posterior surface gives origin to the transversus thoracis and is related to the heart and the anterior mediastinum.",
+  "ta_latin_name": "corpus sterni",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, sternum section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

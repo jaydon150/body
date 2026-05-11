@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0002396",
+  "summary": "The vomer is an unpaired, thin, flat bone of the facial skeleton that forms the inferior and posterior part of the bony nasal septum.",
+  "long_form": "The vomer (Latin: vomer, ploughshare) is an unpaired, roughly trapezoidal bone of the facial skeleton. It forms the inferior and posterior part of the bony nasal septum, dividing the posterior nasal cavity into right and left choanae.\n\nThe superior border of the vomer is grooved and receives the rostrum of the sphenoid; the inferior border articulates with the nasal crest of the maxilla and palatine bones along the floor of the nasal cavity. The anterior border slopes obliquely and articulates above with the perpendicular plate of the ethmoid and below with the cartilaginous nasal septum. The free posterior border is concave and separates the choanae.\n\nIts lateral surfaces are smooth and grooved by the nasopalatine nerve and the sphenopalatine artery as they descend toward the incisive canal. The vomer ossifies from membrane around the cartilaginous nasal septum.",
+  "ta_latin_name": "vomer",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, facial skeleton section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

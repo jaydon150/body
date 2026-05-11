@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0010757",
+  "summary": "The eighth rib (costa VIII) is a false rib of the thoracic cage. It articulates posteriorly with the bodies of the seventh and eighth thoracic vertebrae and joins the costal margin anteriorly by attaching its costal cartilage to that of the seventh rib rather than directly to the sternum.",
+  "long_form": "The eighth rib (Latin: costa VIII) is one of twelve paired bones of the thoracic cage and the second of the so-called false ribs (costae spuriae). Like the other typical ribs, it has a head, neck, tubercle, body, and costal cartilage.\n\nThe head bears two articular facets that meet the costal facets on the bodies of the seventh and eighth thoracic vertebrae across the intervening intervertebral disc. The neck connects head to tubercle; the tubercle articulates with the transverse process of T8 at the costotransverse joint. The body curves laterally, then forward and downward, and carries a costal groove along its inferior internal margin in which run the intercostal vein, artery, and nerve.\n\nAnteriorly the eighth rib does not reach the sternum directly. Its costal cartilage articulates with the costal cartilage of the seventh rib, contributing to the costal margin. This indirect attachment defines the eighth rib as a vertebrochondral or false rib. The rib forms part of the boundary of the thoracic cage and gives attachment to several of the intercostal muscles and the upper fibres of the diaphragm.",
+  "ta_latin_name": "costa VIII",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, section on the ribs"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 4 (Thorax), ribs and costal cartilages"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

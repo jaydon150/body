@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004613",
+  "summary": "The fourth cervical vertebra (C4) is a typical cervical vertebra. It shares the morphology of C3 and C5 — small body with uncinate processes, triangular vertebral foramen, foramen transversarium in each transverse process, and a short, often bifid spinous process.",
+  "long_form": "The fourth cervical vertebra (Latin: vertebra cervicalis IV) lies between C3 and C5 in the middle of the cervical region. It conforms to the pattern of typical cervical vertebrae: a small wide body with uncinate processes (lateral lips) projecting from the superolateral aspect; a triangular vertebral foramen; pedicles that are short and project posterolaterally; laminae that are thin and slope inferiorly; a bifid spinous process that is short and palpable only with deep pressure; and transverse processes that each contain a foramen transversarium transmitting the vertebral artery, vertebral veins, and sympathetic fibres.\n\nEach transverse process ends laterally in anterior and posterior tubercles. The anterior tubercle of C4 is small; the carotid tubercle of Chassaignac is found on C6. The superior articular facets of C4 face superoposteriorly and articulate with C3; the inferior facets face inferoanteriorly and articulate with C5. The C4 vertebral level corresponds approximately to the level of the upper border of the thyroid cartilage and the bifurcation of the common carotid artery.",
+  "ta_latin_name": "vertebra cervicalis IV",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, cervical vertebrae section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0002207",
+  "summary": "The xiphoid process (processus xiphoideus) is the smallest, most inferior part of the sternum. It articulates superiorly with the body of the sternum at the xiphisternal joint and serves as an attachment site for the rectus abdominis and parts of the diaphragm.",
+  "long_form": "The xiphoid process (Latin: processus xiphoideus, sword-shaped process) is the small, variable cartilaginous projection that forms the most inferior part of the sternum. It remains largely cartilaginous in early life and ossifies progressively from above downward, often only partially even in adulthood.\n\nThe xiphoid process articulates superiorly with the body of the sternum at the xiphisternal joint, a symphysis that typically ossifies by middle age. The xiphisternal joint corresponds in surface anatomy to the inferior limit of the heart, the central tendon of the diaphragm, and the T9 vertebral level. The tip of the xiphoid is highly variable: it may be pointed, blunt, bifid, or curved anteriorly or posteriorly.\n\nThe anterior surface gives attachment to the medial fibres of the rectus abdominis and the aponeurosis of the internal oblique. The posterior surface gives attachment to the lower fibres of the transversus thoracis and to a portion of the diaphragm. The lateral borders give attachment to the seventh costal cartilage (its lower part) and the linea alba below.",
+  "ta_latin_name": "processus xiphoideus",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, sternum section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

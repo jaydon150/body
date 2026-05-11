@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0001684",
+  "summary": "The mandible (mandibula) is the lower jaw bone, the only mobile bone of the adult skull. It carries the lower dental arch and articulates bilaterally with the temporal bones at the temporomandibular joints.",
+  "long_form": "The mandible (Latin: mandibula) is the largest and strongest bone of the facial skeleton and the only freely movable bone of the adult skull. It develops from paired halves that fuse at the symphysis menti shortly after birth, producing a single horseshoe-shaped bone.\n\nThe mandible consists of a horizontal body and two vertical rami that meet the body at the angles of the mandible. The body bears the alveolar process superiorly, which houses the lower teeth, and the mental protuberance anteriorly. Each ramus terminates superiorly in two processes separated by the mandibular notch: the anterior coronoid process, which receives the temporalis muscle, and the posterior condylar process, whose head articulates with the mandibular fossa of the temporal bone to form the temporomandibular joint.\n\nThe internal surface of the body shows the mylohyoid line, marking the origin of the mylohyoid muscle, while the lateral surface of the ramus gives insertion to the masseter and the medial surface to the medial pterygoid. The inferior alveolar nerve and vessels enter the mandibular foramen on the medial aspect of the ramus, traverse the mandibular canal, and emerge anteriorly through the mental foramen as the mental nerve.",
+  "ta_latin_name": "mandibula",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, mandible section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 8 (Head), mandible subsection"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

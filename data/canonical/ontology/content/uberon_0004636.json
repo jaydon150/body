@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0004636",
+  "summary": "The twelfth thoracic vertebra (T12) is the most inferior of the thoracic vertebrae and a transitional vertebra. It has a single complete costal facet on each side of its body for the twelfth rib, and its inferior articular processes face laterally in the lumbar pattern.",
+  "long_form": "The twelfth thoracic vertebra (Latin: vertebra thoracica XII) is the lowest of the thoracic vertebrae and exhibits transitional features at the thoracolumbar junction. Its body is comparable in size to that of a small lumbar vertebra. Each side of the body bears a single, complete costal facet for the head of the twelfth rib, without demifacets above or below, reflecting the absence of articulation between the twelfth rib and any neighbouring vertebra.\n\nThe transverse processes are short and lack costal facets — the twelfth rib articulates only with the body, not the transverse process — and present small superior, inferior, and lateral tubercles that correspond to the mammillary, accessory, and costal processes of lumbar vertebrae respectively. The spinous process is shorter and more horizontal than at mid-thoracic levels.\n\nThe superior articular facets of T12 face posteriorly and laterally in the thoracic pattern. The inferior articular facets, however, face laterally and slightly anteriorly in the lumbar pattern, articulating with the superior articular facets of L1 at this transitional level. This switch in facet orientation occurs abruptly within a single vertebra in approximately half of individuals and contributes to the susceptibility of the T12-L1 junction to rotational injury.",
+  "ta_latin_name": "vertebra thoracica XII",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, thoracic vertebrae section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 2 (Back), thoracic vertebrae"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

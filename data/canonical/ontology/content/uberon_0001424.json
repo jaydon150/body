@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001424",
+  "summary": "The ulna is the medial of the two long bones of the forearm. It is the principal articulating bone with the humerus at the elbow but, distally, does not directly participate in the wrist joint.",
+  "long_form": "The ulna (Latin: ulna) is the medial long bone of the forearm, lying on the little-finger side of the forearm in the anatomical position. It is the principal articulating bone with the humerus at the elbow but is excluded from the wrist joint proper by an intervening articular disc.\n\nThe proximal end is massive and forms the major portion of the elbow joint. The trochlear (semilunar) notch on the anterior surface is a concavity that articulates with the trochlea of the humerus. The notch is bounded above by the olecranon, a large projection that forms the prominence of the elbow and receives the insertion of the triceps brachii, and below by the coronoid process. The radial notch on the lateral side of the coronoid process articulates with the head of the radius at the proximal radio-ulnar joint. The tuberosity of the ulna lies just distal to the coronoid process and gives insertion to brachialis.\n\nThe shaft tapers from proximal to distal and is triangular in cross-section, with anterior, posterior, and medial surfaces. The lateral surface is sharp and bounded by the interosseous border, to which the interosseous membrane is attached.\n\nThe distal end is small and rounded, comprising a head and a styloid process. The head bears a circumferential articular surface for the ulnar notch of the radius and an inferior surface that articulates with the triangular fibrocartilage articular disc (which separates it from the carpus). The styloid process projects from the posteromedial aspect of the head.",
+  "ta_latin_name": "ulna",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Pectoral girdle and upper limb chapter, ulna section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

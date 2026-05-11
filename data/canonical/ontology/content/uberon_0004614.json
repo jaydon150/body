@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004614",
+  "summary": "The fifth cervical vertebra (C5) is a typical cervical vertebra. It lies in the mid-cervical region and shares the general morphology of C3-C6 with a small body, uncinate processes, foramen transversarium in each transverse process, and a short bifid spinous process.",
+  "long_form": "The fifth cervical vertebra (Latin: vertebra cervicalis V) lies between C4 and C6. It exhibits the typical cervical vertebral pattern: a small, wide body with bilateral uncinate processes superiorly; a triangular vertebral foramen that accommodates the cervical enlargement of the spinal cord; short pedicles; thin laminae; a short, commonly bifid spinous process; and transverse processes perforated by a foramen transversarium that transmits the vertebral artery, accompanying veins, and sympathetic nerves.\n\nThe transverse process of C5 ends laterally in anterior and posterior tubercles separated by the groove for the ventral ramus of the corresponding spinal nerve. The superior articular facets face superoposteriorly and articulate with C4 at the zygapophyseal joints; the inferior facets face inferoanteriorly and articulate with C6. The C5 vertebra contributes its ventral ramus to the brachial plexus (C5-T1), specifically the upper trunk via union with C6.",
+  "ta_latin_name": "vertebra cervicalis V",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, cervical vertebrae section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

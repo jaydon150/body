@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0000979",
+  "summary": "The tibia is the medial and larger of the two long bones of the leg. It transmits weight from the femur to the talus and forms, with the fibula, the bony framework of the leg.",
+  "long_form": "The tibia (Latin: tibia, flute or shinbone) is the medial and larger long bone of the leg and the second-largest bone in the human body after the femur. It transmits the weight of the body from the femur to the talus and contributes to the knee joint proximally and the ankle joint distally.\n\nThe proximal end is expanded into medial and lateral condyles separated by the intercondylar eminence, on either side of which lie the anterior and posterior intercondylar areas, where the cruciate ligaments and the menisci attach. The superior surfaces of the condyles are the tibial articular surfaces (tibial plateau) that meet the corresponding condyles of the femur. The lateral condyle bears a small facet on its inferolateral aspect for the head of the fibula (proximal tibiofibular joint).\n\nThe shaft is triangular in cross-section, with anterior, medial, and interosseous (lateral) borders and corresponding surfaces. The anterior border, sharp and subcutaneous, is palpable as the shin; the medial surface is also subcutaneous along its whole length. The tibial tuberosity on the upper part of the anterior surface receives the insertion of the patellar ligament. The interosseous border gives attachment to the interosseous membrane that connects tibia and fibula.\n\nThe distal end is smaller and bears a square inferior articular surface that articulates with the trochlea of the talus at the ankle joint. The medial malleolus projects inferiorly from the medial side of the distal end as a subcutaneous prominence; the fibular notch on the lateral side receives the distal end of the fibula at the inferior tibiofibular joint.",
+  "ta_latin_name": "tibia",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Lower limb chapter, tibia section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 7 (Lower Limb), tibia"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

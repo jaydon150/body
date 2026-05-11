@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0000976",
+  "summary": "The humerus is the long bone of the arm. It articulates proximally with the glenoid cavity of the scapula at the glenohumeral joint and distally with the radius and ulna at the elbow joint.",
+  "long_form": "The humerus (Latin: humerus) is a long bone that constitutes the skeleton of the arm. It articulates proximally with the glenoid cavity of the scapula at the glenohumeral joint and distally with the radius and ulna at the elbow.\n\nThe proximal end bears a hemispherical head, which faces medially, superiorly, and slightly posteriorly. The anatomical neck encircles the head and is the site of capsular attachment. Immediately distal lie the greater tubercle laterally (with three facets for the insertion of supraspinatus, infraspinatus, and teres minor) and the lesser tubercle anteromedially (insertion of subscapularis). Between the tubercles runs the intertubercular sulcus (bicipital groove), which transmits the tendon of the long head of biceps brachii. The surgical neck is a narrowed region distal to the tubercles and is the most common site of proximal humeral fracture.\n\nThe shaft is roughly cylindrical above and triangular below. Its lateral surface presents the deltoid tuberosity for the insertion of deltoid; the posterior surface is crossed obliquely by the radial groove (spiral groove), which lodges the radial nerve and the profunda brachii artery.\n\nThe distal end is expanded and flattened anteroposteriorly. It bears a condyle on either side: medially the trochlea, articulating with the trochlear notch of the ulna, and laterally the capitulum, articulating with the head of the radius. Above the trochlea anteriorly lies the coronoid fossa (receives the coronoid process of the ulna in flexion) and posteriorly the olecranon fossa (receives the olecranon in extension). The medial and lateral epicondyles project from the condyle; the medial is grooved posteriorly by the ulnar nerve.",
+  "ta_latin_name": "humerus",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Pectoral girdle and upper limb chapter, humerus section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 3 (Upper Limb), humerus"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

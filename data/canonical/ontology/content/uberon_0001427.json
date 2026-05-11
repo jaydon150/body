@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0001427",
+  "summary": "The scaphoid (os scaphoideum) is the largest bone of the proximal carpal row. It bridges the proximal and distal carpal rows and is the most commonly fractured of the carpal bones.",
+  "long_form": "The scaphoid (Latin: os scaphoideum, boat-shaped) is the most lateral and the largest bone of the proximal row of the carpus. It is roughly boat-shaped and bridges the proximal and distal carpal rows, contributing to the mechanical stability and the characteristic movements of the wrist.\n\nThe scaphoid articulates proximally with the radius at the radiocarpal joint, medially with the lunate, and distally with the trapezium, trapezoid, and the head of the capitate. Its palmar (anterior) surface bears the scaphoid tubercle, which is palpable at the radial side of the wrist and gives attachment to part of the flexor retinaculum and the abductor pollicis brevis. The dorsal surface is grooved and pierced by the principal arterial supply, derived from branches of the radial artery, which enter distally.\n\nThe predominantly distal arterial supply means that fractures through the waist of the scaphoid can interrupt blood flow to the proximal fragment, predisposing to non-union and avascular necrosis. The scaphoid is the most commonly fractured carpal bone, classically after a fall on the outstretched hand.",
+  "ta_latin_name": "os scaphoideum",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Pectoral girdle and upper limb chapter, carpal bones section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 3 (Upper Limb), carpal bones"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

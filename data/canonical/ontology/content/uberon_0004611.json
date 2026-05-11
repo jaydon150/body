@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0004611",
+  "summary": "The twelfth rib (costa XII) is the shortest of the floating ribs. It articulates only with T12 posteriorly, has no neck or tubercle, and ends anteriorly within the muscles of the posterolateral abdominal wall.",
+  "long_form": "The twelfth rib (Latin: costa XII) is the most inferior of the ribs and the second of the floating ribs (costae fluctuantes). It is shorter than the eleventh rib and its anterior end terminates within the muscles of the posterolateral abdominal wall, well behind the costal margin.\n\nThe head bears a single articular facet that articulates only with the body of T12. There is no costotransverse joint and consequently no neck or tubercle in any developed form. The body is short, nearly straight, and lacks a true costal groove and a definite angle. The anterior extremity bears a small pointed costal cartilage that ends among the fibres of quadratus lumborum and the posterior fibres of the diaphragm.\n\nThe twelfth rib lies in the posterior abdominal wall behind the upper pole of the kidney on the corresponding side, where it is an important landmark for posterior approaches to the kidney and the costodiaphragmatic recess of the pleura.",
+  "ta_latin_name": "costa XII",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, ribs section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 4 (Thorax), floating ribs"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

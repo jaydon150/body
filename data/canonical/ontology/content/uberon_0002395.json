@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0002395",
+  "summary": "The talus is the second largest tarsal bone and the most superior. It transmits the weight of the body from the tibia to the rest of the foot and contributes to the ankle, subtalar, and talocalcaneonavicular joints.",
+  "long_form": "The talus (Latin: talus, ankle bone) is the most superior bone of the tarsus and the only bone of the foot to articulate with the leg bones. It transmits the entire weight of the body from the tibia to the talocalcaneonavicular complex and then to the rest of the foot.\n\nThe talus has three principal parts: the body posteriorly, the head anteriorly, and the constricted neck between them. The body bears the trochlea on its superior surface, a saddle-shaped articular surface that fits into the mortise formed by the tibia and the two malleoli, forming the ankle (talocrural) joint. The trochlea is wider anteriorly than posteriorly, so the ankle joint is most stable in dorsiflexion. The medial and lateral surfaces of the body bear facets for the medial and lateral malleoli.\n\nThe neck of the talus is narrow and grooved inferiorly by the sulcus tali; with the sulcus calcanei it forms the tarsal sinus (sinus tarsi), which contains the interosseous talocalcaneal ligament. The head is rounded and bears anterior, middle, and posterior articular facets for the calcaneus, an articular surface for the navicular anteriorly, and an inferior facet for the plantar calcaneonavicular (spring) ligament.\n\nNo muscles attach to the talus. Its blood supply is precarious and reaches the body principally from branches that enter via the neck; fractures through the neck may interrupt this supply and result in avascular necrosis of the body.",
+  "ta_latin_name": "talus",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Lower limb chapter, tarsal bones section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 7 (Lower Limb), tarsal bones"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

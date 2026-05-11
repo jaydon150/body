@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0004616",
+  "summary": "The seventh cervical vertebra (C7), or vertebra prominens, marks the transition from the cervical to the thoracic spine. Its long, non-bifid spinous process is readily palpable and serves as a surface landmark for counting vertebral levels.",
+  "long_form": "The seventh cervical vertebra (Latin: vertebra cervicalis VII), also called vertebra prominens, is a transitional vertebra between the cervical and thoracic regions. Its most conspicuous feature is its long spinous process, which is typically non-bifid and ends in a single tubercle that is easily palpable at the base of the neck — a standard surface landmark for vertebral counting.\n\nLike other cervical vertebrae, C7 has a small body, a triangular vertebral foramen, and transverse processes that contain a foramen transversarium. The foramen transversarium of C7 is smaller than that of C1-C6 and typically transmits only an accessory vertebral vein; the vertebral artery itself usually enters the cervical column at C6, so the foramen of C7 does not carry the artery in most individuals.\n\nThe transverse processes are larger and posteriorly placed, sometimes possessing only a posterior tubercle. The ventral ramus of C7 joins the brachial plexus as part of the middle trunk (with C7 alone) or as a contribution to the upper trunk in pre-fixed plexus variants. A cervical rib, when present, arises from the costal element of the C7 transverse process and may compress the lower trunk of the brachial plexus.",
+  "ta_latin_name": "vertebra cervicalis VII",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, cervical vertebrae section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 2 (Back), cervical vertebrae"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

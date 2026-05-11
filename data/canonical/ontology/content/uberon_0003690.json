@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0003690",
+  "summary": "The sacrum (os sacrum) is a large triangular bone at the base of the vertebral column, formed by the fusion of five sacral vertebrae. It is wedged between the two hip bones and forms the posterior wall of the pelvis.",
+  "long_form": "The sacrum (Latin: os sacrum) is a triangular bone at the base of the vertebral column, formed by the fusion of the five sacral vertebrae during late adolescence and early adulthood. It transmits the weight of the upper body to the pelvis and lower limbs through the sacroiliac joints.\n\nThe base of the sacrum, formed by the superior surface of the first sacral vertebra (S1), faces upward and slightly forward and articulates with the body of L5 at the lumbosacral joint. The anterior projection of the body of S1 — the promontory — is an important obstetric landmark. The apex of the sacrum lies inferiorly and articulates with the coccyx.\n\nThe pelvic (anterior) surface is concave and smooth; four pairs of pelvic sacral foramina transmit the ventral rami of the upper four sacral nerves. The dorsal (posterior) surface is convex and irregular and bears the median sacral crest (formed by fused spinous processes), the intermediate sacral crest (fused articular processes), and the lateral sacral crest (fused transverse processes). Four pairs of dorsal sacral foramina transmit the dorsal rami of S1-S4. The lateral surface bears the auricular surface, an ear-shaped facet that articulates with the corresponding facet of the ilium to form the sacroiliac joint.\n\nThe sacral canal continues the vertebral canal and ends inferiorly at the sacral hiatus, an opening formed by the failure of fusion of the laminae of S5 (and sometimes S4); it is bounded laterally by the sacral cornua and provides access for caudal epidural anaesthesia.",
+  "ta_latin_name": "os sacrum",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, sacrum and coccyx section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 5 (Pelvis), sacrum"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

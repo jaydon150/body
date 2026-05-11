@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0001105",
+  "summary": "The clavicle (clavicula) is the S-shaped bone of the pectoral girdle that connects the upper limb to the trunk. It articulates medially with the manubrium of the sternum and laterally with the acromion of the scapula.",
+  "long_form": "The clavicle (Latin: clavicula, little key) is a long bone that lies horizontally across the root of the neck and forms the anterior part of the pectoral girdle. It is the only bony connection between the upper limb and the axial skeleton.\n\nIts shaft is S-shaped: the medial two thirds curve convex forward and the lateral third convex backward. The medial (sternal) end is enlarged and bears an articular facet that meets the clavicular notch of the manubrium and the first costal cartilage at the sternoclavicular joint. The lateral (acromial) end is flattened and bears an articular facet for the acromion of the scapula at the acromioclavicular joint.\n\nThe inferior surface of the clavicle bears several distinctive markings: medially the impression for the costoclavicular ligament; laterally the conoid tubercle and the trapezoid line, marking attachments of the two parts of the coracoclavicular ligament; and along the mid-shaft the subclavian groove for the subclavian muscle. The superior surface is smooth and is crossed by the supraclavicular nerves. The clavicle gives origin to deltoid and pectoralis major anteriorly, and to trapezius, sternocleidomastoid (clavicular head), and sternohyoid posteriorly. It is one of the most commonly fractured bones, particularly at the junction of its middle and lateral thirds.",
+  "ta_latin_name": "clavicula",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Pectoral girdle and upper limb chapter, clavicle section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 3 (Upper Limb), clavicle"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0001092",
+  "summary": "The atlas (C1) is the first cervical vertebra. It is a ring-shaped bone without a body, articulating superiorly with the occipital condyles to support the cranium and inferiorly with the axis (C2) at the atlanto-axial joints.",
+  "long_form": "The atlas (Latin: atlas) is the first cervical vertebra. Named for the Titan who, in Greek mythology, supports the heavens, it bears the weight of the cranium and is unique among vertebrae in lacking both a body and a true spinous process.\n\nThe atlas consists of an anterior arch, a posterior arch, and two lateral masses. The lateral masses bear the superior articular facets, which are concave and receive the occipital condyles to form the atlanto-occipital joints — the principal joints of head flexion and extension. The inferior articular facets are more nearly flat and articulate with the superior facets of the axis at the lateral atlanto-axial joints.\n\nThe anterior arch is short and bears the anterior tubercle on its convexity; on its posterior surface lies a small facet that articulates with the dens of the axis. The posterior arch is longer and represents the homologue of the laminae of typical vertebrae; it bears the posterior tubercle, a rudimentary spinous process, and is grooved superiorly by the vertebral artery as it ascends to enter the foramen magnum. The transverse processes are long and easily palpated; the transverse foramen in each transmits the vertebral artery and veins.\n\nThe transverse ligament of the atlas stretches across the vertebral foramen behind the dens, dividing the canal into an anterior compartment for the dens and a posterior compartment for the spinal cord and meninges.",
+  "ta_latin_name": "atlas",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, cervical vertebrae section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 2 (Back), cervical vertebrae"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0001272",
+  "summary": "The hip bone (os coxae) is the large, irregular bone that forms the lateral half of the pelvic girdle. It is formed by the fusion of three bones — ilium, ischium, and pubis — at the acetabulum.",
+  "long_form": "The hip bone (Latin: os coxae), also called the innominate or coxal bone, is the large, irregular bone that constitutes the lateral half of the pelvic girdle. The two hip bones articulate posteriorly with the sacrum at the sacroiliac joints and anteriorly with one another at the pubic symphysis, completing the bony pelvis.\n\nEach hip bone develops as three separate bones — the ilium, ischium, and pubis — which fuse in the acetabulum during the second decade of life. In the adult these three components remain distinguishable as topographical parts of the single fused bone.\n\nOn the lateral surface, the cup-shaped acetabulum receives the head of the femur to form the hip joint. The acetabulum is bounded by the acetabular rim and notched inferiorly by the acetabular notch; the lunate articular surface within the cup is C-shaped and faces the acetabular fossa, which lodges the ligament of the head of the femur. Below and behind the acetabulum lies the obturator foramen, the largest foramen in the skeleton, closed in life by the obturator membrane.\n\nThe ilium forms the upper expanded part of the bone, with the iliac crest as its superior margin. The ischium forms the posteroinferior part and bears the ischial tuberosity (which supports the body in sitting) and the ischial spine. The pubis forms the anteroinferior part and ends anteriorly at the pubic symphysis. The pelvic surface of the hip bone is smooth and bears the iliac fossa superiorly; the gluteal surface is laterally placed and is crossed by three gluteal lines marking the origins of the gluteal muscles.",
+  "ta_latin_name": "os coxae",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Pelvis chapter, hip bone section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 5 (Pelvis), bony pelvis"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

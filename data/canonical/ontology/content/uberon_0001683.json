@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001683",
+  "summary": "The zygomatic bone (os zygomaticum) is a paired bone of the facial skeleton that forms the prominence of the cheek and contributes to the lateral wall and floor of the orbit and to the zygomatic arch.",
+  "long_form": "The zygomatic bone (Latin: os zygomaticum), commonly called the cheekbone, is a paired, roughly quadrangular bone lying between the maxilla, the frontal bone, the sphenoid, and the temporal bone. It contributes to the prominence of the cheek, to the lateral wall and inferolateral margin of the orbit, and to the zygomatic arch.\n\nEach zygomatic bone has three surfaces (lateral, temporal, and orbital) and four processes. The frontosphenoidal process ascends to articulate with the zygomatic process of the frontal bone and the greater wing of the sphenoid at the lateral wall of the orbit. The maxillary process meets the zygomatic process of the maxilla anteroinferiorly. The temporal process projects posteriorly to meet the zygomatic process of the temporal bone, completing the zygomatic arch. The orbital surface contributes to the lateral wall and floor of the orbit.\n\nThe lateral surface is pierced by the zygomaticofacial foramen, transmitting the zygomaticofacial nerve and vessels; the temporal surface bears the zygomaticotemporal foramen for the corresponding nerve. The zygomatic bone gives partial origin to the masseter muscle from its lateral surface and inferior border.",
+  "ta_latin_name": "os zygomaticum",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, facial skeleton section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

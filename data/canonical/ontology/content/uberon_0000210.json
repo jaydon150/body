@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0000210",
+  "summary": "The parietal bone (os parietale) is a paired bone of the neurocranium that forms most of the side and roof of the cranial vault. The two parietal bones meet in the midline at the sagittal suture.",
+  "long_form": "The parietal bone (Latin: os parietale) is a flat, curved, quadrilateral bone of the cranial vault. The two parietals together form the largest portion of the calvaria and articulate with one another in the midline at the sagittal suture.\n\nEach parietal bone has an external (convex) and an internal (concave) surface and four borders. Anteriorly it articulates with the frontal bone at the coronal suture, posteriorly with the occipital bone at the lambdoid suture, and inferiorly with the squamous part of the temporal bone and the greater wing of the sphenoid. The external surface bears the parietal eminence (the most prominent point of the bone), and is crossed by two arched lines — the superior and inferior temporal lines — which mark attachments of the temporalis muscle and its fascia.\n\nThe internal concave surface is grooved by branches of the middle meningeal artery and, near the sagittal margin, lodges the superior sagittal sinus in a midline groove formed jointly with the contralateral parietal bone. Pacchionian (arachnoid) granulations indent the bone in small depressions adjacent to the sagittal sulcus.",
+  "ta_latin_name": "os parietale",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, cranium section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

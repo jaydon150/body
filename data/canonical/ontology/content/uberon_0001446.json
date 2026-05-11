@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001446",
+  "summary": "The fibula is the slender lateral bone of the leg. It does not articulate at the knee joint or directly bear weight, but its distal end forms the lateral malleolus and is an essential component of the ankle joint.",
+  "long_form": "The fibula (Latin: fibula, brooch or pin) is the slender lateral long bone of the leg, lying alongside the tibia. Unlike the tibia, the fibula plays only a minor role in weight-bearing through the knee but is essential at the ankle, where its distal end forms the lateral malleolus and stabilises the talocrural joint.\n\nThe head of the fibula is a small expansion at the proximal end; its medial articular surface meets the lateral condyle of the tibia at the proximal tibiofibular joint. A pointed apex (styloid process) projects upward from its posterolateral aspect and receives the insertion of the biceps femoris tendon and the lateral collateral ligament of the knee. The neck connects the head to the shaft and is closely related to the common fibular (peroneal) nerve, which winds around it superficially and can be injured by fractures or pressure at this site.\n\nThe shaft is slender and triangular in cross-section, with anterior, posterior, and interosseous borders. The interosseous border gives attachment to the interosseous membrane that connects fibula to tibia. The shaft gives origin to several muscles of the lateral and anterior compartments of the leg (fibularis longus, fibularis brevis, extensor digitorum longus, extensor hallucis longus, fibularis tertius) and the deep posterior compartment (tibialis posterior, flexor hallucis longus).\n\nThe distal end is expanded into the lateral malleolus, which projects inferiorly and posteriorly relative to the medial malleolus. Its medial surface bears a triangular articular facet for the talus and, just behind it, a depression (the malleolar fossa) for the attachment of the posterior talofibular ligament.",
+  "ta_latin_name": "fibula",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Lower limb chapter, fibula section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

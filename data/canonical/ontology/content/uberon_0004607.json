@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004607",
+  "summary": "The seventh rib (costa VII) is the last true rib of the thoracic cage. Its costal cartilage articulates directly with the inferolateral angle of the sternum body, completing the lower boundary of the true ribs.",
+  "long_form": "The seventh rib (Latin: costa VII) is a typical rib and is the last of the true ribs (costae verae), so designated because its costal cartilage articulates directly with the sternum.\n\nIts head bears two articular facets that articulate with the bodies of T6 and T7 across the intervening intervertebral disc. The neck connects head to tubercle, and the tubercle articulates with the transverse process of T7 at the costotransverse joint. The body curves laterally and forwards and bears a costal groove along the inferior internal margin, which lodges the intercostal vein, artery, and nerve.\n\nAnteriorly the costal cartilage of the seventh rib meets the sternum at the inferolateral angle of the sternal body — at or just above the xiphisternal joint — and contributes to the costal margin. Ribs eight through ten attach to the costal cartilage above (ultimately to the seventh costal cartilage), so the seventh rib serves as the anatomical boundary between the true and false ribs.",
+  "ta_latin_name": "costa VII",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, ribs section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

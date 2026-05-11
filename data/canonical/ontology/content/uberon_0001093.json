@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0001093",
+  "summary": "The axis (C2) is the second cervical vertebra. Its distinguishing feature is the dens (odontoid process), which projects superiorly from the body and forms the pivot around which the atlas, and with it the head, rotates.",
+  "long_form": "The axis (Latin: axis) is the second cervical vertebra. It is the strongest of the cervical vertebrae and bears the dens (Latin: dens axis, odontoid process), a tooth-like vertical projection from the superior surface of the body that represents, developmentally, the centrum of the atlas fused to the body of the axis.\n\nThe dens articulates anteriorly with the posterior surface of the anterior arch of the atlas at the median atlanto-axial joint and is held in position by the transverse ligament of the atlas, the apical ligament, and the paired alar ligaments. Rotation of the head — the 'no' movement — occurs principally at this joint.\n\nThe body of the axis carries a sloping anterior surface and is fused with the dens above. Superior articular facets are large and lie on the body and pedicles, sloping laterally to receive the inferior facets of the atlas. Inferior articular facets lie on the laminae and articulate with C3 in the typical manner of cervical zygapophyseal joints. The bifid spinous process is large and palpable. The transverse processes are short and bear transverse foramina, which transmit the vertebral artery.",
+  "ta_latin_name": "axis",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, cervical vertebrae section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 2 (Back), cervical vertebrae"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

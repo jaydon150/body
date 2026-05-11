@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004615",
+  "summary": "The sixth cervical vertebra (C6) is a typical cervical vertebra, distinguished by an enlarged anterior tubercle on each transverse process — the carotid tubercle (of Chassaignac) — against which the common carotid artery can be compressed.",
+  "long_form": "The sixth cervical vertebra (Latin: vertebra cervicalis VI) is a typical cervical vertebra with one distinguishing surface landmark: the carotid tubercle (Chassaignac tubercle), an enlarged anterior tubercle on each transverse process. The common carotid artery lies anterior to this tubercle and can be compressed against it manually.\n\nAs with other typical cervical vertebrae, C6 has a small wide body bearing uncinate processes, a triangular vertebral foramen, short pedicles, thin laminae, and a short bifid spinous process. Each transverse process contains a foramen transversarium that transmits the vertebral artery, the vertebral veins, and sympathetic fibres. The C6 level corresponds approximately to the cricoid cartilage anteriorly, the inferior border of the larynx, the beginning of the trachea, and the beginning of the oesophagus.\n\nThe ventral ramus of the C6 spinal nerve joins that of C5 to form the upper trunk of the brachial plexus.",
+  "ta_latin_name": "vertebra cervicalis VI",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, cervical vertebrae section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

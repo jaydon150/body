@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0000981",
+  "summary": "The femur (os femoris) is the longest and strongest bone of the human body. It forms the skeleton of the thigh and articulates proximally with the acetabulum of the hip bone and distally with the tibia and patella at the knee.",
+  "long_form": "The femur (Latin: os femoris) is a single long bone that constitutes the skeleton of the thigh. It is the longest, strongest, and heaviest bone in the body and transmits force from the trunk and pelvis to the tibia during stance and locomotion.\n\nThe proximal end carries a near-spherical head that articulates with the acetabulum of the os coxae to form the hip joint. The head is connected to the shaft by a narrowed neck, which is angulated with respect to the shaft (the neck-shaft angle); this geometry shifts the line of weight transmission laterally and is a frequent site of fracture in the elderly. At the junction of neck and shaft project the greater trochanter laterally and the lesser trochanter medially, both serving as insertion sites for muscles that act on the hip.\n\nThe shaft (corpus femoris) is roughly cylindrical with a posterior longitudinal ridge, the linea aspera, which gives attachment to the adductors of the thigh and the short head of biceps femoris. Distally the shaft expands into medial and lateral condyles separated posteriorly by the intercondylar fossa; the condyles articulate with the corresponding tibial condyles, and an anterior patellar surface receives the patella. The medial and lateral epicondyles project from the condyles and serve as the proximal attachments of the collateral ligaments of the knee.\n\nOssification begins from a primary centre in the shaft during fetal life and proceeds through five secondary centres (head, greater and lesser trochanters, and the two distal condyles), with the distal centre typically present at birth.",
+  "ta_latin_name": "os femoris",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Lower limb chapter, section on the femur"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 7 (Lower Limb), femur subsection"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

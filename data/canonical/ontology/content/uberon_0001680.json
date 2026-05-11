@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001680",
+  "summary": "The lacrimal bone (os lacrimale) is the smallest paired bone of the facial skeleton. It lies in the anterior part of the medial wall of the orbit and contributes to the bony lacrimal fossa.",
+  "long_form": "The lacrimal bone (Latin: os lacrimale) is a delicate, scale-like paired bone located in the anterior part of the medial wall of each orbit. It is the smallest bone of the facial skeleton.\n\nIts lateral (orbital) surface presents the posterior lacrimal crest, which divides the surface into two parts. Anterior to the crest the bone is grooved to form, together with the frontal process of the maxilla, the bony lacrimal fossa for the lacrimal sac; this fossa is continuous inferiorly with the nasolacrimal canal, which transmits the nasolacrimal duct into the inferior meatus of the nasal cavity. Posterior to the crest the bone is smooth and contributes to the medial wall of the orbit.\n\nThe lacrimal bone articulates with four bones: the frontal bone superiorly, the maxilla anteriorly, the inferior nasal concha inferiorly, and the ethmoid (lamina papyracea) posteriorly. The posterior lacrimal crest provides attachment for the lacrimal part of the orbicularis oculi muscle (Horner's muscle).",
+  "ta_latin_name": "os lacrimale",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, facial skeleton section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

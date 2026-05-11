@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004626",
+  "summary": "The first thoracic vertebra (T1) is the most superior of the thoracic vertebrae. It is a transitional vertebra: its body resembles a cervical body but it bears full costal facets for articulation with the first rib.",
+  "long_form": "The first thoracic vertebra (Latin: vertebra thoracica I) is the most superior of the twelve thoracic vertebrae and the immediate inferior neighbour of the vertebra prominens (C7). It is transitional in character: its body is wider than tall (somewhat resembling a cervical body) but its costal articulations and spinous process conform to the thoracic pattern.\n\nThe body of T1 bears a full costal facet on each side of its superior margin for the head of the first rib, and a partial (demi)facet on each side of its inferior margin for the upper part of the head of the second rib. The pedicles project posteriorly and the laminae meet at a long, almost horizontal spinous process that resembles those of the lower cervical vertebrae more than the steeply oblique processes of mid-thoracic levels.\n\nThe transverse processes are stout and bear a costal facet for articulation with the tubercle of the first rib. The vertebral foramen is roughly oval and accommodates the spinal cord at the level of the cervicothoracic enlargement. The ventral ramus of the first thoracic nerve contributes the major portion to the lower trunk of the brachial plexus.",
+  "ta_latin_name": "vertebra thoracica I",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, thoracic vertebrae section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

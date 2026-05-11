@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0002446",
+  "summary": "The patella is the largest sesamoid bone in the body. It is embedded within the quadriceps tendon and articulates with the patellar surface of the femur at the knee, where it improves the mechanical advantage of the quadriceps femoris muscle.",
+  "long_form": "The patella (Latin: patella, small plate), commonly called the kneecap, is the largest sesamoid bone in the human body. It develops within the tendon of the quadriceps femoris and lies anterior to the knee joint, embedded in the extensor mechanism of the knee.\n\nThe patella is roughly triangular when viewed from in front, with a broad superior base and a pointed apex directed inferiorly. Its anterior surface is convex and subcutaneous and is grooved vertically by longitudinal striations representing the fibres of the quadriceps tendon. The posterior surface bears a smooth articular surface divided by a vertical ridge into a smaller medial facet and a larger lateral facet; both articulate with the patellar surface of the femur. A separate small facet (the odd facet) at the medial edge contacts the medial femoral condyle in deep knee flexion.\n\nThe patella is bound to the tibial tuberosity by the patellar ligament (the continuation of the quadriceps tendon below the bone). It increases the moment arm of the quadriceps about the knee joint, particularly in extension, and protects the anterior aspect of the joint. It ossifies from a single centre that typically appears in early childhood.",
+  "ta_latin_name": "patella",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Lower limb chapter, patella section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 7 (Lower Limb), patella"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

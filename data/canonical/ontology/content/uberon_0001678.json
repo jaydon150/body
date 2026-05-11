@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001678",
+  "summary": "The temporal bone (os temporale) is a paired bone of the neurocranium that forms part of the lateral wall and base of the skull. It houses the organs of hearing and balance and articulates with the mandible at the temporomandibular joint.",
+  "long_form": "The temporal bone (Latin: os temporale) is an irregular paired bone forming the inferolateral part of the cranium and a portion of the cranial base. Each temporal bone is conventionally described as having four principal parts that fuse during development: the squamous, petromastoid (petrous and mastoid), and tympanic parts, together with the styloid process.\n\nThe squamous part is a thin plate that contributes to the lateral wall of the cranium and articulates with the parietal bone above. Its anterior projection, the zygomatic process, meets the temporal process of the zygomatic bone to form the zygomatic arch. Inferior to the zygomatic process lies the mandibular fossa, which receives the head of the mandible at the temporomandibular joint, with the articular tubercle marking its anterior boundary.\n\nThe petrous part is a dense, pyramidal portion of the cranial base that contains the internal ear (cochlea, vestibule, and semicircular canals) and the internal acoustic meatus, which transmits the facial and vestibulocochlear nerves. The mastoid part lies posterior to the external acoustic meatus and projects inferiorly as the mastoid process, an attachment site for the sternocleidomastoid, splenius capitis, and longissimus capitis. The tympanic part forms much of the wall of the external acoustic meatus. The styloid process projects inferoanteriorly and serves as an attachment for stylohyoid and stylopharyngeus muscles and the stylohyoid and stylomandibular ligaments.",
+  "ta_latin_name": "os temporale",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, cranium section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

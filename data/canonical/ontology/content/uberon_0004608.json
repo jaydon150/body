@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004608",
+  "summary": "The ninth rib (costa IX) is a false rib of the thoracic cage. It articulates posteriorly with T8 and T9 and joins the costal margin anteriorly through its costal cartilage, which attaches to the costal cartilage of the rib above.",
+  "long_form": "The ninth rib (Latin: costa IX) is a typical rib and the third of the false ribs (costae spuriae). Like the eighth and tenth ribs, its costal cartilage attaches to the costal cartilage above rather than directly to the sternum.\n\nThe head bears two articular facets that articulate with the bodies of T8 and T9 across the intervening intervertebral disc. The neck connects head to tubercle, and the tubercle articulates with the transverse process of T9 at the costotransverse joint. The body curves laterally and forwards and bears a costal groove along its inferior internal margin, which lodges the intercostal vein, artery, and nerve.\n\nAnteriorly the costal cartilage of the ninth rib joins the costal cartilage of the eighth rib, which in turn joins the seventh, so the ninth rib contributes to the costal margin (the inferior border of the thoracic cage) without articulating with the sternum itself. The cartilaginous interconnections between ribs 7-10 form the rib cage's lower lateral margin and provide indirect transmission of force to the sternum.",
+  "ta_latin_name": "costa IX",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, ribs section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

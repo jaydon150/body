@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004610",
+  "summary": "The eleventh rib (costa XI) is a floating rib. Its costal cartilage is short and does not attach anteriorly to the sternum or to any other costal cartilage, leaving the rib's anterior end free in the muscles of the lateral abdominal wall.",
+  "long_form": "The eleventh rib (Latin: costa XI) is an atypical rib classified as a floating rib (costa fluctuantes) because its anterior end is free, embedded in the lateral abdominal musculature rather than attaching to the sternum or to the costal cartilages above.\n\nUnlike typical ribs, the head of the eleventh rib bears only a single articular facet, which articulates with the side of the body of T11 alone. There is no costotransverse joint because the transverse process of T11 lacks a costal facet. The neck and tubercle are correspondingly indistinct or absent.\n\nThe body is short and tapering and curves only slightly. The costal groove on the internal surface is shallow or absent in the most lateral portion. The anterior end is capped with a small pointed costal cartilage that lies free among the muscles of the posterolateral abdominal wall, beyond the lateral border of the quadratus lumborum.",
+  "ta_latin_name": "costa XI",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, ribs section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

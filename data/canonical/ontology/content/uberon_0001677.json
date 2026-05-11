@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001677",
+  "summary": "The sphenoid bone (os sphenoidale) is a single, complex bone at the centre of the cranial base. It articulates with all the other cranial bones and contributes to the floor of the middle cranial fossa.",
+  "long_form": "The sphenoid bone (Latin: os sphenoidale) is an unpaired, butterfly-shaped bone wedged between the frontal, ethmoid, occipital, temporal, and parietal bones. It articulates with every other bone of the cranium and forms a substantial portion of the cranial base.\n\nIt has a central body and three pairs of processes: the greater wings, the lesser wings, and the pterygoid processes. The body contains the sphenoidal sinuses and bears the sella turcica on its superior surface, with the pituitary fossa (hypophyseal fossa) lodging the pituitary gland. The lesser wings project laterally from the upper part of the body, contribute to the floor of the anterior cranial fossa, and form the superior margin of the superior orbital fissure. The greater wings form most of the floor of the middle cranial fossa and bear three important foramina: the foramen rotundum (transmitting the maxillary nerve, V2), the foramen ovale (mandibular nerve, V3), and the foramen spinosum (middle meningeal artery).\n\nThe pterygoid processes descend from the junction of body and greater wings; each consists of a medial and lateral plate that give attachment to the pterygoid muscles and the pharyngeal constrictors. Between the lesser wing, greater wing, and body, the superior orbital fissure transmits the oculomotor, trochlear, ophthalmic (V1), and abducens nerves and the superior ophthalmic vein.",
+  "ta_latin_name": "os sphenoidale",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, cranium section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

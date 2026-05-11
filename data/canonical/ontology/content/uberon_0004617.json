@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004617",
+  "summary": "The first lumbar vertebra (L1) is the most superior of the five lumbar vertebrae. It marks the level at which the spinal cord typically terminates as the conus medullaris in adults and bears the characteristic kidney-shaped body and broad lumbar morphology.",
+  "long_form": "The first lumbar vertebra (Latin: vertebra lumbalis I) is the uppermost of the five lumbar vertebrae and lies at the thoracolumbar junction. Its body is large and kidney-shaped in superior view, broader transversely than anteroposteriorly. The vertebral foramen is triangular and larger than at thoracic levels because the spinal cord ends here (the conus medullaris typically terminates at the L1-L2 disc level in adult humans).\n\nThe pedicles arise from the upper posterior part of the body and lead to broad, sturdy laminae that meet at a short, hatchet-shaped spinous process. The transverse processes are long and slender — they represent fused costal elements (sometimes called costiform processes) and project laterally. A small tubercle on the posterior aspect of each transverse process is the accessory process, while a mammillary process projects from the back of the superior articular process; these give attachment to the deep back musculature (multifidus and longissimus).\n\nThe superior articular facets face medially (and slightly posteriorly) and the inferior facets face laterally (and slightly anteriorly) — the lumbar facet orientation favours flexion and extension while strongly limiting rotation. The level of L1 corresponds anteriorly to the transpyloric plane and to the origins of the renal arteries and the superior mesenteric artery.",
+  "ta_latin_name": "vertebra lumbalis I",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, lumbar vertebrae section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

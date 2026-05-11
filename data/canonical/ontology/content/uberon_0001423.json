@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001423",
+  "summary": "The radius is the lateral of the two long bones of the forearm. It is shorter than the ulna proximally but expands distally to articulate with the carpus, and rotates around the ulna during pronation and supination.",
+  "long_form": "The radius (Latin: radius) is the lateral long bone of the forearm. It lies on the thumb side of the forearm in the anatomical position and rotates around the ulna during the movements of pronation and supination.\n\nThe proximal end is small and consists of a head, a neck, and a tuberosity. The head is a flat disc whose superior surface is concave and articulates with the capitulum of the humerus, while its circumferential surface articulates with the radial notch of the ulna at the proximal radio-ulnar joint and is encircled by the annular ligament. The neck is constricted and lies just distal to the head; below it lies the radial tuberosity, the site of insertion of the biceps brachii tendon.\n\nThe shaft increases in diameter from proximal to distal and is triangular in cross-section, with anterior, posterior, and interosseous (medial) surfaces and corresponding borders. The sharp interosseous border gives attachment to the interosseous membrane, which connects the radius and ulna.\n\nThe distal end is expanded and bears two articular surfaces. The carpal articular surface on its inferior aspect is divided into two facets that articulate with the scaphoid and lunate at the wrist (radiocarpal) joint. The medial surface bears the ulnar notch, which articulates with the head of the ulna at the distal radio-ulnar joint. The lateral surface ends in the styloid process; the posterior surface bears the dorsal tubercle (of Lister), which serves as a pulley for the tendon of extensor pollicis longus.",
+  "ta_latin_name": "radius",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Pectoral girdle and upper limb chapter, radius section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0000209",
+  "summary": "The frontal bone (os frontale) is an unpaired bone of the neurocranium that forms the forehead and the bony framework of the roof of each orbit and the anterior wall of the anterior cranial fossa.",
+  "long_form": "The frontal bone (Latin: os frontale) is the anterior bone of the cranium. Developmentally it arises from paired halves that normally fuse at the metopic suture during early childhood; the adult bone is therefore usually a single midline structure.\n\nIt has three principal parts. The squamous part (squama frontalis) is a curved plate that forms the forehead and the anterior part of the calvaria; it bears the paired frontal eminences laterally and the supraorbital margins inferiorly. The orbital parts (partes orbitales) are two horizontal triangular plates that form the larger portion of the roofs of the orbits and the floor of the anterior cranial fossa. The nasal part lies in the midline between the orbital parts and articulates inferiorly with the nasal bones and frontal processes of the maxillae.\n\nWithin the bone, on each side of the midline above the orbits, lies a frontal sinus — an air-filled cavity that drains into the middle meatus of the nasal cavity. The frontal bone articulates posteriorly with the parietal bones at the coronal suture, laterally with the greater wings of the sphenoid and the zygomatic bones, and inferiorly with the ethmoid, lacrimal, nasal, and maxillary bones.",
+  "ta_latin_name": "os frontale",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, cranium section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

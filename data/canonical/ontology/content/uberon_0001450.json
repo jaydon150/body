@@ -1,0 +1,23 @@
+{
+  "structure_id": "UBERON:0001450",
+  "summary": "The calcaneus is the largest of the tarsal bones. It forms the bony framework of the heel, articulates superiorly with the talus and anteriorly with the cuboid, and provides the insertion point for the calcaneal (Achilles) tendon.",
+  "long_form": "The calcaneus (Latin: calcaneus, heel bone) is the largest and strongest bone of the tarsus. It forms the bony framework of the heel and projects posterior to the tibia and fibula at the back of the foot.\n\nThe superior surface bears three articular facets — anterior, middle, and posterior — for articulation with the corresponding facets on the talus at the subtalar joint complex. Between the middle and posterior facets the sulcus calcanei forms the floor of the sinus tarsi. The anterior surface bears a saddle-shaped articular facet for the cuboid at the calcaneocuboid joint, a key component of the transverse tarsal (Chopart) joint.\n\nThe posterior surface is convex and is divided into three parts: an upper smooth area separated from the calcaneal tendon by a bursa, a middle roughened area that gives insertion to the calcaneal (Achilles) tendon of gastrocnemius and soleus, and a lower portion that supports the heel pad. The plantar (inferior) surface bears the medial and lateral processes of the calcaneal tuberosity posteriorly, the anterior tubercle near the front, and a groove between for the long plantar ligament.\n\nThe medial surface bears the prominent shelf of the sustentaculum tali, which supports the talus and is grooved inferiorly by the tendon of flexor hallucis longus. The lateral surface bears the small fibular trochlea, which separates the tendons of fibularis longus (below) and fibularis brevis (above).",
+  "ta_latin_name": "calcaneus",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Lower limb chapter, tarsal bones section"
+    },
+    {
+      "kind": "textbook",
+      "ref": "Moore KL, Dalley AF, Agur AMR. Clinically Oriented Anatomy",
+      "edition": "9th ed. (2023)",
+      "page": "Chapter 7 (Lower Limb), tarsal bones"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

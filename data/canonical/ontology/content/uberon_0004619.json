@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0004619",
+  "summary": "The third lumbar vertebra (L3) is a representative lumbar vertebra. It has a massive kidney-shaped body, a triangular vertebral foramen, long slender transverse processes, and lumbar-pattern articular facets.",
+  "long_form": "The third lumbar vertebra (Latin: vertebra lumbalis III) lies in the middle of the lumbar spine and exhibits the typical lumbar morphology. The body is large and roughly kidney-shaped on superior view, with the long axis transverse. The body is taller and broader than at thoracic levels, reflecting its role in supporting greater weight transmitted through the spine.\n\nThe pedicles are short and stout; the laminae are broad. The transverse processes (costiform processes), representing fused costal elements, are long, thin, and project laterally. The accessory process is a small tubercle on the posteroinferior aspect of the transverse process root, while the mammillary process arises from the posterior aspect of the superior articular process — both give attachment to the multifidus and longissimus muscles.\n\nThe vertebral foramen is triangular. The superior articular facets are concave and face medially; the inferior facets are convex and face laterally, locking the joints into the typical lumbar configuration that resists rotation. The hatchet-shaped spinous process is broad and quadrangular and is readily palpated. The body of L3 lies near the level of the umbilicus in the supine adult and is the lowest level at which the abdominal aorta typically extends before bifurcating at L4.",
+  "ta_latin_name": "vertebra lumbalis III",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Back chapter, lumbar vertebrae section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

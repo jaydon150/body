@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0001682",
+  "summary": "The palatine bone (os palatinum) is an L-shaped paired bone situated between the maxilla and the pterygoid process of the sphenoid. It contributes to the hard palate, the lateral wall of the nasal cavity, and the floor of the orbit.",
+  "long_form": "The palatine bone (Latin: os palatinum) is an L-shaped paired bone interposed between the maxilla anteriorly and the pterygoid process of the sphenoid posteriorly. Each palatine bone consists of two main plates set at right angles: a horizontal plate and a perpendicular plate.\n\nThe horizontal plate joins its fellow in the midline to form the posterior third of the hard palate, completing the bony floor of the nasal cavity. The greater and lesser palatine foramina pierce the horizontal plate near its lateral border and transmit the greater and lesser palatine nerves and vessels to the hard and soft palate respectively.\n\nThe perpendicular plate ascends along the posterior part of the lateral wall of the nasal cavity. Three processes spring from its superior border: the pyramidal process projects posteriorly into the angle between the pterygoid plates; the orbital process contributes a small portion to the posterior part of the floor of the orbit; and the sphenoidal process articulates with the body of the sphenoid. Between the orbital and sphenoidal processes lies the sphenopalatine notch, which becomes the sphenopalatine foramen when closed by the sphenoid above; this foramen transmits the sphenopalatine artery and the nasopalatine nerve into the nasal cavity.",
+  "ta_latin_name": "os palatinum",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Head and neck chapter, facial skeleton section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}

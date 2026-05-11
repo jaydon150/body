@@ -1,0 +1,17 @@
+{
+  "structure_id": "UBERON:0002205",
+  "summary": "The manubrium (manubrium sterni) is the broad superior part of the sternum. It articulates with the clavicles, the first costal cartilages, and the upper part of the second costal cartilages, and meets the body of the sternum at the sternal angle.",
+  "long_form": "The manubrium (Latin: manubrium sterni) is the broad, roughly quadrangular upper portion of the sternum. Its superior border bears a central jugular notch (suprasternal notch), readily palpable in the floor of the neck, flanked on each side by a clavicular notch for articulation with the medial end of the clavicle at the sternoclavicular joint.\n\nThe lateral borders of the manubrium each present a facet for the first costal cartilage near their upper end (an immobile synchondrosis) and a demifacet for the upper part of the second costal cartilage at the lower end. The inferior border articulates with the body of the sternum at the manubriosternal joint, a symphysis that fuses partially in old age. The transverse ridge formed at this joint projects forward as the sternal angle (of Louis), a constant surface landmark marking the level of the second costal cartilage, the bifurcation of the trachea, and the boundary between the superior and inferior mediastinum.\n\nThe anterior surface of the manubrium gives origin to the sternal heads of sternocleidomastoid superiorly and to pectoralis major (clavicular and sternocostal portions) below. The posterior surface gives origin to the sternohyoid and sternothyroid muscles.",
+  "ta_latin_name": "manubrium sterni",
+  "citations": [
+    {
+      "kind": "textbook",
+      "ref": "Standring S, editor. Gray's Anatomy: The Anatomical Basis of Clinical Practice",
+      "edition": "42nd ed. (2021)",
+      "page": "Thorax chapter, sternum section"
+    }
+  ],
+  "confidence": "pending",
+  "authored_by": "Content agent, P1.15 dispatch",
+  "last_updated": "2026-05-11T00:00:00Z"
+}
