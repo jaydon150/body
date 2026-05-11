@@ -1,8 +1,8 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.18 close)
-**Current phase:** Phase 1 in progress. **P1.01–P1.18 complete.** Application side is wired end-to-end: 79-mesh BP3D skeleton renders, picking + outline + selection works, peel + dive plumbing in place, full UI chrome (Sidebar/Search/Breadcrumbs/DetailPanel/PeelControls/NomenclatureToggle/AttributionSurface), 51 pending content records authored + anatomist review packet queued, **3 visual-regression baselines + 3 perf budgets all passing in CI**, **WCAG 2.2 AA audit complete with 4 fixes landed and 1 deferred design decision (UA-009 long-press feedback)**. Remaining: P1.19 (Reviewer handoff passes), P1.20 (Phase 1 retro).
-**Overall health:** Green (one open design decision flagged from P1.18 — does not block reviewer/retro)
+**Last updated:** 2026-05-11 (late evening, post-P1.19 close)
+**Current phase:** Phase 1 in progress. **P1.01–P1.19 complete.** Application side wired end-to-end (79-mesh BP3D skeleton, picking + outline + selection, peel + dive plumbing, full UI chrome, 51 pending content records + anatomist review packet queued, 3 visual-regression baselines + 3 perf budgets passing in CI, WCAG 2.2 AA audit complete). **Reviewer Tier 2 pass complete: PASS-WITH-CONCERNS verdict, 3 BLOCK + 10 CONCERN + 4 NIT findings across 5 cross-agent handoff boundaries.** Remaining: P1.20 (Phase 1 retro).
+**Overall health:** Green-with-three-must-close (Reviewer flagged 3 narrow contract-touching items totalling <60 LoC for pre-retro close: selection-intent enum widening, useStructureContent cross-check soft-fail, AttributionSurface comment correction). Plus the open UA-009 long-press design decision from P1.18.
 
 ---
 
@@ -22,7 +22,7 @@
 
 - **10:30Z** — P1.17 (QA: visual regression baselines + perf budgets + accuracy queue) — **DONE**
 - **11:30Z** — P1.18 (UX/Accessibility Tier 2 audit) — **DONE**
-- **12:30Z** — P1.19 (Reviewer Tier 2 handoff passes on P1.11–16 boundaries)
+- **12:30Z** — P1.19 (Reviewer Tier 2 handoff passes on P1.11–18 boundaries) — **DONE**. Report at `docs/orchestrator/reviews/2026-05-11-phase-1-handoffs.md`. Verdict PASS-WITH-CONCERNS; 3 must-close-before-retro items (R1 selection-intent enum widening 3D Engine; R2 content cross-check soft-fail UI; R3 attribution comment correction UI+Architect) total <60 LoC.
 - **13:30Z** — P1.20 (Phase 1 retro doc + close)
 - **14:30Z** — Phase 2 Spec v0.1 draft (orchestrator-direct; needs user approval before any P2 dispatch)
 
@@ -37,11 +37,11 @@ The vertical slice is functionally complete:
 
 ## Blockers
 
-- None for P1.19/P1.20 close. **One open design decision flagged from P1.18:** UA-009 long-press visual feedback (touch user has no signal during 500 ms long-press budget). Recommended a CSS-only radial-progress ring at the pointer position with reduced-motion opacity-step fallback (~40 LoC + ~30 lines CSS); awaiting user/orchestrator decision on the affordance form before UI-agent implementation. Does not block reviewer pass or retro doc; would block "shippable to actual iPad users" claim.
+- None for P1.20 close. **Two open items inherited from earlier dispatches:** (1) UA-009 long-press visual feedback design decision from P1.18 (CSS-only radial-progress ring recommended; awaiting affordance choice before UI implementation). (2) The three Reviewer must-close items from P1.19 (R1 selection-intent enum, R2 content cross-check, R3 attribution comment) — none breaks the slice today, all are forward-coupling fixes. User decision needed on whether to land the three fixes before P1.20 retro or fold into Phase 2 prep.
 
 ## Next milestone
 
-**P1.19 dispatch (Reviewer Tier 2 handoff passes).** Audit the major Phase 1 handoff boundaries (3 raw-asset, 8 baked-registry, 14 UI↔engine integration) for completeness, contract integrity, and asset-chain trust. After P1.19: P1.20 (Phase 1 retro + close).
+**P1.20 dispatch (Phase 1 retro doc + close).** Synthesize Phase 1 learnings from P1.01–P1.19 retros across all agent state files and the Reviewer report; produce `docs/orchestrator/retros/phase-1-retro.md`; mark Phase 1 closed in master-spec.md. Optional pre-retro: land the three Reviewer must-close fixes (<60 LoC total).
 
 ## Upcoming gates (user approval required)
 
@@ -80,6 +80,7 @@ See [decision-log.md](decision-log.md). Latest:
 | P1.17 baselines | ✅ captured | 3 PNGs at `tests/rendering-snapshots/baseline-*.png`; re-captured post-P1.18 with new `--text-muted` token |
 | P1.17 perf budgets | ✅ all pass | JS gzip 303.45 KB / 320 KB; registry 79 / 79; LOD bytes 13.71 / 16 MB |
 | P1.18 WCAG 2.2 AA | ✅ MET | 21-finding audit; 5 fixes applied (`--text-muted` contrast bump, reduced-motion snap for dive lerp, scene-host focus ring, Search dialog `aria-labelledby`, sidebar disclosure 44 px on coarse pointer); 1 deferred design decision (UA-009 long-press feedback) |
+| P1.19 Reviewer Tier 2 | ✅ PASS-WITH-CONCERNS | 17 findings across 5 boundaries: 3 BLOCK / 10 CONCERN / 4 NIT. 3 must-close-before-P1.20-retro; 6 carry-into-Phase-2; 4 architect open items confirmed properly logged. Report at `docs/orchestrator/reviews/2026-05-11-phase-1-handoffs.md`. |
 | CI on main | ⏳ runs on next push | Pushed with each commit; check Actions tab |
 
 ## Pending external inputs
