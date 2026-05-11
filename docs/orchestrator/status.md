@@ -1,21 +1,20 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening)
-**Current phase:** Phase 1 in progress. Step P1.01 complete; P1.02 ready to dispatch.
+**Last updated:** 2026-05-11 (late evening, post-P1.02)
+**Current phase:** Phase 1 in progress. Steps P1.01–P1.02 complete; P1.03 ready to dispatch.
 **Overall health:** Green
 
 ---
 
 ## Right now
 
-- Phase 1 step P1.01 (Research/Docs UBERON→FMA skeletal crosswalk) **complete**. Deliverable at `docs/references/summaries/uberon-fma-skeletal-crosswalk.md` — ~70 verified anchor rows across 16 sub-regions plus ~30 flagged gaps.
-- First file-backed Task-subagent dispatch validated end to end. ADR 0003's mechanism is now proven in production.
-- Phase 1 Spec v0.2 in effect (iPad co-primary; plain naming + clinical-toggle; ADR 0006 runtime attribution criterion; peel UX validation deferred to Phase 2).
-- User's procedural femur seed integrated. ADRs 0004 / 0005 / 0006 accepted.
+- Phase 1 steps P1.01 and P1.02 **complete**. The skeletal sub-ontology is real: 125 UBERON-primary nodes + 125 typed edges populated in `data/canonical/ontology/` and validated against the schemas.
+- Notable catch in P1.02: the P1.01 pattern-inferred T8 row was wrong (would have caused a labeling bug downstream). Anatomy Domain's mechanical second-pass found the real T8 at `UBERON:0011050`. Agent-handoff design is paying off.
+- Two file-backed Task-subagent dispatches now executed cleanly. ADR 0003 is twice-proven.
 
 ## Active work
 
-- **P1.02 (Anatomy Domain): draft skeletal sub-ontology** — ready to dispatch. Inputs: P1.01 crosswalk + ADR 0004 + ADR 0001. Outputs: populated `data/canonical/ontology/{nodes,relations,synonyms}.json` with ~80–120 nodes and their typed edges.
+- **P1.03 (Asset Pipeline): download BodyParts3D into `data/raw/bodyparts3d/`** — ready to dispatch. First step that touches the asset side; will verify the BodyParts3D download URL is accessible and pull the archive. Does not yet need Blender (that's P1.05).
 
 ## Blockers
 
@@ -24,7 +23,7 @@
 
 ## Next milestone
 
-**P1.02 dispatch.** Anatomy Domain consumes the crosswalk, runs the inferred-row second-pass batch, decides flagship-bone sub-structure depth (femur / humerus / etc.), populates the three ontology JSON files. Output feeds P1.03 (Asset Pipeline download) and P1.04+ (mesh ingestion).
+**P1.03 dispatch.** Asset Pipeline verifies the BodyParts3D download URL is accessible and pulls the archive into `data/raw/bodyparts3d/`. Subsequent P1.04–P1.08 chain (import → clean → LOD → validate → bake registry) follows. Blender install confirmation needed before P1.05.
 
 ## Upcoming gates (user approval required)
 

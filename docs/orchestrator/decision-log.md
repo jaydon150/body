@@ -80,6 +80,12 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **Open follow-up from P1.01:** UBERON release version still not pinned to a specific date — needs a direct `github.com/obophenotype/uberon/releases` query. Filed in Research/Docs state; not a Phase 1 blocker, but a citation footnote worth resolving before Phase 1 retro.
 
+- **P1.02 dispatched and returned clean.** Anatomy Domain subagent populated the skeletal sub-ontology: 125 nodes (1 system, 16 region, 108 structure) + 125 typed edges (regional_part_of 70, member_of 30, constitutional_part_of 24, systemic_part_of 1). DAG verified clean — no cycles, all referential integrity passes. Zero `BODY:NNNN` IDs assigned. Schemas + typecheck + build all green. The pattern-inferred-row second-pass from P1.01 caught a real bug: P1.01 had T8 at `UBERON:0004633`, which is actually T9; P1.02 corrected to `UBERON:0011050`. Agent-handoff design is paying off — the discovered error was caught by the next agent in the chain rather than reaching production. *Reason:* user dispatched.
+
+- **P1.02 surfaced two more sharp edges.** (1) **Thoracic T8 non-contiguous at `UBERON:0011050`** (same anomaly shape as Rib 8). Asset Pipeline must not assume vertebrae are sequentially numbered. (2) **Humerus neck at `UBERON:4200172`** — an unusually high-prefix UBERON ID, still 7 digits, still schema-valid, but worth knowing about for any tooling that filters by ID range.
+
+- **`synonyms.json` schema gap surfaced.** P1.02 subagent's open-items list flags that the current `anatomical-id-schema.json` has no `$defs.synonym_entry` definition; the subagent produced a placeholder structure. Architect's P1.09 schema upgrade should resolve this; or earlier if a synonyms-specific schema is needed before P1.09.
+
 ---
 
 ## Conventions
