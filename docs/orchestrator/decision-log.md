@@ -116,6 +116,14 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **Two glbs flagged for hand-review** as P1.05 by-products: `uberon_0001679` (ethmoid bone, 2 non-manifold edges + 7 verts on intricate paranasal-sinus geometry — likely real anatomical complexity that auto-remediation would destroy) and `uberon_0006820` (sternum body, 24 non-manifold verts — stray verts from BP3D's 99% decimation tier). Both filed in Asset Pipeline state open items. Not Phase 1 blockers; anatomist review path or P1.06 decimation may incidentally resolve them.
 
+- **P1.06 dispatched and returned clean.** 158 new glbs produced (79 LOD1 + 79 LOD2). Triangle reduction LOD0→LOD1→LOD2: 478,717 → 239,293 → 47,823 (49.99% / 9.99%, on target). Bytes: LOD0 8.80 MB, LOD1 4.52 MB, LOD2 1.05 MB. **0 conversion failures.** 2 degenerate-fallback substitutions on small carpal sub-meshes (used ratio 0.3 instead of 0.1 after the 0.1 pass produced fewer than 20 triangles). The two P1.05 hand-review glbs (ethmoid + sternum body) decimated cleanly. Idempotency re-confirmed. *Reason:* user dispatched.
+
+- **Sharp edge surfaced in P1.06: GLB chunk-type bytes are NUL-padded** (`42 49 4E 00`), not space-padded — editors render NUL as space but writers must emit NUL to match the obj2gltf and Blender output. Documented in ADR 0007 so future pipeline authors don't lose hours to this.
+
+- **ADR 0007 (Blender pipeline attribution discipline) accepted.** Two consecutive Blender pipelines (P1.05 and P1.06) confirmed empirically that Blender 5.1.1's glTF exporter overwrites `asset.copyright` and drops `asset.extras` unconditionally, despite the documented flags. The pre-snapshot + post-export re-injection pattern is now canonical. Reference implementations live at `pipelines/02-clean-meshes/reinject_attribution.mjs` and `pipelines/03-decimate-lods/reinject_attribution.mjs`. Any future Blender-touching pipeline must implement the same pattern. Orchestrator drafted the ADR directly (not dispatched) since ADRs are the orchestrator's owned artifact per its agent prompt. ADR: 0007.
+
+- **P1.05 attribution-discipline pattern held cleanly across P1.06.** Two consecutive empirical confirmations across two distinct Blender operations (cleanup + decimation). The pattern is canonicalized via ADR 0007 rather than left as per-pipeline trial-and-error rediscovery.
+
 ---
 
 ## Conventions

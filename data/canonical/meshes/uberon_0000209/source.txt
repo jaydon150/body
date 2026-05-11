@@ -55,3 +55,31 @@ Filesize:
 
 Edit tag (also in glb's asset.extras.source.edits[]):
   blender_5.1.1_cleanup:remove_doubles+normals_make_consistent
+
+## LODs (P1.06)
+
+Pipeline:       pipelines/03-decimate-lods (P1.06)
+Generated at:   2026-05-11
+Tooling:        Blender 5.1.1 headless --background (Decimate modifier, COLLAPSE) + reinject_attribution.mjs (direct GLB JSON-chunk surgery)
+Ratios used:
+  LOD1: 0.5 (target ~50% of LOD0 triangle count)
+  LOD2: 0.1 (target ~10% of LOD0 triangle count)
+  LOD2 fallback: 0.3 (applied per-mesh when LOD2 below 20 tris)
+Sanity guards:
+  small-mesh skip (LOD1): mesh tris < 100
+  degenerate fallback (LOD2): mesh tris < 20 after decimate -> redo at 0.3
+
+Per-LOD totals:
+  LOD0:  tris=  14510  bytes=  263840  meshes=1
+  LOD1:  tris=   7254  bytes=  132716  meshes=1
+  LOD2:  tris=   1450  bytes=   27580  meshes=1
+
+Per-mesh triangle counts (LOD0 -> LOD1 -> LOD2):
+    grp1: LOD0=14510 -> LOD1=7254 -> LOD2=1450
+
+Notes:
+  (none)
+
+Edit tags (also in glb's asset.extras.source.edits[]):
+  blender_5.1.1_decimate:lod1_ratio_0.5
+  blender_5.1.1_decimate:lod2_ratio_0.1

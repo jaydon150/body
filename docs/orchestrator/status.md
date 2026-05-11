@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.05)
-**Current phase:** Phase 1 in progress. Steps P1.01–P1.05 complete; P1.06 (LOD decimation) ready to dispatch.
+**Last updated:** 2026-05-11 (late evening, post-P1.06 + ADR 0007)
+**Current phase:** Phase 1 in progress. Steps P1.01–P1.06 complete; P1.07 (validate-ontology) ready to dispatch.
 **Overall health:** Green
 
 ---
@@ -18,8 +18,8 @@
 
 ## Active work
 
-- **P1.06 (LOD decimation, Blender) ready to dispatch.** Generates LOD1 (~50%) and LOD2 (~10%) chains alongside the existing LOD0 for each of the 79 cleaned glbs.
-- **P1.07 (validate-ontology cross-check)** remains independent and could run before or after P1.06. Natural sequence: P1.06 → P1.07.
+- **P1.07 (validate-ontology cross-check) ready to dispatch.** Cross-checks the 79 mesh directories × 3 LODs against the ontology + crosswalk + gap report. Surfaces drift before the registry bakes in P1.08. Independent of Blender.
+- **P1.08 (bake-registry) after P1.07.** Walks `data/canonical/meshes/` + ontology to produce the canonical `mesh-asset-manifest.json`. Includes sternum composite synthesis (the P1.04-flagged opportunity).
 
 ## Blockers
 
@@ -28,7 +28,7 @@
 
 ## Next milestone
 
-**P1.06 dispatch.** Asset Pipeline runs Blender headless decimate to generate LOD1 (~50% triangle target) and LOD2 (~10% triangle target) for each of the 79 cleaned glbs. Preserves attribution metadata via the same pre-snapshot + reinject pattern P1.05 validated.
+**P1.07 dispatch.** Asset Pipeline + Anatomy Domain cross-check the canonical mesh set against the ontology + P1.01 crosswalk + P1.04 gap report. Surfaces any drift (orphaned glbs, ontology nodes without meshes, broken provenance chains) before P1.08 bakes the registry.
 
 ## Upcoming gates (user approval required)
 

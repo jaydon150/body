@@ -3,11 +3,14 @@
 Append-only state log. Most recent at top.
 
 **Initialized:** 2026-05-11
-**Last invocation:** 2026-05-11 — P1.05 (Blender headless cleanup + attribution re-injection)
+**Last invocation:** 2026-05-11 — P1.06 (Blender headless LOD chain generation via Decimate modifier)
 
 ---
 
 ## Open items
+
+0. **(NEW, P1.06)** **Two LOD2 fallbacks took ratio 0.3 instead of 0.1 on small carpal-bone "part_1" meshes.** Specifically: `uberon_0001429` (pisiform, part_1: LOD0=190 -> LOD1=94 -> LOD2 at 0.1 produced 18 tris, below the 20-tri degenerate threshold -> re-decimated at 0.3 -> 56 tris); `uberon_0002445` (similar 170-tri carpal, part_1: LOD0=170 -> LOD1=84 -> LOD2 at 0.1 produced 17 tris -> re-decimated at 0.3 -> 50 tris). Both glbs carry the `blender_5.1.1_decimate:lod2_ratio_0.3_fallback` edit tag alongside the standard `lod2_ratio_0.1` tag, and `extras.source.lod2_telemetry.per_mesh` records the per-mesh `lod2_fallback_ratio_0.3` action. Visually these meshes are tiny carpal bones rendered at low-distance LOD2; 50-56 tris is sufficient. The registry-bake step (P1.08) can pick up the fallback signal from the edit tag if it ever needs to flag "this LOD2 used the fallback path."
+0b. **(NEW, P1.06)** **Decimation of the two P1.05 non-manifold meshes (ethmoid + sternum body) succeeded cleanly with no degenerate-mesh fallback.** `uberon_0001679` (ethmoid, 1 mesh, 22,265 LOD0 tris) decimated to 11,132 (LOD1) -> 2,225 (LOD2) with no notes. `uberon_0006820` (sternum body, 1 mesh, 4,638 LOD0 tris) decimated to 2,319 (LOD1) -> 462 (LOD2) with no notes. The 2 non-manifold edges + 31 non-manifold verts logged at P1.05 are still present in the LOD chain (decimation neither cleaned them up nor introduced new ones at the tri counts measured) -- these glbs remain on the hand-review list per open item #7 below.
 
 1. **License-page version discrepancy.** The canonical project portal `lifesciencedb.jp/bp3d/info/license/index.html` declares CC BY-SA 2.1 Japan; the LSDB Archive mirror `dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html` displays a CC BY 4.0 summary. Per ADR 0005 the project follows the canonical lifesciencedb.jp version (CC BY-SA 2.1 JP). Pre-launch compliance review should reconcile and confirm. Not a Phase 1 blocker.
 2. **CC BY-SA 2.1 JP legal code is Japanese-only.** The authoritative legal code lives at `creativecommons.org/licenses/by-sa/2.1/jp/legalcode.ja`. The English deed is a summary, not the law. Compliance review item.
@@ -20,6 +23,20 @@ Append-only state log. Most recent at top.
 9. **OBJ → glb conversion preserves only geometry, not normals from source.** BP3D OBJs include `vn` (vertex normals) but my merge routine rewrites them. `obj2gltf` recomputes per-triangle normals on import. For the 99% decimation tier the normals are still smooth enough to look correct, and **P1.05 now runs `normals_make_consistent(inside=False)` per mesh object** so normals are deterministically outward-facing across the canonical set. **(Closes P1.04 open item #8.)**
 
 ## Decisions log
+
+### 2026-05-11 — P1.06
+
+- **Tool: Blender 5.1.1 Decimate modifier (COLLAPSE), not pure-Python quadric reduction (`pyfqmr`, `pymeshlab`) nor `gltfpack`.** The agent prompt explicitly required `bpy.ops.object.modifier_add(type='DECIMATE')` with `decimate_type='COLLAPSE'`, and the Collapse algorithm is content-aware (preserves silhouette better than uniform vertex-cluster reduction or `gltfpack -si`'s edge-collapse heuristic for anatomical structures). Blender was already installed and validated at P1.05; reusing the same toolchain also reuses the attribution-discipline pattern. Total Blender wall time for all 79 glbs (LOD1 + LOD2): 23.44 s (mean ~0.3 s per glb across both LOD levels including the per-LOD reset + import + modifier-apply + export cycle). Pure-Python alternatives would also have required reimplementing the LOD2-degenerate fallback path inside the same script -- single Blender process keeps the implementation atomic.
+- **Tool sequence: identical pre-snapshot + Blender + direct GLB JSON-chunk surgery, replicating P1.05 exactly.** No deviations from the P1.05 attribution-preservation pipeline. Blender 5.1.1's glTF exporter strips `asset.copyright` and `asset.extras` unconditionally on export of the decimated meshes -- empirically reconfirmed in this run by reading a Blender-output LOD1 before reinject (copyright `null`, extras `null`). The reinject step is the safety net, same as P1.05. **Decision: the P1.05 attribution-discipline pattern held cleanly across a second Blender step.** Two-pass empirical confirmation in two consecutive pipelines is strong evidence the pattern is the right shape -- recommend the Orchestrator dispatch an ADR drafting task to canonicalize "Blender-step attribution discipline" so P1.07/P1.08/P2 pipelines inherit the rule explicitly rather than re-discovering it.
+- **Sanity-guard threshold for LOD1 small-mesh skip: 100 tris.** Per the prompt. No meshes in the 79-glb canonical set tripped this guard at LOD1 time (the smallest sub-mesh is `uberon_0002445::part_1` at 170 tris, which decimates cleanly at 0.5 to 84 tris). The guard remained dormant for this dataset but is still useful insurance for future BP3D additions or hand-authored small placeholders.
+- **Sanity-guard threshold for LOD2 degenerate fallback: 20 tris -> redo at ratio 0.3.** Two meshes tripped this guard: `uberon_0001429::part_1` (pisiform half) at 18 tris -> re-decimated at 0.3 to 56 tris; `uberon_0002445::part_1` at 17 tris -> 50 tris. Both pisiform/carpal-bone halves at the extreme small end of the canonical set. **Implementation choice for the fallback was a single re-import + per-mesh re-decimate at the planned ratio.** I considered (a) re-decimating only the offending mesh in-place (keeps the LOD1-style decimated meshes for everything else, replaces just the bad one) and (b) re-importing fresh source and re-decimating everything per a plan map. Went with (b) because re-decimating an already-applied-Decimate-modifier mesh is geometry-dependent: the Decimate modifier on top of decimated topology produces results that depend on the prior collapse pattern, not on the source topology. Single source -> single result is cleaner and deterministic.
+- **`use_collapse_triangulate=False`, `use_symmetry=False` on the Decimate modifier.** Blender 5.1 defaults are sensible (Collapse mode with no symmetry, no triangulation). Explicitly setting these keeps the script self-documenting -- a future Blender version that flips a default won't silently change the LOD output.
+- **No UV decimation parameters set.** BP3D meshes carry no useful UVs; Decimate-Collapse decimates position + normal only. No `vertex_group_factor`, no `use_dissolve_boundaries` -- both default off.
+- **LOD0 never modified.** Hard rule from the prompt. The pipeline writes only `lod1.glb` and `lod2.glb` next to the existing `lod0.glb`. Empirically verified by file mtimes: post-P1.06 the LOD0 files retain their P1.05 mtimes; only LOD1 + LOD2 are freshly written.
+- **`asset.extras.source.lod1_telemetry` + `asset.extras.source.lod2_telemetry` added beyond the prompt's required fields.** Same shape as P1.05's `cleanup_telemetry` extension -- per-mesh decimate report + any fallback notes are embedded into the glb's extras block so a downstream agent (registry-bake, QA) can surface "this LOD2 ran the fallback" or "this mesh saw the small-mesh skip" without re-parsing telemetry JSON. Schema-compatible (`extras` is freeform).
+- **Idempotency verified empirically.** Ran the full pipeline twice in succession. Second run produced byte-identical LOD1 + LOD2 files (Blender Decimate-Collapse is deterministic for the same input topology + same ratio; the reinject step deduplicates edit tags before appending). Idempotency was a hard rule from the agent prompt -- now verified.
+- **Two non-manifold meshes from P1.05 (ethmoid + sternum body) decimated cleanly with no notes.** No degenerate fallback triggered for either. The non-manifold features themselves (2 edges + 31 verts total from P1.05) were neither cleaned up nor amplified by the Decimate-Collapse pass -- the Decimate modifier operates on the manifold portion of the geometry and ignores stray verts/edges. Open item #7 status is unchanged: still hand-review pending; LOD chain is renderable.
+- **Hidden invariant uncovered during smoke test: GLB chunk type field uses NUL padding (0x00), not space (0x20).** P1.05's source-code literal `"BIN "` is actually `"BIN\0"` (4-byte chunk type with NUL byte at index 3) -- the editor visually renders the NUL as a space, but the chunk type bytes on disk are `42 49 4E 00`. obj2gltf (P1.04 source) and Blender's glTF 5.1 exporter both emit NUL-padded chunk type fields. The glTF 2.0 spec actually says the chunk type is one of "JSON" or "BIN" + zero-padding to 4 bytes; the spec text shows " " (space) in examples but the binary layout uses NUL. **P1.06's parseGlb was updated to accept either NUL or space padding** (lenient parse, strict write of NUL to match the rest of the pipeline). This is a robustness improvement over P1.05's literal-NUL check, which would have rejected a future glb that happens to use space padding.
 
 ### 2026-05-11 — P1.05
 
@@ -53,9 +70,56 @@ Append-only state log. Most recent at top.
 
 ## Handoffs
 
-### Outbound — to Asset Pipeline (next invocation, P1.06 LOD chain generation)
+### Outbound — to Asset Pipeline (next invocation, P1.07 validate-ontology OR P1.08 bake-registry)
 
 The next agent run consumes:
+
+- **237 canonical glbs** under `data/canonical/meshes/uberon_NNNNNNN/` — three files per directory:
+  - `lod0.glb` — full-detail cleaned master from P1.05 (unchanged by P1.06). Total 8.80 MB, 478,717 tris.
+  - `lod1.glb` — ~50% LOD generated by P1.06 (Blender Decimate-Collapse, ratio 0.5). Total 4.52 MB, 239,293 tris (50.0% of LOD0).
+  - `lod2.glb` — ~10% LOD generated by P1.06 (ratio 0.1, with per-mesh ratio-0.3 fallback for 2 carpal-bone halves). Total 1.05 MB, 47,823 tris (10.0% of LOD0).
+- All 237 glbs carry `asset.copyright` (verbatim BodyParts3D attribution) and `asset.extras.source` (full provenance) per ADR 0006. `extras.source.edits[]` shows the full pipeline chain:
+  - LOD0: `["obj_to_glb_conversion", (optional)"merged_2_fj_obj_into_one_glb", "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"]`
+  - LOD1: above + `"blender_5.1.1_decimate:lod1_ratio_0.5"`
+  - LOD2: above + `"blender_5.1.1_decimate:lod2_ratio_0.1"` and (when fallback applied) `"blender_5.1.1_decimate:lod2_ratio_0.3_fallback"`
+- 79 `source.txt` files updated with a `## LODs (P1.06)` section: per-LOD totals, per-mesh tris (LOD0 -> LOD1 -> LOD2), any fallback notes, edit-tag list.
+- `pipelines/03-decimate-lods/` complete: `decimate_lods.py`, `reinject_attribution.mjs`, `update_source_txt.mjs`, `verify.mjs`, `run.ps1`, `package.json`, `README.md`, `.gitignore`. Idempotent — re-running reproduces byte-identical LOD1 + LOD2 files.
+- `pipelines/03-decimate-lods/decimate-telemetry.json` per-run telemetry (gitignored). 79 successes, 0 failures. Wall time 23.44 s for the Blender pass + <1 s for reinject + <1 s for source.txt update.
+
+**Pipeline 04-validate-ontology responsibilities (P1.07) -- if dispatched next:**
+
+1. **Cross-check every canonical mesh's `asset.extras.source.fma_id` (and original UBERON id derived from the directory name `uberon_NNNNNNN`) against `data/canonical/ontology/nodes.json`.** Every mesh's UBERON id must exist as a node with `kind: "structure"` in nodes.json, and the FMA alias should be present under `aliases.fma`. Flag any mismatch.
+2. **Cross-check the inverse: every `kind: "structure"` node in nodes.json that has an `aliases.fma` should either have a canonical mesh on disk OR be in the P1.04 gap report.** 29 are in the gap report. The other 79 must each map to a `data/canonical/meshes/uberon_NNNNNNN/` directory with all three LOD files present.
+3. **Validate the LOD chain is monotonic.** For each directory, LOD0 tris > LOD1 tris > LOD2 tris (already true post-P1.06 across the canonical set; this is a regression guard for future runs).
+4. **Do not modify any glb.** P1.07 is validation only. Any failure flagged for hand-review / P1.06 re-run.
+
+**Pipeline 05-bake-registry responsibilities (P1.08) -- if dispatched next:**
+
+1. **Emit `data/derived/mesh-registry.json`** following the `mesh-asset-manifest.json` schema. For each of the 79 UBERON ids, write a registry entry containing:
+   - `id`: the UBERON id
+   - `kind`: "structure"
+   - `aliases`: pulled from nodes.json
+   - `lods`: `[{path: "data/canonical/meshes/uberon_NNNNNNN/lod0.glb", tris: N, bytes: B}, ... LOD1 ..., ... LOD2 ...]`
+   - `provenance`: pulled from each glb's `asset.extras.source` (preserves the full chain).
+   - `bounds`: AABB computed by parsing each glb's POSITION accessors and walking min/max.
+2. **Reconcile the procedural femur proxy.** The user's existing `procedural/femur-proxy-threejs` entry should be demoted to a fallback or removed; the real BP3D femur at `data/canonical/meshes/uberon_0000981/` is the primary going forward. Anatomy Domain should sign off on this before P1.08 commits.
+3. **Synthesize the virtual whole-sternum entry.** Per state-log open item #6, P1.08 can compose a UBERON:0000975 entry referencing the three sternum-piece glbs (manubrium / body / xiphoid) without needing a new mesh extraction. Anatomy Domain decision required.
+4. **Emit per-mesh thumbnails.** Out of scope until a renderer is available; P1.08 should leave `thumbnails: null` in the registry for now (or generate a placeholder).
+5. **Emit `data/derived/spatial-index.bin`.** AABB-based spatial index for runtime culling. Format defined by the 3D Engine agent.
+6. **Flag the two `lod2_ratio_0.3_fallback` glbs in the registry.** Add a `quality_notes: ["lod2_used_ratio_0.3_fallback"]` field on `uberon_0001429` and `uberon_0002445` so the QA agent can spot-check them post-bake.
+
+### Outbound — older P1.05 handoff (closed by this invocation)
+
+Completed by P1.06:
+- LOD1 (~50%) and LOD2 (~10%) generated for every glb under `data/canonical/meshes/uberon_*/lod0.glb`. ✓
+- Attribution preserved across both new LOD levels via the same pre-snapshot + post-Blender reinject pattern as P1.05. Independently verified on three samples (femur, mandible, rib 8). ✓
+- Paired-bone multi-mesh structure preserved across LOD1 + LOD2 (laterality still selectable at runtime). ✓
+- Two P1.05 non-manifold meshes (ethmoid + sternum body) decimated cleanly with no degenerate-fallback trigger. They remain on the hand-review list. ✓
+- Hard rule "LOD0 read-only after P1.05" respected: only new LOD1 + LOD2 files written. ✓
+
+### Outbound — older P1.04 handoff (closed by P1.05, but documented here for chain audit)
+
+The next agent run (now P1.05's outbound to P1.06, closed above) consumed:
 
 - 79 canonical glbs under `data/canonical/meshes/uberon_NNNNNNN/lod0.glb` (~8.36 MB total after weld). All carry `asset.copyright` and `asset.extras.source` per ADR 0006, plus `extras.source.edits[]` containing the cleanup tag and `extras.source.cleanup_telemetry`. Sizes range 9.7 KB (pisiform) to 916 KB (scapula), mean 110.9 KB. **Net welding removed 23,343 vertices / 19 triangles across the 79 meshes** (8.9% vert reduction, 0.004% tri reduction — the tri delta is tiny because welding mostly collapses coincident verts on shared edges/seams, not whole triangles).
 - 79 `source.txt` files updated with a `## Cleanup (P1.05)` section showing per-glb before/after geometry, non-manifold counts, and file-size delta.
@@ -108,6 +172,49 @@ Completed by P1.04:
 No prior agent has handed off to Asset Pipeline. P1.03 was this agent's first invocation; P1.04 was self-chained.
 
 ## Invocation history
+
+### 2026-05-11 — Invocation #4 (P1.06 — Blender headless LOD chain generation via Decimate modifier)
+
+- **Dispatched by:** Orchestrator per `docs/orchestrator/phase-1-spec.md` dispatch plan step 6. Self-chained from P1.05 within the asset-pipeline agent.
+- **Inputs read:** asset-pipeline agent prompt, this state file (post-P1.05), ADR 0006 (runtime attribution), sample `source.txt` for femur (UBERON:0000981) showing the existing `## Cleanup (P1.05)` block, the P1.05 pipeline reference implementation (`clean_glbs.py`, `reinject_attribution.mjs`, `update_source_txt.mjs`, `verify.mjs`, `run.ps1`, `package.json`, `README.md`, `.gitignore`) -- replicated the pattern with LOD-specific changes.
+- **Actions taken:**
+  - Created `pipelines/03-decimate-lods/` working folder (removed the placeholder `.gitkeep`).
+  - Wrote `decimate_lods.py` (Blender 5.1.1 Python, ~330 lines): per-mesh `DECIMATE` modifier in `COLLAPSE` mode at ratio 0.5 (LOD1) and 0.1 (LOD2), with two sanity guards (small-mesh skip < 100 tris for LOD1; degenerate fallback < 20 tris -> redo at 0.3 for LOD2 via single-pass re-import + per-mesh ratio plan). Writes lod1.glb + lod2.glb next to existing lod0.glb. Never modifies LOD0. Emits `decimate-telemetry.json`.
+  - Wrote `reinject_attribution.mjs` (Node ESM, zero npm deps, ~260 lines): same shape as P1.05's reinject, two modes (`--snapshot` + `--reinject`). Snapshot reads every LOD0 metadata; reinject walks decimate-telemetry, restores `asset.copyright` + `asset.extras.source` via direct GLB JSON-chunk surgery into both LOD1 + LOD2 outputs, appends LOD-specific edit tags (`blender_5.1.1_decimate:lod1_ratio_0.5`, `lod2_ratio_0.1`, optional `lod2_ratio_0.3_fallback`), embeds `lod1_telemetry` + `lod2_telemetry` per-mesh records into extras.
+  - Wrote `update_source_txt.mjs` (Node ESM, ~150 lines): appends idempotent `## LODs (P1.06)` section with per-LOD totals, per-mesh tri-counts (LOD0 -> LOD1 -> LOD2 paired by mesh name), fallback notes, edit-tag list. Replaces any prior block on re-run.
+  - Wrote `verify.mjs` (Node ESM, ~110 lines): walks three canaries (femur, mandible, rib 8) across all three LOD levels, asserts (a) attribution survives at LOD0/LOD1/LOD2, (b) edits[] reflects the full pipeline chain at each level, (c) tris are strictly monotonically decreasing.
+  - Wrote `run.ps1` (PowerShell orchestrator): 5-step pipeline (snapshot -> Blender -> reinject -> source.txt -> verify) with `-SmokeTarget`, `-SkipBlender`, `-SkipReinject`, `-SkipSnapshot`, `-SkipSourceTxt`, `-SkipVerify`. Pre-flight checks Blender path. No npm install needed (zero-dep).
+  - Wrote `package.json`, `README.md`, `.gitignore` -- same shape as P1.05.
+  - **Debugging round during the smoke test:** parseGlb threw `expected BIN chunk, got 'BIN '` on the first run -- discovered P1.05's source-code literal `"BIN "` is actually `"BIN\0"` (NUL byte) which the editor renders as a space. obj2gltf + Blender's exporter both emit NUL-padded chunk type fields. **Updated parseGlb to accept either NUL or space, and updated buildGlb to emit NUL explicitly** (matches the rest of the pipeline).
+  - Ran single-glb smoke test on the femur (UBERON:0000981 / FMA:9611): LOD0 6306 tris -> LOD1 3152 -> LOD2 630. Attribution survived intact. PASS.
+  - Ran full 79-glb pass: 23.44 s Blender + <1 s reinject + <1 s source.txt update.
+  - Verification gate passed (3 sample LOD chains -- 9 file reads in total -- attribution + edit chain + monotonic tri-order all OK).
+  - Ran the full pipeline a second time end-to-end to confirm idempotency: byte-identical LOD1 + LOD2 outputs on re-run; edit tags deduplicated rather than accumulated.
+  - Ran `npm run verify` in `app/web/`: typecheck ✓, 7 schemas validated ✓, vite build green (49 modules, gzip 168.35 kB).
+- **Output state:**
+  - **158 new glb files** (`lod1.glb` + `lod2.glb` in every `uberon_*` directory).
+  - **79 `source.txt` files updated** with the LODs (P1.06) section.
+  - 8 pipeline files in `pipelines/03-decimate-lods/` (tracked): `decimate_lods.py`, `reinject_attribution.mjs`, `update_source_txt.mjs`, `verify.mjs`, `run.ps1`, `package.json`, `README.md`, `.gitignore`.
+  - Gitignored: `decimate-telemetry.json`, `pre-lod-metadata.json`, `reinject-report.json`, `p1.06-full-run.log`, `p1.06-smoke-femur.log`.
+- **Geometry deltas across the 79-glb canonical set (LOD0 -> LOD1 -> LOD2):**
+  - Triangles: **478,717 -> 239,293 -> 47,823** (49.99% reduction at LOD1, 80.02% reduction LOD1->LOD2, 90.01% reduction overall). Exactly on-target for the 50%/10% ratios.
+  - Bytes (post-reinject, on disk): **8,803,760 -> 4,518,988 -> 1,048,124** (LOD1 51.3% of LOD0, LOD2 11.9% of LOD0). Total LOD chain on disk: 14,370,872 bytes (~14.37 MB across 237 glbs).
+  - LOD1 small-mesh skips: **0** (smallest sub-mesh is 170 tris, above the 100-tri guard threshold).
+  - LOD2 degenerate-fallbacks (ratio 0.3 substitution): **2** -- both on small carpal-bone "part_1" sub-meshes (`uberon_0001429`, `uberon_0002445`). See open item #0.
+- **Status of P1.05 hand-review glbs under decimation:**
+  - `uberon_0001679` (ethmoid bone, 2 non-manifold edges + 7 non-manifold verts pre-LOD): decimated cleanly LOD0=22,265 -> LOD1=11,132 -> LOD2=2,225. No fallback. Pre-existing non-manifold features preserved (Decimate didn't auto-clean them).
+  - `uberon_0006820` (body of sternum, 24 non-manifold verts pre-LOD): decimated cleanly LOD0=4,638 -> LOD1=2,319 -> LOD2=462. No fallback. Pre-existing non-manifold features preserved.
+  - Both remain on the open-item #7 hand-review list (unchanged status). Note: the 2 non-manifold edges + 31 verts logged at P1.05 are still present in the chain. Decimation operates on the manifold portion of the mesh; stray verts/edges pass through unchanged.
+- **Three-sample verification output (femur, mandible, rib 8):**
+  - femur (UBERON:0000981, paired): LOD0=6306 tris, LOD1=3152, LOD2=630; copyright + 4-entry edits[] chain on LOD1/LOD2; tri-order monotonic decreasing -- PASS
+  - mandible (UBERON:0001684, single): LOD0=5576, LOD1=2788, LOD2=556; copyright + 3-entry edits[] chain on LOD1 / 3-entry on LOD2 (no P1.04 merge tag because mandible is single-FJ); monotonic -- PASS
+  - rib 8 (UBERON:0010757, paired): LOD0=16672, LOD1=8336, LOD2=1664; copyright + 4-entry edits[] chain; monotonic -- PASS
+- **Sharp edges encountered:**
+  - Hidden invariant: GLB chunk type field is NUL-padded (`42 49 4E 00`), not space-padded (`42 49 4E 20`). The glTF 2.0 spec is ambiguous in this respect; obj2gltf and Blender both emit NUL. P1.05's source-code literal `"BIN "` is actually `"BIN\0"`. Editor display rendered the NUL as a space, which I copied verbatim into P1.06's first draft; got a parse error on the smoke test. **Fix: P1.06's parser now accepts either NUL or space padding, and the writer emits NUL explicitly to match the rest of the pipeline.**
+  - Blender's glTF exporter at 5.1 silently strips attribution -- empirically confirmed again on this run (read a Blender-output LOD1 before reinject; copyright was absent). The reinject pass is the safety net, not an optimization. **The P1.05 attribution-discipline pattern held cleanly across two consecutive Blender pipelines -- strong evidence the pattern is the right shape.** Recommend the Orchestrator dispatch an ADR drafting task to canonicalize "Blender-step attribution discipline" before P2 pipelines run.
+  - Decimate-Collapse on already-decimated topology is unsafe -- the LOD2 fallback path (when a mesh's ratio-0.1 result is below 20 tris and we want a ratio-0.3 result instead) requires a fresh import + re-decimate from the source, not "re-decimate the already-collapsed mesh." Made this explicit in the Blender script: a single re-import + per-mesh plan map for the fallback case keeps the operation deterministic.
+- **Time spent:** ~35 minutes wall time including writing all 8 pipeline files, BIN-chunk-type-padding diagnosis + fix, smoke test, full run, idempotency re-run, app/web verify, state-log update.
+- **Return status:** Complete. Handed back to Orchestrator with summary. Next Asset Pipeline invocation is **P1.07 (validate-ontology cross-check) OR P1.08 (bake-registry)** per the updated handoff above -- Orchestrator decides which to dispatch.
 
 ### 2026-05-11 — Invocation #3 (P1.05 — Blender headless cleanup + attribution re-injection)
 

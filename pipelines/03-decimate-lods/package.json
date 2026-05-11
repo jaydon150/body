@@ -1,0 +1,14 @@
+{
+  "name": "03-decimate-lods",
+  "version": "1.0.0",
+  "description": "P1.06 LOD chain generation: Blender headless Decimate modifier + attribution re-injection.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "snapshot": "node reinject_attribution.mjs --snapshot",
+    "reinject": "node reinject_attribution.mjs --reinject",
+    "sourcetxt": "node update_source_txt.mjs",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {}
+}

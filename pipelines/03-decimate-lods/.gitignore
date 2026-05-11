@@ -1,0 +1,11 @@
+# P1.06 telemetry / per-run artefacts. Re-derivable from a re-run.
+decimate-telemetry.json
+pre-lod-metadata.json
+reinject-report.json
+
+# Per-run logs.
+p1.06-full-run.log
+
+# npm install artefacts (no deps today, but keep the rule for future).
+node_modules/
+package-lock.json
