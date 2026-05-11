@@ -1,0 +1,32 @@
+{
+  "name": "body-web",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "description": "body — interactive 3D human-body atlas. Web viewer.",
+  "license": "AGPL-3.0-or-later",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc -b --noEmit",
+    "validate:schemas": "node scripts/validate-schemas.mjs",
+    "verify": "npm run typecheck && npm run validate:schemas && npm run build"
+  },
+  "dependencies": {
+    "@react-three/drei": "^9.114.0",
+    "@react-three/fiber": "^8.17.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.169.0",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/three": "^0.169.0",
+    "@vitejs/plugin-react": "^4.3.3",
+    "typescript": "~5.6.3",
+    "vite": "^5.4.10"
+  }
+}

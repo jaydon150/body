@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://desktop-body.local/schema/test-fixture-schema.json",
+  "title": "Test Fixture Schema",
+  "description": "Shape of fixture files in tests/fixtures/. Allows any agent to produce test fixtures the QA harness can load. Owned by QA. Authority: Architect.",
+  "type": "object",
+  "required": ["fixture_id", "kind", "data"],
+  "properties": {
+    "fixture_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_-]+$",
+      "description": "Stable identifier; used in test names."
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "mesh_entry",
+        "content_record",
+        "ontology_node",
+        "ontology_edge",
+        "selection_event",
+        "build_manifest_entry",
+        "style_tokens_subset",
+        "custom"
+      ],
+      "description": "Categorises the fixture so the right validator runs."
+    },
+    "description": {
+      "type": "string"
+    },
+    "data": {
+      "description": "Arbitrary fixture payload. The schema is open here; each `kind` implies its own structure validated separately."
+    },
+    "provenance": {
+      "type": "object",
+      "properties": {
+        "authored_by": { "type": "string" },
+        "purpose": { "type": "string" },
+        "created_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

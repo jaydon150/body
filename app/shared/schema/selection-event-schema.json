@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://desktop-body.local/schema/selection-event-schema.json",
+  "title": "Selection Event Schema",
+  "description": "Shape of events emitted by the 3D Engine for selection / hover / focus / peel state changes. Consumed by UI. Owned by 3D Engine. Authority: Architect.",
+  "$defs": {
+    "target": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^FMA:\\d+$",
+          "description": "Anatomical ID of the targeted structure."
+        },
+        "screen_position": {
+          "type": "object",
+          "properties": {
+            "x": { "type": "number" },
+            "y": { "type": "number" }
+          },
+          "required": ["x", "y"],
+          "additionalProperties": false,
+          "description": "Where on the canvas the event occurred."
+        },
+        "world_position": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3,
+          "description": "3D point of intersection."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": ["event_type", "timestamp"],
+  "properties": {
+    "event_type": {
+      "type": "string",
+      "enum": ["hover", "select", "multi_select_add", "multi_select_remove", "focus", "deselect", "clear", "peel_change", "camera_change"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "targets": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/target" },
+      "description": "Zero or more structures involved. 'clear' has none; 'select' has one; 'multi_select_*' has the changed target."
+    },
+    "modifier_keys": {
+      "type": "object",
+      "properties": {
+        "shift": { "type": "boolean" },
+        "ctrl": { "type": "boolean" },
+        "alt": { "type": "boolean" },
+        "meta": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "camera_intent": {
+      "type": "string",
+      "enum": ["none", "frame", "orbit", "dive"],
+      "default": "none",
+      "description": "Whether this event implies a camera response."
+    },
+    "peel_state": {
+      "type": "object",
+      "properties": {
+        "preset": {
+          "type": "string",
+          "enum": ["surface", "subcutaneous", "musculoskeletal", "visceral", "skeletal"],
+          "description": "Anatomy-region-aware preset (per ADR 0001 consequences). Not a continuous slider."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

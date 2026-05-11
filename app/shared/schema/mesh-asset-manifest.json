@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://desktop-body.local/schema/mesh-asset-manifest.json",
+  "title": "Mesh Asset Manifest",
+  "description": "Registry of all canonical meshes by anatomical ID, with LOD chains, bounds, and source provenance. Owned by Asset Pipeline. Authority: Architect.",
+  "$defs": {
+    "bounds": {
+      "type": "object",
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3 },
+        "max": { "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3 }
+      },
+      "additionalProperties": false
+    },
+    "lod": {
+      "type": "object",
+      "required": ["level", "file", "triangle_count"],
+      "properties": {
+        "level": { "type": "integer", "minimum": 0, "description": "0 = highest detail." },
+        "file": { "type": "string", "description": "Path relative to data/canonical/meshes/." },
+        "triangle_count": { "type": "integer", "minimum": 0 },
+        "vertex_count": { "type": "integer", "minimum": 0 },
+        "byte_size": { "type": "integer", "minimum": 0 },
+        "compression": {
+          "type": "string",
+          "enum": ["none", "draco", "meshopt"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["source", "license"],
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "Upstream dataset name (e.g. 'BodyParts3D', 'Z-Anatomy', 'hand-authored')."
+        },
+        "license": {
+          "type": "string",
+          "description": "Upstream license identifier (SPDX or descriptive)."
+        },
+        "original_id": {
+          "type": "string",
+          "description": "Source-side identifier if different from FMA."
+        },
+        "ingested_at": { "type": "string", "format": "date" },
+        "edits": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Cleanup operations applied (e.g. 'fixed normals', 'welded vertices')."
+        }
+      },
+      "additionalProperties": false
+    },
+    "entry": {
+      "type": "object",
+      "required": ["id", "lods", "bounds", "provenance"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^FMA:\\d+$"
+        },
+        "lods": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/lod" },
+          "minItems": 1,
+          "description": "At minimum LOD0; LOD2 strongly recommended for in-viewer assets."
+        },
+        "bounds": { "$ref": "#/$defs/bounds" },
+        "material_hint": {
+          "type": "string",
+          "enum": ["bone", "muscle", "vessel_artery", "vessel_vein", "nerve", "skin", "fascia", "fat", "organ_parenchyma", "cartilage", "ligament", "tendon", "generic"]
+        },
+        "provenance": { "$ref": "#/$defs/provenance" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": ["version", "generated_at", "entries"],
+  "properties": {
+    "version": { "type": "string", "description": "Pipeline run version." },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://desktop-body.local/schema/content-record-schema.json",
+  "title": "Content Record Schema",
+  "description": "Shape of a single content record keyed to an anatomical ID. Owned by Content. Authority: Architect.",
+  "$defs": {
+    "citation": {
+      "type": "object",
+      "required": ["kind", "ref"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["textbook", "atlas", "peer_reviewed", "primary_source", "url"]
+        },
+        "ref": { "type": "string", "minLength": 1 },
+        "edition": { "type": "string" },
+        "page": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "retrieved_at": { "type": "string", "format": "date" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": ["structure_id", "summary", "confidence", "last_updated"],
+  "properties": {
+    "structure_id": {
+      "type": "string",
+      "pattern": "^FMA:\\d+$",
+      "description": "References a node in the anatomy graph."
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One-to-two-sentence description for tooltip use."
+    },
+    "long_form": {
+      "type": "string",
+      "description": "Full descriptive prose for the detail panel. Markdown allowed."
+    },
+    "ta_latin_name": {
+      "type": "string",
+      "description": "Terminologia Anatomica Latin term if applicable."
+    },
+    "citations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/citation" },
+      "description": "At least one citation required for reviewed content."
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["reviewed", "pending", "flagged"],
+      "description": "Anatomist-review state. Only 'reviewed' ships to the user-facing app."
+    },
+    "authored_by": {
+      "type": "string",
+      "description": "Agent or human who drafted this record."
+    },
+    "reviewed_by": {
+      "type": "string",
+      "description": "Anatomist who reviewed; required when confidence='reviewed'."
+    },
+    "review_notes": {
+      "type": "string"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": { "properties": { "confidence": { "const": "reviewed" } } },
+      "then": {
+        "required": ["citations", "reviewed_by"],
+        "properties": {
+          "citations": { "minItems": 1 }
+        }
+      }
+    }
+  ]
+}

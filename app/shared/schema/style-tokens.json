@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://desktop-body.local/schema/style-tokens.json",
+  "title": "Style Tokens",
+  "description": "Design tokens for the web app — colors, spacing, type, motion. Co-owned by UI and UX/Accessibility. Authority: Architect.",
+  "$defs": {
+    "color_palette": {
+      "type": "object",
+      "required": ["background", "surface", "text", "primary"],
+      "properties": {
+        "background": { "type": "string" },
+        "surface": { "type": "string" },
+        "surface_raised": { "type": "string" },
+        "text": { "type": "string" },
+        "text_muted": { "type": "string" },
+        "primary": { "type": "string" },
+        "primary_muted": { "type": "string" },
+        "border": { "type": "string" },
+        "warning": { "type": "string" },
+        "error": { "type": "string" },
+        "success": { "type": "string" }
+      },
+      "additionalProperties": true,
+      "description": "Color values can be hex, hsl, or oklch. Color is never the sole information channel (a11y rule)."
+    }
+  },
+  "type": "object",
+  "required": ["color", "spacing", "typography", "motion"],
+  "properties": {
+    "color": {
+      "type": "object",
+      "required": ["light", "dark"],
+      "properties": {
+        "light": { "$ref": "#/$defs/color_palette" },
+        "dark": { "$ref": "#/$defs/color_palette" }
+      },
+      "additionalProperties": false
+    },
+    "spacing": {
+      "type": "object",
+      "patternProperties": {
+        "^(xs|sm|md|lg|xl|xxl)$": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "typography": {
+      "type": "object",
+      "required": ["font_family", "scale"],
+      "properties": {
+        "font_family": {
+          "type": "object",
+          "properties": {
+            "sans": { "type": "string" },
+            "serif": { "type": "string" },
+            "mono": { "type": "string" }
+          }
+        },
+        "scale": {
+          "type": "object",
+          "patternProperties": {
+            "^(xs|sm|base|lg|xl|xxl|display)$": { "type": "string" }
+          }
+        },
+        "line_height": {
+          "type": "object",
+          "patternProperties": {
+            "^(tight|normal|relaxed)$": { "type": "number" }
+          }
+        }
+      }
+    },
+    "motion": {
+      "type": "object",
+      "required": ["duration", "easing"],
+      "properties": {
+        "duration": {
+          "type": "object",
+          "patternProperties": {
+            "^(instant|fast|normal|slow|deliberate)$": { "type": "string" }
+          }
+        },
+        "easing": {
+          "type": "object",
+          "properties": {
+            "standard": { "type": "string" },
+            "decelerate": { "type": "string" },
+            "accelerate": { "type": "string" }
+          }
+        },
+        "reduced_motion_replacement": {
+          "type": "string",
+          "description": "What motion-tokens degrade to when prefers-reduced-motion is set."
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

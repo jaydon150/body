@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://desktop-body.local/schema/build-manifest.json",
+  "title": "Build Manifest",
+  "description": "Inventory of what was built in a given build — artifacts, sizes, hashes, source git SHA. Owned by DevOps. Authority: Architect.",
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "required": ["path", "type", "byte_size", "sha256"],
+      "properties": {
+        "path": { "type": "string", "description": "Relative to build root." },
+        "type": {
+          "type": "string",
+          "enum": ["js", "css", "html", "image", "font", "wasm", "mesh", "texture", "ontology", "data", "other"]
+        },
+        "byte_size": { "type": "integer", "minimum": 0 },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "compressed_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Brotli or gzip size for served artifacts."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": ["built_at", "app_version", "git_sha", "artifacts"],
+  "properties": {
+    "built_at": { "type": "string", "format": "date-time" },
+    "app_version": { "type": "string", "description": "Semver or git-describe output." },
+    "git_sha": { "type": "string", "pattern": "^[a-f0-9]{7,40}$" },
+    "node_version": { "type": "string" },
+    "build_environment": {
+      "type": "string",
+      "enum": ["local", "ci", "release"]
+    },
+    "artifacts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/artifact" }
+    },
+    "totals": {
+      "type": "object",
+      "properties": {
+        "byte_size": { "type": "integer", "minimum": 0 },
+        "compressed_byte_size": { "type": "integer", "minimum": 0 },
+        "artifact_count": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "additionalProperties": false
+}

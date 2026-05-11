@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://desktop-body.local/schema/anatomical-id-schema.json",
+  "title": "Anatomical ID Schema",
+  "description": "Defines the shape of nodes and typed edges in the anatomy DAG. Owned by Anatomy Domain. Authority: Architect. See ADR 0001.",
+  "$defs": {
+    "fma_id": {
+      "type": "string",
+      "pattern": "^FMA:\\d+$",
+      "description": "Foundational Model of Anatomy identifier; format 'FMA:NNNN'."
+    },
+    "language_code": {
+      "type": "string",
+      "pattern": "^[a-z]{2,3}(-[A-Z][a-zA-Z]{1,7})?$",
+      "description": "BCP-47-ish language code (subset). 'en', 'la' (Latin), 'ja-JP'."
+    },
+    "label": {
+      "type": "object",
+      "required": ["text", "lang"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "lang": { "$ref": "#/$defs/language_code" },
+        "script": { "type": "string", "description": "Optional script tag for non-Latin scripts." },
+        "source": { "type": "string", "description": "Authority for this label (TA2, FMA, vernacular)." }
+      },
+      "additionalProperties": false
+    },
+    "relation_type": {
+      "type": "string",
+      "enum": [
+        "regional_part_of",
+        "constitutional_part_of",
+        "systemic_part_of",
+        "member_of",
+        "branch_of",
+        "tributary_of",
+        "innervates",
+        "supplied_by"
+      ],
+      "description": "Initial relation enum. Additions require an ADR per ADR 0001."
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "labels", "kind"],
+      "properties": {
+        "id": { "$ref": "#/$defs/fma_id" },
+        "labels": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/label" },
+          "minItems": 1,
+          "description": "Canonical names in one or more languages. First entry is the preferred display."
+        },
+        "aliases": {
+          "type": "object",
+          "description": "Identifier aliases from other ontologies.",
+          "properties": {
+            "uberon": { "type": "string", "pattern": "^UBERON:\\d+$" },
+            "ta2": { "type": "string" },
+            "snomed": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["concept", "structure", "region", "system", "tissue", "cell", "compound"],
+          "description": "Coarse classification; informs UI grouping."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["reviewed", "pending", "deprecated"],
+          "default": "pending"
+        }
+      },
+      "additionalProperties": false
+    },
+    "edge": {
+      "type": "object",
+      "required": ["from", "to", "type"],
+      "properties": {
+        "from": { "$ref": "#/$defs/fma_id" },
+        "to": { "$ref": "#/$defs/fma_id" },
+        "type": { "$ref": "#/$defs/relation_type" },
+        "source": { "type": "string", "description": "Where this relation is asserted (FMA, hand-curated, etc.)." }
+      },
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "required": ["version", "nodes", "edges"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "description": "Timestamped version (YYYY-MM-DD). Anatomy evolves; timestamps are clearer than semver for this domain."
+    },
+    "nodes": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/edge" }
+    }
+  },
+  "additionalProperties": false
+}
