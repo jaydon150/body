@@ -37,8 +37,8 @@ Active queue, in-progress items, and what's blocked. The orchestrator maintains 
 
 Phase 1 has 20 sequenced dispatches across the agent roster. Full plan in the spec; this is the headline queue:
 
-- `[ ] P1.01` Research/Docs: extract UBERON's FMA xref subset for skeletal terms (independent; can start first)
-- `[ ] P1.02` Anatomy Domain: draft skeletal sub-ontology (nodes, relations, synonyms — UBERON primary, FMA alias, TA2 labels)
+- `[x] P1.01` Research/Docs: extract UBERON's FMA xref subset for skeletal terms — DONE 2026-05-11. Deliverable: `docs/references/summaries/uberon-fma-skeletal-crosswalk.md` (~70 verified anchor rows + ~30 flagged gaps). First formal Phase 1 dispatch via file-backed Task subagent. ADR 0003 mechanism proven.
+- `[ ] P1.02` Anatomy Domain: draft skeletal sub-ontology (nodes, relations, synonyms — UBERON primary, FMA alias, TA2 labels). Consumes the crosswalk doc; handles second-pass for inferred rows; resolves sub-structure depth (femur head/neck/shaft/condyles, etc.); flags any structure requiring `BODY:NNNN` (none expected per the crosswalk findings).
 - `[ ] P1.03` Asset Pipeline: download BodyParts3D into `data/raw/bodyparts3d/`
 - `[ ] P1.04–06` Asset Pipeline: import → clean → LOD
 - `[ ] P1.07` Asset Pipeline + Anatomy Domain: validate-ontology cross-check
@@ -65,3 +65,5 @@ Specialists append here when they complete or block a task. Format: `YYYY-MM-DD 
 - 2026-05-11 | orchestrator | Phase 0 dispatched after user approval of Phase 0 Spec v0.1.
 - 2026-05-11 | orchestrator | Phase 0 closed. All 12 spec tasks completed. Initial commit `311e18a` pushed to `jaydon150/body` (private). Local `npm run verify` passes. Retro at `docs/orchestrator/retros/phase-0-retro.md`. Awaiting user sign-off and deep-research feed before Phase 1 spec drafting.
 - 2026-05-11 | orchestrator | Phase 0 signed off by user. Research feed ingested at `f0941ba`. ADRs 0004 (ontology pivot to UBERON) and 0005 (asset source refinement) drafted and approved. Master spec and schemas updated. Phase 1 Spec v0.1 drafted at `docs/orchestrator/phase-1-spec.md`. Awaiting user approval and answers to 7 open questions before dispatching Phase 1.
+- 2026-05-11 | orchestrator | Phase 1 Spec v0.2 published (iPad co-primary, plain naming + nomenclature toggle, ADR 0006 runtime attribution criterion, peel UX deferred to Phase 2). User's procedural femur seed integrated. Commit `e60bb9e`.
+- 2026-05-11 | research-docs (subagent) | P1.01 complete. UBERON→FMA skeletal crosswalk delivered. ~70 verified anchor rows across 16 sub-regions; ~30 sub-structure rows flagged for Anatomy Domain second-pass. UBERON's FMA xref coverage is comprehensive for skeletal — no `BODY:NNNN` IDs needed so far. Rib 8 anomaly (non-contiguous UBERON ID) and comparative-anatomy label register mismatch (~25 rows) flagged for downstream handling. First Task-subagent dispatch validated ADR 0003.

@@ -74,6 +74,12 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **Phase 1 Spec v0.1 → v0.2.** 16 acceptance criteria → 19. New: nomenclature toggle (#7), iPad perf (#17), runtime attribution (#18). Renumbered the rest. Open questions consolidated; 5 of 7 resolved, Blender install remains open, BodyParts3D download verifies-at-step-3 unchanged.
 
+- **P1.01 dispatched and returned clean.** Research/Docs subagent built the UBERON→FMA skeletal crosswalk. ~70 verified anchor rows + ~30 flagged sub-structure gaps. UBERON's FMA xref coverage is comprehensive enough that no `BODY:NNNN` IDs are needed for Phase 1 skeletal — validates ADR 0004's tractability assumption. First file-backed Task-subagent dispatch ran end-to-end without orchestrator intervention; ADR 0003's mechanism is proven in production. *Reason:* user dispatched.
+
+- **Surfaced sharp edges from P1.01.** (1) Rib 8 sits at non-contiguous `UBERON:0010757` (ribs 1-7 and 9-12 use the `UBERON:0004601–0004611` sequence) — Asset Pipeline mesh-registry generation must handle this. (2) UBERON's preferred labels use comparative-anatomy register ("tetrapod frontal bone", "vertebral bone 1", "innominate bone", "fused sacrum") in ~25 rows — already covered by ADR 0004's decision to put TA2 labels in `labels[0]`. (3) ~7 thoracic-vertebra and rib rows were inferred-by-pattern between verified anchors; Anatomy Domain owns the mechanical second-pass batch before promoting to `reviewed`.
+
+- **Open follow-up from P1.01:** UBERON release version still not pinned to a specific date — needs a direct `github.com/obophenotype/uberon/releases` query. Filed in Research/Docs state; not a Phase 1 blocker, but a citation footnote worth resolving before Phase 1 retro.
+
 ---
 
 ## Conventions

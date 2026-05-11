@@ -1,31 +1,30 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (evening)
-**Current phase:** Phase 0 signed off; Phase 1 Spec v0.1 drafted, awaiting user approval
+**Last updated:** 2026-05-11 (late evening)
+**Current phase:** Phase 1 in progress. Step P1.01 complete; P1.02 ready to dispatch.
 **Overall health:** Green
 
 ---
 
 ## Right now
 
-- Phase 0 closed and signed off by user.
-- Deep-research feed ingested. One factual error in the source caught (BodyParts3D license claim). Two ADRs drafted and approved as a result: 0004 (ontology pivot to UBERON-primary) and 0005 (asset source refinement: BodyParts3D primary + OpenAnatomy supplement, Z-Anatomy demoted).
-- Schemas updated for UBERON-primary across `anatomical-id`, `content-record`, `mesh-asset-manifest`, and `selection-event`. Local `npm run verify` still green: 7 schemas valid, typecheck clean, build in ~3.3s.
-- Master spec §3 / §4 / §5 / §7 / §11 updated with ADR references and new risks.
-- Phase 1 Spec v0.1 drafted at `docs/orchestrator/phase-1-spec.md`.
+- Phase 1 step P1.01 (Research/Docs UBERON→FMA skeletal crosswalk) **complete**. Deliverable at `docs/references/summaries/uberon-fma-skeletal-crosswalk.md` — ~70 verified anchor rows across 16 sub-regions plus ~30 flagged gaps.
+- First file-backed Task-subagent dispatch validated end to end. ADR 0003's mechanism is now proven in production.
+- Phase 1 Spec v0.2 in effect (iPad co-primary; plain naming + clinical-toggle; ADR 0006 runtime attribution criterion; peel UX validation deferred to Phase 2).
+- User's procedural femur seed integrated. ADRs 0004 / 0005 / 0006 accepted.
 
 ## Active work
 
-- User-directed first model seed in progress: a selectable procedural femur proxy keyed to `UBERON:0000981` with FMA alias `FMA:9611`.
-- Formal Phase 1 remains gated on user approval of Phase 1 Spec v0.1 + answers to 7 open questions.
+- **P1.02 (Anatomy Domain): draft skeletal sub-ontology** — ready to dispatch. Inputs: P1.01 crosswalk + ADR 0004 + ADR 0001. Outputs: populated `data/canonical/ontology/{nodes,relations,synonyms}.json` with ~80–120 nodes and their typed edges.
 
 ## Blockers
 
-- None for orchestrator. Awaiting user input.
+- None for the orchestrator. P1.02 ready to dispatch on user "go."
+- Blender install confirmation still open from user — does not block P1.02 (Anatomy Domain doesn't need Blender). Required ahead of P1.05 (Asset Pipeline cleanup).
 
 ## Next milestone
 
-**Phase 1 dispatch.** Begins on user sign-off. First dispatch is Research/Docs (FMA→UBERON skeletal crosswalk) — independent of other steps, can run in background while remaining open questions resolve.
+**P1.02 dispatch.** Anatomy Domain consumes the crosswalk, runs the inferred-row second-pass batch, decides flagship-bone sub-structure depth (femur / humerus / etc.), populates the three ontology JSON files. Output feeds P1.03 (Asset Pipeline download) and P1.04+ (mesh ingestion).
 
 ## Upcoming gates (user approval required)
 
@@ -55,13 +54,16 @@ See [decision-log.md](decision-log.md). Latest:
 | ADRs 0004 + 0005 | ✅ drafted, approved, committed | UBERON primary, BodyParts3D primary + OpenAnatomy supplement |
 | Schema updates | ✅ four schemas updated for UBERON-primary | Non-breaking; all validate |
 | Master spec | ✅ refreshed | §3 §4 §5 §7 §11 |
-| Phase 1 Spec | ✅ drafted | Awaiting user approval |
-| First model seed | ⏳ in progress | Procedural femur proxy keyed to `UBERON:0000981`; not atlas-grade |
+| Phase 1 Spec | ✅ v0.2 in effect | iPad co-primary, plain naming + toggle, attribution criterion |
+| First model seed | ✅ committed | Procedural femur proxy keyed to `UBERON:0000981` with TA2 label + FMA alias |
+| ADR 0006 (runtime attribution) | ✅ accepted | Pipeline + UI changes scoped into Phase 1 |
+| P1.01 deliverable | ✅ landed | `docs/references/summaries/uberon-fma-skeletal-crosswalk.md` |
+| Agent dispatch mechanism (ADR 0003) | ✅ validated | First subagent dispatch ran clean |
 | Local verify | ✅ green | Typecheck + 7 schemas + build all pass |
-| CI on main | ⏳ runs on next push | Push will follow this commit |
+| CI on main | ⏳ runs on next push | Pushed with each commit; check Actions tab |
 
 ## Pending external inputs
 
-- User approval of Phase 1 Spec v0.1
-- Answers to 7 open questions in Phase 1 Spec
-- Anatomist reviewer cadence confirmation
+- **User "go" to dispatch P1.02** (Anatomy Domain).
+- **Blender install confirmation** — does not block P1.02; required ahead of P1.05.
+- **Anatomist reviewer cadence confirmation** — required before P1.16 (review batch).
