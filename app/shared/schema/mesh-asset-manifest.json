@@ -60,7 +60,8 @@
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^FMA:\\d+$"
+          "pattern": "^(UBERON:\\d{7}|FMA:\\d+|BODY:\\d+)$",
+          "description": "Primary anatomy-graph identifier this mesh represents. UBERON preferred per ADR 0004; FMA accepted for BodyParts3D-originated meshes pending crosswalk to UBERON."
         },
         "lods": {
           "type": "array",

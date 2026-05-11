@@ -38,6 +38,24 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 ---
 
+## 2026-05-11 (evening — post-research ingest)
+
+- **Phase 0 closed.** User signed off after retro filed. Initial scaffold pushed to `jaydon150/body` (private) at commit `311e18a`; Phase 0 close at `3acf0a7`; research intake at `f0941ba`.
+
+- **Research feed ingested.** External report on ontology + dataset strategy saved to `docs/references/raw/2026-05-11-ontology-and-dataset-review.md`; summary at `docs/references/summaries/ontology-and-dataset-review.md`. One factual error in the source (BodyParts3D license claim) was caught and noted; the canonical license is CC BY-SA 2.1 Japan, verified at `lifesciencedb.jp/bp3d/info/license/index.html`.
+
+- **Ontology primary backbone flipped from FMA to UBERON.** UBERON IDs are now primary per ADR 0004. FMA and TA2 codes preserved as aliases; project-local `BODY:NNNN` reserved for orphans. *Reason:* FMA's public OBO track is stale; UBERON is actively maintained and graph-native. ADR 0001's DAG structure is unchanged. ADR: 0004.
+
+- **Asset source path refined.** BodyParts3D remains primary; OpenAnatomy added as regional supplement (brain especially, Phase 2+); Z-Anatomy demoted to a watch list pending license clarification; commercial fallback short-list narrowed to Zygote only. *Reason:* Z-Anatomy's license trail is contradictory and it lacks a published ontology mapping. ADR 0002's "build on top of existing" stance is unchanged. ADR: 0005.
+
+- **Schema change to `anatomical-id-schema.json`.** `node.id` regex broadened from `^FMA:\d+$` to `^(UBERON:\d{7}|FMA:\d+|BODY:\d+)$` with UBERON as the preferred form, per ADR 0004. No fields added or removed. Existing schema validation still passes.
+
+- **Master spec updates.** §3 (asset path), §4 (license map), §5 (anatomical model), §7 (phasing), §11 (risks). All linked to the relevant new ADRs. Change-log entry appended.
+
+- **Phase 1 starter system confirmed.** Skeletal. Vertical slice covers: import BodyParts3D skeletal meshes → build UBERON-primary sub-ontology with FMA aliases → mesh registry + LODs → renderer with selection / peel / dive-deeper for skeletal → UI sidebar / search / breadcrumbs / panel → first content batch with anatomist review. Detailed in Phase 1 Spec v0.1.
+
+---
+
 ## Conventions
 
 - Decisions are immutable once logged. If a decision is reversed, append a new entry that supersedes it and reference the original by date + scope.

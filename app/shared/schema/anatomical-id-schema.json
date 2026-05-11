@@ -4,10 +4,20 @@
   "title": "Anatomical ID Schema",
   "description": "Defines the shape of nodes and typed edges in the anatomy DAG. Owned by Anatomy Domain. Authority: Architect. See ADR 0001.",
   "$defs": {
+    "primary_id": {
+      "type": "string",
+      "pattern": "^(UBERON:\\d{7}|FMA:\\d+|BODY:\\d+)$",
+      "description": "Primary node identifier. UBERON preferred (UBERON:NNNNNNN, 7 digits). FMA accepted only when no UBERON equivalent exists and a crosswalk task is on file. BODY:NNNN reserved for structures with no upstream ontology equivalent. See ADR 0004."
+    },
     "fma_id": {
       "type": "string",
       "pattern": "^FMA:\\d+$",
-      "description": "Foundational Model of Anatomy identifier; format 'FMA:NNNN'."
+      "description": "Foundational Model of Anatomy identifier; format 'FMA:NNNN'. Used in aliases per ADR 0004."
+    },
+    "uberon_id": {
+      "type": "string",
+      "pattern": "^UBERON:\\d{7}$",
+      "description": "UBERON identifier; format 'UBERON:NNNNNNN'."
     },
     "language_code": {
       "type": "string",
@@ -43,20 +53,21 @@
       "type": "object",
       "required": ["id", "labels", "kind"],
       "properties": {
-        "id": { "$ref": "#/$defs/fma_id" },
+        "id": { "$ref": "#/$defs/primary_id" },
         "labels": {
           "type": "array",
           "items": { "$ref": "#/$defs/label" },
           "minItems": 1,
-          "description": "Canonical names in one or more languages. First entry is the preferred display."
+          "description": "Canonical names in one or more languages. First entry is the preferred display. TA2 is the preferred source per ADR 0004."
         },
         "aliases": {
           "type": "object",
-          "description": "Identifier aliases from other ontologies.",
+          "description": "Identifier aliases from other ontologies. Populate every applicable field — multiple aliases per node is expected.",
           "properties": {
-            "uberon": { "type": "string", "pattern": "^UBERON:\\d+$" },
-            "ta2": { "type": "string" },
-            "snomed": { "type": "string" }
+            "uberon": { "$ref": "#/$defs/uberon_id" },
+            "fma": { "$ref": "#/$defs/fma_id" },
+            "ta2": { "type": "string", "description": "Terminologia Anatomica 2 code." },
+            "snomed": { "type": "string", "description": "SNOMED CT code if applicable." }
           },
           "additionalProperties": false
         },
@@ -77,10 +88,10 @@
       "type": "object",
       "required": ["from", "to", "type"],
       "properties": {
-        "from": { "$ref": "#/$defs/fma_id" },
-        "to": { "$ref": "#/$defs/fma_id" },
+        "from": { "$ref": "#/$defs/primary_id" },
+        "to": { "$ref": "#/$defs/primary_id" },
         "type": { "$ref": "#/$defs/relation_type" },
-        "source": { "type": "string", "description": "Where this relation is asserted (FMA, hand-curated, etc.)." }
+        "source": { "type": "string", "description": "Where this relation is asserted (UBERON, FMA, hand-curated, etc.)." }
       },
       "additionalProperties": false
     }

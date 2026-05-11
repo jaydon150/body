@@ -24,13 +24,14 @@ This document is the single source of truth for what is decided and what is open
 - **Renderer baseline:** WebGL2, with WebGPU upgrade where available
 - **Out of scope for v1:** mobile, VR/AR, Unity/Unreal native, volumetric rendering
 
-## 3. Asset path (locked)
+## 3. Asset path (locked, refined by ADR 0005)
 
-- **Primary source:** Z-Anatomy / BodyParts3D
-- **Upstream license:** CC-BY-SA-2.1-JP, share-alike accepted
-- **Strategy:** build on top of existing, do not sculpt from scratch
-- **Reserved option:** commission or carefully hand-author targeted high-stakes meshes (heart, brain) post-v1 if quality demands it
-- See [ADR 0002](../decisions/0002-asset-source.md)
+- **Primary source:** BodyParts3D (CC-BY-SA-2.1-JP, verified directly at the upstream license page on 2026-05-11)
+- **Supplementary source:** OpenAnatomy (3D Slicer License, commercialization-permissive) for regional atlases where it exceeds BodyParts3D coverage. Brain is the first such region; full integration deferred until Phase 2.
+- **Watch list (not active):** Z-Anatomy — moved off the active list pending maintainer clarification of its contradictory license trail and absent ontology mapping.
+- **Strategy:** build on top of existing, do not sculpt from scratch.
+- **Post-v1 commercial upgrade short-list:** Zygote for targeted region replacements if open quality is insufficient. BioDigital / Complete Anatomy / Visible Body are not asset suppliers for this project; their licensing models do not support our use case without enterprise contracts.
+- See [ADR 0002](../decisions/0002-asset-source.md) and [ADR 0005](../decisions/0005-asset-source-refinement.md).
 
 ## 4. License map (locked)
 
@@ -39,16 +40,18 @@ This document is the single source of truth for what is decided and what is open
 | Code | AGPL-3.0-or-later | `LICENSE` |
 | Anatomical content + data | CC-BY-SA-4.0 | `LICENSE-CONTENT` |
 | Project documentation | CC-BY-4.0 | `LICENSE-DOCS` |
-| Upstream Z-Anatomy / BodyParts3D | CC-BY-SA-2.1-JP | `ATTRIBUTIONS.md` |
+| Upstream BodyParts3D | CC-BY-SA-2.1-JP (verified 2026-05-11) | `ATTRIBUTIONS.md` |
+| Upstream OpenAnatomy (Phase 2+) | 3D Slicer License | `ATTRIBUTIONS.md` |
 
 Configuration B per the licensing decision. Choice documented in [ADR 0002](../decisions/0002-asset-source.md).
 
-## 5. Anatomical model (locked)
+## 5. Anatomical model (locked, refined by ADR 0004)
 
 - **Structure:** typed directed acyclic graph (not a tree). Multiple parents per node permitted.
-- **Identifier scheme:** Foundational Model of Anatomy (FMA) IDs as primary; UBERON/TA2 as aliases via the synonyms file.
+- **Identifier scheme:** UBERON IDs as primary (`UBERON:NNNNNNN`). FMA and TA2 codes preserved as aliases. Project-local `BODY:NNNN` reserved for structures with no upstream ontology equivalent.
+- **Display vocabulary:** Terminologia Anatomica 2 (TA2) as primary source for English and Latin labels and synonyms.
 - **Relation types (initial):** `regional_part_of`, `constitutional_part_of`, `systemic_part_of`, `member_of`, `branch_of`, `tributary_of`, `innervates`, `supplied_by`.
-- See [ADR 0001](../decisions/0001-graph-not-tree.md)
+- See [ADR 0001](../decisions/0001-graph-not-tree.md) and [ADR 0004](../decisions/0004-ontology-primary-uberon.md).
 
 ## 6. v1 scope (locked)
 
@@ -61,8 +64,8 @@ Configuration B per the licensing decision. Choice documented in [ADR 0002](../d
 
 | Phase | Goal | Status |
 |-------|------|--------|
-| 0 — Infrastructure | folder, agents, contracts, CI, app skeleton | **in progress** |
-| 1 — First system slice | one system end-to-end (skeletal as starter) | not started |
+| 0 — Infrastructure | folder, agents, contracts, CI, app skeleton | **closed 2026-05-11** |
+| 1 — First system slice | one system end-to-end (skeletal as starter) | spec drafting |
 | 2 — Widen | second and third systems, refine interaction model | not started |
 | 3 — Depth | organ-level focus on flagship structures | not started |
 | 4 — Content scale + a11y + i18n + compliance review | not started | not started |
@@ -96,6 +99,8 @@ Tissue, cellular, female anatomy, pathology overlays, mobile, and VR are reserve
 | Functional anatomy (innervation, supply) absent from free data | Hand-author in Phase 2+ with anatomist review | Content + Anatomy Domain |
 | Draw-call ceiling on WebGL2 with many separate meshes | Plan for instancing and per-system merged geometry, WebGPU upgrade path | 3D Engine |
 | Anatomist availability constrains review throughput | Batch reviews; queue managed by QA | QA |
+| FMA's public OBO track is stale; reliance on it as upstream is brittle | UBERON primary per ADR 0004; FMA used only as alias and via BodyParts3D's existing FMA mapping | Anatomy Domain |
+| FMA→UBERON crosswalk gaps for non-canonical structures | Project-local `BODY:NNNN` IDs for orphans; Anatomy Domain owns the crosswalk task list | Anatomy Domain |
 
 ## 12. Out of scope (locked)
 
@@ -116,3 +121,4 @@ Tissue, cellular, female anatomy, pathology overlays, mobile, and VR are reserve
 | Date | Change | Source |
 |------|--------|--------|
 | 2026-05-11 | Initial spec committed at start of Phase 0 | Orchestrator |
+| 2026-05-11 | Phase 0 closed. §3 asset path refined per ADR 0005 (BodyParts3D primary + OpenAnatomy supplement; Z-Anatomy demoted). §4 license map split BodyParts3D and OpenAnatomy chains. §5 anatomical model flipped to UBERON-primary per ADR 0004. §7 Phase 0 marked closed; Phase 1 marked spec-drafting. §11 added two new risks. | Orchestrator |

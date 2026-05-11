@@ -26,8 +26,8 @@
   "properties": {
     "structure_id": {
       "type": "string",
-      "pattern": "^FMA:\\d+$",
-      "description": "References a node in the anatomy graph."
+      "pattern": "^(UBERON:\\d{7}|FMA:\\d+|BODY:\\d+)$",
+      "description": "Primary identifier of the anatomy-graph node this content describes. UBERON preferred per ADR 0004."
     },
     "summary": {
       "type": "string",

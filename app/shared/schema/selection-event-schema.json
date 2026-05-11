@@ -10,8 +10,8 @@
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^FMA:\\d+$",
-          "description": "Anatomical ID of the targeted structure."
+          "pattern": "^(UBERON:\\d{7}|FMA:\\d+|BODY:\\d+)$",
+          "description": "Primary anatomy-graph identifier of the targeted structure. UBERON preferred per ADR 0004."
         },
         "screen_position": {
           "type": "object",
