@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.10)
-**Current phase:** Phase 1 in progress. **P1.01–P1.10 complete.** `npm run dev` now renders the full 79-mesh BP3D skeleton. P1.11 (GPU picking + selection + outline) ready to dispatch.
+**Last updated:** 2026-05-11 (late evening, post-P1.11–P1.16 batch)
+**Current phase:** Phase 1 in progress. **P1.01–P1.16 complete.** Application side is wired end-to-end: 79-mesh BP3D skeleton renders, picking + outline + selection works, peel + dive plumbing in place, full UI chrome (Sidebar/Search/Breadcrumbs/DetailPanel/PeelControls/NomenclatureToggle/AttributionSurface), 51 pending content records authored + anatomist review packet queued. Remaining: P1.17 (QA visual + perf baselines), P1.18 (UX/a11y audit), P1.19 (Reviewer handoff passes), P1.20 (Phase 1 retro).
 **Overall health:** Green
 
 ---
@@ -18,16 +18,24 @@
 
 ## Active work
 
-- **P1.10 (3D Engine: render meshes from registry) ready to dispatch.** First step that wires the canonical registry to the canvas. Loads `data/derived/mesh-registry.json`, instantiates the 79 skeletal meshes via R3F + drei's `useGLTF`, applies a basic bone material, lights the scene, frames the camera on combined bounds. **This is when the dev server starts showing real anatomy.** Replaces the procedural-femur-proxy seed with the full skeletal set.
+_None dispatched. Phase 1 closing-stretch agents (P1.17 QA, P1.18 UX/A11y Tier 2, P1.19 Reviewer Tier 2, P1.20 retro) await user "go."_
+
+The vertical slice is functionally complete:
+- Loading the dev server renders 79 BP3D skeletal meshes
+- Click any mesh → cyan outline + DetailPanel shows the structure's name + summary + long-form prose (for the 51 with pending content, with an amber "pending review" pill)
+- Sidebar tree + breadcrumbs + Cmd/Ctrl+K search all drive selection and dive
+- Peel mode toggles work mechanically (visual effect arrives in Phase 2 with non-bone material_hints)
+- Nomenclature toggle switches plain ↔ clinical labels
+- "About this atlas" surface lists every upstream source per ADR 0006
+- iPad: tap-select, drag-rotate, pinch-zoom, long-press-to-dive
 
 ## Blockers
 
-- None for the orchestrator. P1.02 ready to dispatch on user "go."
-- Blender install confirmation still open from user — does not block P1.02 (Anatomy Domain doesn't need Blender). Required ahead of P1.05 (Asset Pipeline cleanup).
+- None. All 16 Phase 1 main steps complete.
 
 ## Next milestone
 
-**P1.10 dispatch.** 3D Engine subagent reads `data/derived/mesh-registry.json` + the 79 canonical glb files and renders the skeletal set to the R3F canvas with a bone material. After P1.10, `npm run dev` shows real BP3D-derived anatomy instead of the procedural femur proxy. P1.11 (GPU picking + selection state + outline pass) and P1.12 (peel mechanic + dive-deeper camera) follow.
+**P1.17 dispatch (QA).** Visual regression baselines (desktop + iPad viewports), performance budgets (frame time, draw calls, bundle size), and the anatomist-review-queue management state machine (which queue currently has 51 pending records awaiting out-of-band review).
 
 ## Upcoming gates (user approval required)
 
