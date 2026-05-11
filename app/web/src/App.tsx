@@ -1,25 +1,19 @@
 import { SkeletalScene } from './scene/SkeletalScene';
-import { StructurePanel } from './ui/StructurePanel';
+import { AppShell } from './ui/AppShell';
 
 /**
  * Phase 1 vertical slice: 79 BP3D-derived skeletal meshes loaded from the
  * canonical registry (`data/derived/mesh-registry.json`) and rendered with
- * a shared bone material. GPU picking and selection wiring arrives in
- * P1.11 — the StructurePanel slot remains for the next dispatch.
+ * a shared bone material. P1.13 (UI shell) wraps the canvas in the full
+ * navigation chrome — Sidebar, Breadcrumbs, Search, DetailPanel,
+ * PeelControls, NomenclatureToggle, AttributionSurface. P1.14 wires the
+ * remaining UI ↔ engine integration (touch input, content fetch, dive
+ * gestures).
  */
 export function App() {
   return (
-    <div className="app-root">
-      <header className="app-header">
-        <div>
-          <h1>body</h1>
-          <p>Phase 1 vertical slice — 79 skeletal structures</p>
-        </div>
-        <StructurePanel />
-      </header>
-      <main className="app-canvas">
-        <SkeletalScene />
-      </main>
-    </div>
+    <AppShell>
+      <SkeletalScene />
+    </AppShell>
   );
 }
