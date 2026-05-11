@@ -3,12 +3,37 @@
 Append-only state log. Most recent at top.
 
 **Initialized:** 2026-05-11
-**Last invocation:** 2026-05-11 (P1.11)
+**Last invocation:** 2026-05-11 (P1.12)
 
 ---
 
 ## Open items
 
+- **Peel UX validation deferred to Phase 2 (no muscle layer to peel).** P1.12
+  lands the peel-mode plumbing (preset enum, visibility table, store
+  actions, scene-side `visible={false}` cascade), but the Phase 1 registry
+  contains only `material_hint === 'bone'` entries. Every preset reduces to
+  the same visual output (full skeleton) EXCEPT `'visceral'`, which by
+  design hides the skeleton — that one is jarring but mechanically correct
+  (visceral view = look past the bones at the organs that aren't present
+  yet). Phase 2 adds skin + muscle + organs and the UX gets real.
+- **Per-side selection of paired bones (still open from P1.11).** Phase 2+.
+- **Long-press touch for iPad dive trigger.** P1.12 wires double-click (350ms)
+  + Enter; both ride R3F's pointer abstraction so touch tap-to-select
+  works, but a "double-tap to dive" relies on the OS surfacing two
+  pointerdown events within the threshold. iPad Safari's gesture stack
+  varies (the second tap can be eaten by the long-press handler when the
+  user pauses). A tap-and-hold gesture handler beyond R3F's pointer
+  abstraction is a P1.14 concern.
+- **Constitutional_part_of children stay bright during dive.** The dispatch
+  spec rule is "siblings dim; the focused entry AND its
+  constitutional_part_of children render full-bright". Phase 1 registry has
+  zero `constitutional_part_of` edges for own-mesh entries (only sternum
+  composite has them, deferred). `EntryMesh.isBright = focusedId === null
+  || focusedId === entry.id` is the Phase 1 form. Phase 2 will need the
+  ontology resolver (read relations.json, gather descendants of the
+  focused id under `constitutional_part_of`) — a one-line filter widening
+  here once that resolver exists.
 - **Pick-through-transparency.** P1.11 picks the front-most raycaster hit
   only. Once organs/skin layers are added in later phases, selecting a
   bone through translucent tissue requires walking the intersection list
@@ -63,6 +88,106 @@ Append-only state log. Most recent at top.
   fiber dominate; code-split deferred to a perf-focused dispatch.
 
 ## Decisions log
+
+### P1.12 — peel mode + dive-deeper camera animation (2026-05-11)
+
+**Peel preset storage: canonical clinical enum, not plain register.**
+The store keys on the schema enum `surface | subcutaneous | musculoskeletal
+| visceral | skeletal`. The plain-vs-clinical nomenclature toggle the user
+requested (`skin / muscle / bone` vs `surface / subcutaneous /
+musculoskeletal`) is a UI render-time transform — engine state stays in
+the canonical register so it conforms to `peel_state.preset` in
+`selection-event-schema.json` without translation. P1.13 owns the label
+toggle.
+
+**Visibility table per preset, keyed on `material_hint`.**
+`PRESET_VISIBLE_HINTS` declares which `material_hint` values render under
+each preset. The decision: `'visceral'` hides the skeleton (canonical
+clinical meaning — opening the body wall to view organs); `'skeletal'`
+hides everything but bone, cartilage, ligament, generic; `'surface'`
+shows everything. Phase 1 has only `bone` so every preset except
+`'visceral'` is visually equivalent. Documented in code comments + the
+state file's open items.
+
+**Sibling-dim technique: two shared materials, swapped at render time.**
+The shared bone material was a single instance reused across all 79
+entries (P1.10) — outlines lived outside the material (P1.11) so they
+didn't disturb that. Dimming requires per-entry opacity, which forks the
+sharing model. Two options:
+  (a) Clone the material per entry (O(N) materials).
+  (b) Two shared variants (`bright`, `dim`), swap via the `material` prop.
+We chose (b). The dim variant is the bright material cloned ONCE per
+material type with `transparent=true`, `opacity=0.18`, `depthWrite=false`
+(to dodge transparent-sort weirdness without losing depth test). The
+swap is a JSX prop change, not a per-frame material allocation — works
+within R3F's declarative model cleanly. Phase 1 only has one
+`material_hint` (`bone`), so practically there are 2 shared materials in
+the scene regardless of how many entries.
+
+Alternative (a) was rejected because it scales linearly with the
+ontology (Phase 2 adds 100+ muscles + skin + organs); 2 materials beats
+several hundred clones for GPU state churn.
+
+Alternative considered: uniform-on-material approach (set an `opacity`
+uniform per entry via `onBeforeCompile`). Rejected because it needs a
+custom shader path and the dim quality only needs to be readable, not
+artistic.
+
+**Dive animation: lerp via `useFrame`, no animation library.**
+The rig latches `from = current camera pose`, `to = computeDivePose(entry)`
+at the moment `focusedId` changes, then interpolates inside `useFrame`
+with quadratic ease-in-out over `DIVE_ANIMATION_DURATION_MS = 600 ms`.
+600 ms is long enough to read as a deliberate movement (vs the agent
+hard-rule "snap" failure mode) and short enough not to feel sluggish on
+repeat dives. The duration is exported from `diveCamera.ts` so a future
+UX dispatch can tune without touching the rig.
+
+OrbitControls is disabled for the duration of the lerp so user drag
+doesn't fight the animation; re-enabled on completion. The lerp uses one
+allocated `scratch` pose reused every frame (zero per-frame allocation).
+
+**Dive framing: along the existing view direction, not a fixed angle.**
+The target camera position is `target + direction * fitDistance`, where
+`direction` is the current camera-to-scene-centre vector. This makes the
+dive feel like "zoom in along where you were looking" rather than
+"teleport to a new angle" — preserves the user's mental orbit while
+focusing the framing. Fallback to the initial 3/4 vector if the camera
+happens to sit exactly on the dive target (avoids divide-by-zero).
+Padding 1.6 (vs initial frame 1.35) — slightly more breathing room for
+small entries like single vertebrae.
+
+**Double-click threshold: 350 ms (dispatch spec).**
+The OS default is 250 ms; the dispatch's stated value 350 ms is the
+slower side because the spatial-3D context (users intermix clicks with
+orbit drags) drops legitimate double-clicks at 250 ms. Detection lives
+in `SkeletalScene.onPointerDown`: snapshot `lastClickAt` + first-selected
+id BEFORE the new select mutation, compare against the just-clicked
+entry, fire `dive()` if `delta <= 350ms && sameEntry && noModifiers`.
+Modifiers suppress dive (the user explicitly meant multi-select).
+
+**Keyboard Enter triggers dive on a unique single selection.**
+Document-level `keydown` listener (mounts once per `<SkeletalScene>`).
+Enter while exactly one entry is selected calls `dive(firstSelectedId)`.
+Multi-select + Enter is intentionally a no-op (ambiguous which one to
+dive into). Form-input targets are excluded so Enter inside a future
+search field doesn't accidentally dive. UI agent (P1.13) owns full
+focus-management for screen readers; this listener is the engine's
+minimum viable Enter handler.
+
+**Dive store breadcrumb: explicit `ascendStack`, plus `clearDive`.**
+Stack-based history lets the UI render the full path
+("Skeletal > Vertebral column > C1") and call `ascend()` to pop one
+level at a time. `clearDive()` pops the whole stack — bound to the
+"home"/breadcrumb-root affordance the UI will surface (P1.13). The
+store's `dive(id)` is idempotent on same-id (no animation churn when the
+user double-clicks repeatedly).
+
+**Store exposure via `window.__peelStore` / `window.__diveStore` in dev.**
+Zustand stores are already module-level singletons — any importer gets
+the same instance, so UI sidebar wiring (P1.13) needs nothing beyond the
+import. The `window` handles are dev-only (gated on `import.meta.env.DEV`)
+so you can hot-poke `__peelStore.getState().setPreset('skeletal')` from
+the console while debugging without remounting the canvas.
 
 ### P1.11 — picking + selection state machine + outline (2026-05-11)
 
@@ -203,7 +328,65 @@ zero runtime cost.
 
 ## Handoffs
 
-### To 3D Engine, P1.12 — peel mode + dive camera
+### To UI agent, P1.13 — sidebar + breadcrumbs + peel toggle + search + panel
+
+- **Peel store** (`app/web/src/state/peelStore.ts`):
+    - State: `preset: 'surface' | 'subcutaneous' | 'musculoskeletal' |
+      'visceral' | 'skeletal'`, default `'surface'`.
+    - Actions: `setPreset(preset)`, `cyclePreset()`.
+    - Selectors: `selectPeelPreset`, `selectIsMeshVisible(materialHint)`.
+    - Pure visibility predicate: `isMeshVisibleForPreset(preset, materialHint)`.
+    - `PEEL_PRESET_CYCLE` is the default cycle (`surface →
+      subcutaneous → musculoskeletal → skeletal → surface…`). UI may
+      rebind to a different cycle (e.g. `skin → muscle → bone` only) by
+      not calling `cyclePreset` and calling `setPreset` explicitly.
+- **Nomenclature toggle (plain vs clinical) is UI's job, not engine's.** The
+  engine stores the canonical enum. UI maintains a separate
+  display-register store and renders the label via a lookup:
+    - `'surface'` ↔ `'skin'`
+    - `'subcutaneous'` ↔ `'subcutaneous'` (no plain equivalent)
+    - `'musculoskeletal'` ↔ `'muscle'`
+    - `'visceral'` ↔ `'visceral'`
+    - `'skeletal'` ↔ `'bone'`
+  Per the user's P1.10 refinement: plain primary, clinical secondary
+  surfaced behind a toggle.
+- **Dive store** (`app/web/src/state/diveStore.ts`):
+    - State: `focusedId: string | null`, `ascendStack: string[]`,
+      `diveStartedAt: number`, `fromPose: CameraPose | null`.
+    - Actions: `dive(entryId)`, `ascend()`, `clearDive()`.
+    - Selectors: `selectFocusedId`, `selectAscendStack`,
+      `selectDiveStartedAt`, `selectIsFocused(id)`.
+    - Breadcrumb: read `selectFocusedId` + `selectAscendStack`; the path
+      to render is `[...ascendStack, focusedId]` (filter `null`). UI's
+      back-button calls `ascend()`; "home"/clear calls `clearDive()`.
+- **Camera animates automatically.** UI doesn't need to choreograph the
+  camera — calling `dive(id)` or `ascend()` is enough. The CameraRig
+  observes `focusedId` and lerps.
+- **Peel-mode UI toggle wires to `setPreset` or `cyclePreset`.** No engine
+  changes needed.
+- **Sidebar tree** continues to read from the selection store as in
+  P1.13's handoff from P1.11. Diving into an entry does not change
+  selection state; the two stores are intentionally orthogonal.
+
+### To 3D Engine, P1.14 — full integration
+
+- **Touch-tap-and-hold for iPad dive trigger** is a P1.14 concern. R3F's
+  pointer abstraction handles tap-to-select and pinch-to-zoom via
+  OrbitControls' touch handlers, but a "double-tap to dive" gesture is
+  flaky on iPad Safari because the second tap can race the long-press
+  handler. The right shape is probably:
+    - Tap-and-hold (≥500 ms) on an entry → dive
+    - Single tap → select
+    - Drag → orbit / pan
+  This needs a touch-specific gesture handler (Pointer Events with
+  `pointerType === 'touch'` discrimination, or use Hammer.js's
+  press recognizer). Out of scope for P1.12; flagged here.
+- **Touch double-tap fallback** also needs explicit handling — current
+  `pointerdown` double-detection works on touch but iPad Safari's
+  300ms-click-delay legacy and the gesture-recognition race can drop the
+  second tap. Worth measuring before adding a new path.
+
+### To 3D Engine, P1.12 (HISTORICAL — completed) — peel mode + dive camera
 
 - **Peel mode hides meshes via `visible: false`.** The picker already
   respects this — `resolveEntryIdFromObject` in `engine/picking.ts` walks
@@ -284,6 +467,83 @@ zero runtime cost.
   structures." Coordinate with UI before a future dispatch tweaks it.
 
 ## Invocation history
+
+### 2026-05-11 — P1.12 (third invocation)
+
+Landed peel-mode plumbing (canonical schema enum stored, visibility
+table keyed on `material_hint`, scene-side `visible` cascade) and
+dive-deeper camera animation (600ms ease-in-out lerp on `focusedId`
+change, sibling dimming via two shared materials, double-click 350ms
+threshold, keyboard Enter on unique single selection). Phase 1 registry
+has only `bone` entries, so the peel UX activates fully only in Phase 2;
+mechanical plumbing is correct.
+
+**Files added**:
+  - `app/web/src/state/peelStore.ts` — Zustand store with `preset` +
+    `setPreset` + `cyclePreset`; `isMeshVisibleForPreset(preset, hint)`
+    pure predicate; visibility table per preset (5 presets × ~13
+    material hints).
+  - `app/web/src/state/diveStore.ts` — Zustand store with `focusedId` +
+    `ascendStack` + `diveStartedAt` + `fromPose`; actions `dive`,
+    `ascend`, `clearDive`, `setFromPose`; named selectors.
+  - `app/web/src/engine/diveCamera.ts` — `computeDivePose(entry, opts)`
+    fits an entry's world-space bounds to the camera FOV;
+    `easeInOutQuad`, `lerpCameraPose` utilities;
+    `DIVE_ANIMATION_DURATION_MS = 600`.
+
+**Files updated**:
+  - `app/web/src/scene/SkeletalScene.tsx` — wires peel-mode visibility
+    via `<group visible={...}>`, sibling dimming via two shared
+    materials (`bright` / `dim`), double-click → `dive` (350ms
+    threshold, modifier-suppressed), keyboard Enter → `dive` on unique
+    single-selection. `EntryMesh` gains `isBright` + `isVisible` props.
+    Host div now `tabIndex={0}` so keyboard focus is grabbable.
+  - `app/web/src/scene/CameraRig.tsx` — observes
+    `useDiveStore(selectFocusedId)` + `selectDiveStartedAt`; latches
+    from-pose + to-pose on transition; lerps in `useFrame` with
+    quadratic ease-in-out; disables OrbitControls during the animation
+    + re-enables on completion. Accepts `entries: RegistryEntry[]` so
+    it can look up the dive target by id.
+
+**Files preserved untouched per dispatch scope**:
+  - `app/web/src/state/selectionStore.ts` — already exposed
+    `lastClickAt` (P1.11) which P1.12 reads for double-click detection.
+    No store-shape change.
+  - `app/web/src/ui/*` — UI scope is P1.13.
+  - `app/web/src/engine/{picking,outline,registry,bounds,loader,material,selectionEvent}.ts` — unchanged.
+
+**Verification**:
+  - `npm run verify` → all green:
+    - `typecheck` clean.
+    - `validate:schemas` 11/11 passed (7 schema files + 4 data files).
+    - `build` succeeded — `1,070.75 kB raw / 299.46 kB gzipped JS`
+      (~12 KB delta from P1.11 for the two new stores + diveCamera
+      utility + scene-side wiring).
+  - Dev-server smoke tests (server started; 8 HTTP requests):
+    - `GET /` → 200
+    - `GET /registry.json` → 200
+    - `GET /meshes/uberon_0000981/lod0.glb` → 200
+    - `GET /src/state/peelStore.ts` → 200
+    - `GET /src/state/diveStore.ts` → 200
+    - `GET /src/engine/diveCamera.ts` → 200
+    - `GET /src/scene/SkeletalScene.tsx` → 200
+    - `GET /src/scene/CameraRig.tsx` → 200
+  - Static reasoning on peel mechanics: with the Phase 1 registry
+    (every `material_hint === 'bone'`), `surface` /
+    `subcutaneous` / `musculoskeletal` / `skeletal` all return the
+    same boolean (`true`) from `isMeshVisibleForPreset`, so the
+    skeleton renders identically under those four. `visceral` returns
+    `false` for `bone`, so the user would see an empty scene with
+    only the lights — mechanically correct (visceral view hides the
+    skeleton because organs would be visible underneath), but visually
+    unsurprising in Phase 1.
+
+**Visual verification note**: as in prior invocations, no headless-
+browser harness is available from inside this dispatch. The curl-level
+assertions cover module transformation + registry serving + glb
+serving; canvas-side dive animation, sibling dimming, and double-click
+behaviour require a manual `npm run dev` + interaction test by the
+user.
 
 ### 2026-05-11 — P1.11 (second invocation)
 
