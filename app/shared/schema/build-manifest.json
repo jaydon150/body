@@ -42,10 +42,24 @@
     "totals": {
       "type": "object",
       "properties": {
-        "byte_size": { "type": "integer", "minimum": 0 },
-        "compressed_byte_size": { "type": "integer", "minimum": 0 },
-        "artifact_count": { "type": "integer", "minimum": 0 }
-      }
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Sum of artifact byte_size values."
+        },
+        "compressed_byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Sum of artifact compressed_byte_size values when present."
+        },
+        "artifact_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Count of entries in artifacts[]."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Roll-up totals for the build, derived from artifacts[]."
     }
   },
   "additionalProperties": false

@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.08)
-**Current phase:** Phase 1 in progress. **Asset side complete (P1.01–P1.08).** Crossing to application side next: P1.09 (Architect + QA schema upgrade) ready to dispatch.
+**Last updated:** 2026-05-11 (late evening, post-P1.09)
+**Current phase:** Phase 1 in progress. **P1.01–P1.09 complete.** Application side begins next with P1.10 (3D Engine wires registry to canvas).
 **Overall health:** Green
 
 ---
@@ -18,7 +18,7 @@
 
 ## Active work
 
-- **P1.09 (Architect + QA schema upgrade) ready to dispatch.** Upgrade schema validation from the Phase 0 placeholder (JSON-parse + key checks) to full ajv meta-schema + data-against-schema validation. Also adds `composite_children` field to `mesh-asset-manifest.json` per P1.08 handoff, unblocking the sternum-composite entry in a future small bake. Architect drafts the schema change as an ADR-worthy decision.
+- **P1.10 (3D Engine: render meshes from registry) ready to dispatch.** First step that wires the canonical registry to the canvas. Loads `data/derived/mesh-registry.json`, instantiates the 79 skeletal meshes via R3F + drei's `useGLTF`, applies a basic bone material, lights the scene, frames the camera on combined bounds. **This is when the dev server starts showing real anatomy.** Replaces the procedural-femur-proxy seed with the full skeletal set.
 
 ## Blockers
 
@@ -27,7 +27,7 @@
 
 ## Next milestone
 
-**P1.09 dispatch.** Architect tightens schema validation tooling (ajv-based) and extends the mesh-asset-manifest schema with `composite_children` to unblock the sternum composite. After P1.09, the application side begins in earnest with P1.10–12 (3D Engine wiring the registry to the canvas — this is when the dev server starts showing real anatomy).
+**P1.10 dispatch.** 3D Engine subagent reads `data/derived/mesh-registry.json` + the 79 canonical glb files and renders the skeletal set to the R3F canvas with a bone material. After P1.10, `npm run dev` shows real BP3D-derived anatomy instead of the procedural femur proxy. P1.11 (GPU picking + selection state + outline pass) and P1.12 (peel mechanic + dive-deeper camera) follow.
 
 ## Upcoming gates (user approval required)
 

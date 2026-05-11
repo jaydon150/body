@@ -39,11 +39,13 @@
   "properties": {
     "event_type": {
       "type": "string",
-      "enum": ["hover", "select", "multi_select_add", "multi_select_remove", "focus", "deselect", "clear", "peel_change", "camera_change"]
+      "enum": ["hover", "select", "multi_select_add", "multi_select_remove", "focus", "deselect", "clear", "peel_change", "camera_change"],
+      "description": "What kind of selection state change this event represents. Drives targets[] cardinality expectations (e.g. 'clear' has zero targets; 'select' has one)."
     },
     "timestamp": {
       "type": "string",
-      "format": "date-time"
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp of when the event was emitted by the 3D Engine."
     },
     "targets": {
       "type": "array",
@@ -53,12 +55,25 @@
     "modifier_keys": {
       "type": "object",
       "properties": {
-        "shift": { "type": "boolean" },
-        "ctrl": { "type": "boolean" },
-        "alt": { "type": "boolean" },
-        "meta": { "type": "boolean" }
+        "shift": {
+          "type": "boolean",
+          "description": "Shift was held during the event (commonly: multi-select extend)."
+        },
+        "ctrl": {
+          "type": "boolean",
+          "description": "Ctrl was held (commonly: multi-select add/remove)."
+        },
+        "alt": {
+          "type": "boolean",
+          "description": "Alt/Option was held (modifier reserved for future use)."
+        },
+        "meta": {
+          "type": "boolean",
+          "description": "Meta/Command was held (macOS analog of ctrl)."
+        }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Modifier-key state at the moment of the event. Omitted modifiers default to false; an entirely omitted modifier_keys object means no modifiers were held."
     },
     "camera_intent": {
       "type": "string",

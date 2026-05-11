@@ -8,20 +8,53 @@
       "type": "object",
       "required": ["background", "surface", "text", "primary"],
       "properties": {
-        "background": { "type": "string" },
-        "surface": { "type": "string" },
-        "surface_raised": { "type": "string" },
-        "text": { "type": "string" },
-        "text_muted": { "type": "string" },
-        "primary": { "type": "string" },
-        "primary_muted": { "type": "string" },
-        "border": { "type": "string" },
-        "warning": { "type": "string" },
-        "error": { "type": "string" },
-        "success": { "type": "string" }
+        "background": {
+          "type": "string",
+          "description": "Page background color. Hex, hsl, or oklch."
+        },
+        "surface": {
+          "type": "string",
+          "description": "Default elevated surface color (panels, cards)."
+        },
+        "surface_raised": {
+          "type": "string",
+          "description": "Higher-elevation surface color (modals, popovers)."
+        },
+        "text": {
+          "type": "string",
+          "description": "Primary text color, must meet WCAG contrast against background."
+        },
+        "text_muted": {
+          "type": "string",
+          "description": "Secondary text color for de-emphasized copy."
+        },
+        "primary": {
+          "type": "string",
+          "description": "Brand / accent color used for primary actions."
+        },
+        "primary_muted": {
+          "type": "string",
+          "description": "Muted variant of primary for hover/secondary states."
+        },
+        "border": {
+          "type": "string",
+          "description": "Default border color across surfaces."
+        },
+        "warning": {
+          "type": "string",
+          "description": "Warning state color (paired with an icon, never sole channel)."
+        },
+        "error": {
+          "type": "string",
+          "description": "Error state color (paired with an icon, never sole channel)."
+        },
+        "success": {
+          "type": "string",
+          "description": "Success state color (paired with an icon, never sole channel)."
+        }
       },
       "additionalProperties": true,
-      "description": "Color values can be hex, hsl, or oklch. Color is never the sole information channel (a11y rule)."
+      "description": "Color values can be hex, hsl, or oklch. Color is never the sole information channel (a11y rule). additionalProperties=true is intentional — custom palette entries (e.g. system-specific accents) are permitted; the listed keys are the minimum contract."
     }
   },
   "type": "object",
@@ -34,14 +67,19 @@
         "light": { "$ref": "#/$defs/color_palette" },
         "dark": { "$ref": "#/$defs/color_palette" }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Light and dark palettes. Both required; the app respects prefers-color-scheme."
     },
     "spacing": {
       "type": "object",
       "patternProperties": {
-        "^(xs|sm|md|lg|xl|xxl)$": { "type": "string" }
+        "^(xs|sm|md|lg|xl|xxl)$": {
+          "type": "string",
+          "description": "CSS length value (e.g. '0.5rem', '8px')."
+        }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Spacing scale tokens. Six tier names defined; values are CSS length strings."
     },
     "typography": {
       "type": "object",
@@ -50,24 +88,45 @@
         "font_family": {
           "type": "object",
           "properties": {
-            "sans": { "type": "string" },
-            "serif": { "type": "string" },
-            "mono": { "type": "string" }
-          }
+            "sans": {
+              "type": "string",
+              "description": "Sans-serif font stack."
+            },
+            "serif": {
+              "type": "string",
+              "description": "Serif font stack."
+            },
+            "mono": {
+              "type": "string",
+              "description": "Monospace font stack (for IDs, code, technical data)."
+            }
+          },
+          "additionalProperties": false
         },
         "scale": {
           "type": "object",
           "patternProperties": {
-            "^(xs|sm|base|lg|xl|xxl|display)$": { "type": "string" }
-          }
+            "^(xs|sm|base|lg|xl|xxl|display)$": {
+              "type": "string",
+              "description": "CSS font-size value (e.g. '1rem', '14px')."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Type-scale tokens."
         },
         "line_height": {
           "type": "object",
           "patternProperties": {
-            "^(tight|normal|relaxed)$": { "type": "number" }
-          }
+            "^(tight|normal|relaxed)$": {
+              "type": "number",
+              "description": "Unitless line-height multiplier."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Line-height tokens, expressed as unitless multipliers."
         }
-      }
+      },
+      "additionalProperties": false
     },
     "motion": {
       "type": "object",
@@ -76,22 +135,38 @@
         "duration": {
           "type": "object",
           "patternProperties": {
-            "^(instant|fast|normal|slow|deliberate)$": { "type": "string" }
-          }
+            "^(instant|fast|normal|slow|deliberate)$": {
+              "type": "string",
+              "description": "CSS duration value (e.g. '120ms', '0.3s')."
+            }
+          },
+          "additionalProperties": false,
+          "description": "Motion duration tokens."
         },
         "easing": {
           "type": "object",
           "properties": {
-            "standard": { "type": "string" },
-            "decelerate": { "type": "string" },
-            "accelerate": { "type": "string" }
-          }
+            "standard": {
+              "type": "string",
+              "description": "Default easing for most motions."
+            },
+            "decelerate": {
+              "type": "string",
+              "description": "Decelerate easing for entrances."
+            },
+            "accelerate": {
+              "type": "string",
+              "description": "Accelerate easing for exits."
+            }
+          },
+          "additionalProperties": false
         },
         "reduced_motion_replacement": {
           "type": "string",
           "description": "What motion-tokens degrade to when prefers-reduced-motion is set."
         }
-      }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

@@ -138,6 +138,16 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **Math reconcile pre-P1.09:** 79 registry entries (kind=structure with mesh) + 1 sternum-deferred (composite-pending) + 17 region/system nodes (no mesh expected) + 29 BP3D-side gaps (kind=structure, no upstream mesh) = 126. The sternum is double-counted (both in the 29-gap set AND in the deferred-composite bucket); both rollups are individually correct. Total distinct ontology nodes is still 125 per ADR 0001 and the P1.02 / P1.07 audits.
 
+- **P1.09 dispatched and returned clean.** Cross-domain subagent (Architect + QA) replaced the Phase 0 schema-validation placeholder with an ajv-backed two-phase validator (meta-schema + data-against-schema). All 11 validations PASS (7 schemas + 4 canonical data files). `composite_children` field added to `mesh-asset-manifest.json` via `oneOf [own_mesh_entry, composite_entry]` per P1.08 handoff. Anatomical-id schema top-level loosened so the nodes / relations file split each validates independently. 5 schemas tightened with `additionalProperties: false`; descriptions added throughout. Smoke test: deliberately-broken registry payload was correctly rejected with 5 ajv errors including the oneOf mismatch. *Reason:* user dispatched.
+
+- **ADR 0008 (composite asset entries) accepted.** Frames the composite-children extension against ADR 0006 (attribution travels via children rather than via a composite-level asset.copyright) and ADR 0007 (no Blender pass involved at composite creation, so attribution-discipline pattern doesn't apply). Documents the temporary UX rule from P1.08 (engine loads children via constitutional_part_of when ontology node has no registry entry) and notes the canonical follow-up: bake the sternum entry with composite_children pointing to manubrium + body + xiphoid once a small follow-up Asset Pipeline dispatch is run.
+
+- **synonyms.json formally retired per ADR 0008.** Vernacular and alternate labels live in `nodes.json[].labels[]` with `source: "vernacular"`. The synonyms.json file remains on disk (hard rule: no canonical data mutation in this dispatch) but is now an empty placeholder; the anatomical-id-schema's top-level loosening lets it validate as a degenerate version-only document.
+
+- **P1.09 deferred two additive schema items** to future dispatches: `quality_notes: string[]` on entries (to capture the 2 P1.06 LOD2-fallback annotations + the 2 P1.05 non-manifold hand-review flags) and `attributions[]` on build-manifest (per ADR 0006's bundle-level attribution enumeration). Both filed in Architect's open items. Not Phase 1 blockers.
+
+- **Two moderate-severity dep audit findings surfaced during ajv install** (not ajv itself; unrelated transitive deps). Filed in QA state for possible follow-up `npm audit` dispatch. Not Phase 1 blockers.
+
 ---
 
 ## Conventions

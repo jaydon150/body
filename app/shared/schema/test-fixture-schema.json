@@ -34,14 +34,26 @@
     "provenance": {
       "type": "object",
       "properties": {
-        "authored_by": { "type": "string" },
-        "purpose": { "type": "string" },
-        "created_at": { "type": "string", "format": "date-time" }
-      }
+        "authored_by": {
+          "type": "string",
+          "description": "Agent or human who created this fixture."
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Why this fixture exists (e.g. 'regression case for issue #42')."
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO-8601 UTC timestamp of fixture creation."
+        }
+      },
+      "additionalProperties": false
     },
     "tags": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": { "type": "string" },
+      "description": "Free-form labels for filtering and grouping fixtures."
     }
   },
   "additionalProperties": false

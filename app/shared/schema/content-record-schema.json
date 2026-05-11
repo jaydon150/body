@@ -10,13 +10,32 @@
       "properties": {
         "kind": {
           "type": "string",
-          "enum": ["textbook", "atlas", "peer_reviewed", "primary_source", "url"]
+          "enum": ["textbook", "atlas", "peer_reviewed", "primary_source", "url"],
+          "description": "Citation category. Determines which other fields are meaningful (e.g. 'url' implies the url field; 'textbook' implies edition/page)."
         },
-        "ref": { "type": "string", "minLength": 1 },
-        "edition": { "type": "string" },
-        "page": { "type": "string" },
-        "url": { "type": "string", "format": "uri" },
-        "retrieved_at": { "type": "string", "format": "date" }
+        "ref": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Short reference string (e.g. 'Gray's Anatomy 41st ed.', 'Netter Atlas plate 178', or a DOI)."
+        },
+        "edition": {
+          "type": "string",
+          "description": "Edition or version identifier where applicable."
+        },
+        "page": {
+          "type": "string",
+          "description": "Page or section reference."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL when citation kind is 'url' or as supplement."
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date",
+          "description": "Date URL was last retrieved (for url citations)."
+        }
       },
       "additionalProperties": false
     }

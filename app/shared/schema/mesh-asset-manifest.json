@@ -2,14 +2,31 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://desktop-body.local/schema/mesh-asset-manifest.json",
   "title": "Mesh Asset Manifest",
-  "description": "Registry of all canonical meshes by anatomical ID, with LOD chains, bounds, and source provenance. Owned by Asset Pipeline. Authority: Architect.",
+  "description": "Registry of all canonical meshes by anatomical ID, with LOD chains, bounds, and source provenance. Entries are either own-mesh (lods + bounds + provenance required) or composite (composite_children required; mesh fields omitted because the renderer assembles from children at load time). Owned by Asset Pipeline. Authority: Architect. See ADR 0006 (runtime attribution), ADR 0007 (Blender attribution discipline), ADR 0008 (composite entries).",
   "$defs": {
+    "primary_id": {
+      "type": "string",
+      "pattern": "^(UBERON:\\d{7}|FMA:\\d+|BODY:\\d+)$",
+      "description": "Primary anatomy-graph identifier this mesh represents. UBERON preferred per ADR 0004; FMA accepted for BodyParts3D-originated meshes pending crosswalk to UBERON. BODY:NNNN reserved for structures with no upstream ontology equivalent."
+    },
     "bounds": {
       "type": "object",
       "required": ["min", "max"],
       "properties": {
-        "min": { "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3 },
-        "max": { "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3 }
+        "min": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3,
+          "description": "AABB minimum corner in mesh-space (x, y, z)."
+        },
+        "max": {
+          "type": "array",
+          "items": { "type": "number" },
+          "minItems": 3,
+          "maxItems": 3,
+          "description": "AABB maximum corner in mesh-space (x, y, z)."
+        }
       },
       "additionalProperties": false
     },
@@ -17,14 +34,35 @@
       "type": "object",
       "required": ["level", "file", "triangle_count"],
       "properties": {
-        "level": { "type": "integer", "minimum": 0, "description": "0 = highest detail." },
-        "file": { "type": "string", "description": "Path relative to data/canonical/meshes/." },
-        "triangle_count": { "type": "integer", "minimum": 0 },
-        "vertex_count": { "type": "integer", "minimum": 0 },
-        "byte_size": { "type": "integer", "minimum": 0 },
+        "level": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "0 = highest detail; integer LOD index ascending toward coarser meshes."
+        },
+        "file": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Path to the LOD glb, relative to data/canonical/meshes/."
+        },
+        "triangle_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Triangle count for this LOD. Reported from the on-disk glb, authoritative source."
+        },
+        "vertex_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Vertex count for this LOD (informational)."
+        },
+        "byte_size": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Byte size of this LOD's glb file on disk."
+        },
         "compression": {
           "type": "string",
-          "enum": ["none", "draco", "meshopt"]
+          "enum": ["none", "draco", "meshopt"],
+          "description": "Compression applied to this LOD. Phase 1 ships uncompressed; draco/meshopt arrive in later phases."
         }
       },
       "additionalProperties": false
@@ -35,34 +73,36 @@
       "properties": {
         "source": {
           "type": "string",
+          "minLength": 1,
           "description": "Upstream dataset name (e.g. 'BodyParts3D', 'Z-Anatomy', 'hand-authored')."
         },
         "license": {
           "type": "string",
+          "minLength": 1,
           "description": "Upstream license identifier (SPDX or descriptive)."
         },
         "original_id": {
           "type": "string",
-          "description": "Source-side identifier if different from FMA."
+          "description": "Source-side identifier if different from the primary id (e.g. BodyParts3D FJ-id)."
         },
-        "ingested_at": { "type": "string", "format": "date" },
+        "ingested_at": {
+          "type": "string",
+          "format": "date",
+          "description": "Date the source asset was ingested into the canonical store."
+        },
         "edits": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Cleanup operations applied (e.g. 'fixed normals', 'welded vertices')."
+          "description": "Cleanup or processing operations applied (e.g. 'fixed normals', 'welded vertices', 'obj_to_glb_conversion'). LOD0 chain only at the entry level; per-LOD decimate tags live inside the glb's asset.extras."
         }
       },
       "additionalProperties": false
     },
-    "entry": {
+    "own_mesh_entry": {
       "type": "object",
       "required": ["id", "lods", "bounds", "provenance"],
       "properties": {
-        "id": {
-          "type": "string",
-          "pattern": "^(UBERON:\\d{7}|FMA:\\d+|BODY:\\d+)$",
-          "description": "Primary anatomy-graph identifier this mesh represents. UBERON preferred per ADR 0004; FMA accepted for BodyParts3D-originated meshes pending crosswalk to UBERON."
-        },
+        "id": { "$ref": "#/$defs/primary_id" },
         "lods": {
           "type": "array",
           "items": { "$ref": "#/$defs/lod" },
@@ -72,21 +112,59 @@
         "bounds": { "$ref": "#/$defs/bounds" },
         "material_hint": {
           "type": "string",
-          "enum": ["bone", "muscle", "vessel_artery", "vessel_vein", "nerve", "skin", "fascia", "fat", "organ_parenchyma", "cartilage", "ligament", "tendon", "generic"]
+          "enum": ["bone", "muscle", "vessel_artery", "vessel_vein", "nerve", "skin", "fascia", "fat", "organ_parenchyma", "cartilage", "ligament", "tendon", "generic"],
+          "description": "Rendering hint for material assignment."
         },
         "provenance": { "$ref": "#/$defs/provenance" }
       },
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "Standard own-mesh entry. The anatomical concept is realized by a concrete LOD chain on disk."
+    },
+    "composite_entry": {
+      "type": "object",
+      "required": ["id", "composite_children"],
+      "properties": {
+        "id": { "$ref": "#/$defs/primary_id" },
+        "composite_children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/primary_id" },
+          "minItems": 1,
+          "description": "Primary IDs of the constituent meshes that together realize this anatomical concept. Each child must itself appear as an own_mesh_entry in this manifest. The renderer/registry-baker resolves bounds and LODs from the children at load time. See ADR 0008."
+        },
+        "material_hint": {
+          "type": "string",
+          "enum": ["bone", "muscle", "vessel_artery", "vessel_vein", "nerve", "skin", "fascia", "fat", "organ_parenchyma", "cartilage", "ligament", "tendon", "generic"],
+          "description": "Optional rendering hint. Children may carry their own material_hint values; this is a default at the composite level."
+        }
+      },
+      "additionalProperties": false,
+      "description": "Composite entry: the anatomical concept has no own mesh and is realized by referencing constituent child meshes. lods, bounds, and provenance are intentionally absent — they are computed from children at load time, and child attribution carries forward per ADR 0006."
+    },
+    "entry": {
+      "oneOf": [
+        { "$ref": "#/$defs/own_mesh_entry" },
+        { "$ref": "#/$defs/composite_entry" }
+      ],
+      "description": "A manifest entry is exactly one of: own_mesh_entry (with lods + bounds + provenance) or composite_entry (with composite_children). Mixing the two shapes in a single entry is incoherent and rejected."
     }
   },
   "type": "object",
   "required": ["version", "generated_at", "entries"],
   "properties": {
-    "version": { "type": "string", "description": "Pipeline run version." },
-    "generated_at": { "type": "string", "format": "date-time" },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Pipeline run version (e.g. 'p1.08-bake-1.0.0')."
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO-8601 UTC timestamp of bake. Fixed to a deterministic value per run for byte-stable re-emission."
+    },
     "entries": {
       "type": "array",
-      "items": { "$ref": "#/$defs/entry" }
+      "items": { "$ref": "#/$defs/entry" },
+      "description": "All canonical mesh entries. Order is deterministic (sorted by id) for byte-stable re-emission."
     }
   },
   "additionalProperties": false
