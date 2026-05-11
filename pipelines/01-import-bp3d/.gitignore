@@ -1,0 +1,11 @@
+# Extracted OBJ cache + intermediate merged OBJs.
+# Re-derivable from data/raw/bodyparts3d/isa_BP3D_4.0_obj_99.zip.
+.cache/
+
+# Run summary is reproducible from a re-run; keep the gap report tracked
+# but the JSON summary is per-run telemetry.
+p1.04-run-summary.json
+
+# npm install artifacts.
+node_modules/
+package-lock.json

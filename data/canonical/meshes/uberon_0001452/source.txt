@@ -1,0 +1,32 @@
+# Source provenance for UBERON:0001452
+
+Anatomical structure: medial cuneiform bone
+Primary identifier:   UBERON:0001452
+FMA alias:            FMA:24518
+BodyParts3D FJ-ids:   FJ3271, FJ3377
+
+## Source dataset
+
+Dataset:        BodyParts3D / Anatomography (DBCLS, Japan)
+Source archive: data/raw/bodyparts3d/isa_BP3D_4.0_obj_99.zip
+Hierarchy:      IS-A
+Decimation:     99% (upstream)
+License:        CC BY-SA 2.1 Japan (CC-BY-SA-2.1-JP)
+License URL:    https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en
+Attribution:    BodyParts3D, Copyright© 2008 Life Science Database Center licensed by CC BY-SA 2.1 Japan
+
+## Ingestion
+
+Pipeline:       pipelines/01-import-bp3d (P1.04)
+Ingested at:    2026-05-11
+Tooling:        obj2gltf (OBJ -> glTF/glb binary) + gltf-pipeline (asset.copyright + asset.extras.source injection)
+Edits applied:
+  - obj_to_glb_conversion
+  - merged_2_fj_obj_into_one_glb (paired-bone left/right consolidation)
+
+## Per ADR 0006
+
+The attribution string above is also baked into the glb's
+asset.copyright field; asset.extras.source carries the full
+structured provenance record. This file is the redundant human-
+readable backup that travels with the asset on disk.

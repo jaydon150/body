@@ -1,21 +1,25 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.03)
-**Current phase:** Phase 1 in progress. Steps P1.01–P1.03 complete; P1.04 ready to dispatch (Blender needed for P1.05 onward).
+**Last updated:** 2026-05-11 (late evening, post-P1.04)
+**Current phase:** Phase 1 in progress. Steps P1.01–P1.04 complete; P1.05 blocked on Blender install confirm; P1.07 (validate-ontology) can run in parallel.
 **Overall health:** Green
 
 ---
 
 ## Right now
 
-- Phase 1 steps P1.01, P1.02, P1.03 **complete**. The skeletal sub-ontology is real (125 UBERON-primary nodes + 125 typed edges). BodyParts3D archives are on disk (210 MB) with full provenance recorded per ADR 0006.
-- OpenAnatomy license verification fully resolved at canonical source.
-- Three file-backed Task-subagent dispatches now executed cleanly. ADR 0003 is thrice-proven.
-- LFS bandwidth preserved: raw mesh ZIPs gitignored, text provenance + FMA mapping tables tracked.
+- Phase 1 steps P1.01–P1.04 **complete**. Real canonical assets now exist:
+  - 125-node UBERON-primary skeletal sub-ontology
+  - 79 canonical glbs (9.4 MB) in `data/canonical/meshes/uberon_NNNNNNN/lod0.glb`
+  - Attribution baked into every glb per ADR 0006 (verified on mandible: `asset.copyright` + `asset.extras.source`)
+  - 29 BP3D-side gaps documented (mostly flagship-bone sub-structures — femur head/neck/shaft, phalanges-of-manus/pes)
+- Four file-backed Task-subagent dispatches now executed cleanly. ADR 0003 is four-times-proven.
+- Paired bones (ribs, vertebrae, carpals, tarsals) handled cleverly: left+right merged at OBJ-text level, preserved as separate glTF mesh nodes for individual runtime selection.
 
 ## Active work
 
-- **P1.04 (Asset Pipeline): import IS-A archive — unzip OBJ → convert to glb** — ready to dispatch. Pivots through `isa_element_parts.txt` (FMA → FJ-prefix → OBJ file). Does not yet need Blender (that's P1.05 cleanup). Will produce working-tier glb files in `data/canonical/meshes/<UBERON-id>/` aligned with the ontology populated in P1.02.
+- **P1.05 (Blender headless cleanup) — BLOCKED on user confirming Blender 4.x is installed and on PATH.** Asset Pipeline flagged this in the outbound handoff.
+- **P1.07 (validate-ontology cross-check) can run in parallel** with the Blender question — it doesn't need Blender, just reads the existing glb set against the ontology. Could be dispatched next while Blender install resolves.
 
 ## Blockers
 
@@ -24,7 +28,7 @@
 
 ## Next milestone
 
-**P1.04 dispatch.** Asset Pipeline unzips the IS-A archive, walks `isa_element_parts.txt` to map FMA IDs to FJ-prefix OBJ filenames, and converts each OBJ to glb keyed by the UBERON ID from the ontology (via the FMA→UBERON crosswalk built in P1.01 + P1.02). Output: working-tier glb files in `data/canonical/meshes/<UBERON-id>/`. **Blender not needed for this step** (OBJ→glb is doable in pure JS/Python without Blender). P1.05 cleanup is the Blender step.
+**Either P1.07 (validate-ontology cross-check) — proceeds without Blender — OR P1.05 (Blender cleanup) once user confirms Blender 4.x is installed.** Recommendation: dispatch P1.07 next while Blender confirmation lands in parallel. Validate-ontology will surface any registry/ontology drift before cleanup is applied.
 
 ## Upcoming gates (user approval required)
 

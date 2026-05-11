@@ -96,6 +96,18 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **P1.03 surfaced a structural sharp edge for P1.04.** BodyParts3D OBJ filenames use an FJ-prefix (e.g. `FJ1252.obj`), not FMA-prefix. The FMA → FJ-id pivot lives in the TSV file `isa_element_parts.txt`. P1.04 (OBJ→glb conversion) MUST read this table; it cannot infer the mapping from filenames. Adds a small but critical dependency on the upstream TSV being in git (it is, per the gitignore exception).
 
+- **P1.04 dispatched and returned clean.** 79 canonical glbs produced in `data/canonical/meshes/uberon_NNNNNNN/lod0.glb`, total 9.4 MB. Mean 118 KB, range 10 KB pisiform → 980 KB scapula. **0 conversion failures.** Tools: `obj2gltf` v3 (programmatic Node API) for OBJ→glb; `gltf-pipeline.processGlb` post-process for attribution injection (obj2gltf v3's CLI flag for copyright no longer exists). `adm-zip` for ZIP extraction after `unzip -p` bash path failed on Windows. *Reason:* user dispatched.
+
+- **Paired bones merged at OBJ-text level.** 45 of 79 outputs are paired bones (ribs, vertebrae, carpals, tarsals) — BP3D ships left + right as separate FJ files inheriting from the same parent FMA. Subagent merged them with v/vn/vt index rebasing, preserved as separate glTF mesh nodes within a single glb. Both halves runtime-selectable individually. Smart engineering; consistent with the schema (one mesh manifest entry per anatomical concept, sub-meshes inside the glb).
+
+- **Sternum gap is recoverable as a composite.** `UBERON:0000975` (sternum) has no whole-sternum mesh in BP3D, but all 3 sub-components (manubrium, body of sternum, xiphoid process) converted successfully. **Decision point for Anatomy Domain in P1.07/P1.08:** synthesize a composite sternum at the registry layer (group the 3 sub-meshes under one anatomical-concept entry) vs leave the parent un-instantiated and only surface the sub-parts. Logged in Asset Pipeline open items.
+
+- **Attribution chain verified end-to-end on mandible glb.** `asset.copyright` reads verbatim: *"BodyParts3D, Copyright© 2008 Life Science Database Center licensed by CC BY-SA 2.1 Japan"*. `asset.extras.source` carries source/license/original_id (FJ3289)/fma_id (FMA:52748)/ingested_at. ADR 0006 is satisfied at the asset layer; UI surface remains a Phase 1 P1.13 task.
+
+- **Surprise: BP3D OBJ headers already carry the CC-BY-SA notice in their `#` comments.** The first-author license chain is intact upstream — not just in our injection layer. Strengthens the provenance story.
+
+- **P1.05 (Blender cleanup) blocked.** Asset Pipeline flagged in its outbound handoff that the user needs to confirm Blender 4.x is installed and on PATH before P1.05 dispatches. **P1.07 (validate-ontology) can proceed in parallel** — it has no Blender dependency.
+
 ---
 
 ## Conventions
