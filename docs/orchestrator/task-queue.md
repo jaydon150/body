@@ -49,10 +49,10 @@ Phase 1 has 20 sequenced dispatches across the agent roster. Full plan in the sp
 - `[x] P1.10` 3D Engine: registry-driven SkeletalScene — DONE 2026-05-11. 79 BP3D-derived skeletal meshes rendered via R3F + drei `useGLTF`. Shared bone material (`#ebe0c9`). Vite dev middleware serves `/registry.json` and `/meshes/*` from canonical data without copying. FemurScene + anatomySeed archived under `_archive/` (not deleted). Bundle: 1059 KB raw / 295 KB gzipped. 3 dev-server curl smoke tests PASS. selectionStore preserved untouched for P1.11.
 - `[x] P1.11` 3D Engine: GPU picking + selection state + outline pass — DONE 2026-05-11. drei `<Outlines>` for selection (cyan #3aa5d9, ~2px screenspace). Paired-bone Option A (whole entry selected). selectionStore extended with hover/select/multi-select state machine. EntryMesh refactored from `<primitive>` to React `<mesh>` children to support Outlines.
 - `[x] P1.12` 3D Engine: peel mode + dive-deeper camera — DONE 2026-05-11. peelStore + diveStore + diveCamera. Sibling dimming via material swap. 600 ms quad-ease lerp. Phase 1 peel UX plumbing in place; visible effect waits for Phase 2 muscle/skin content.
-- `[~] P1.13` UI: sidebar + breadcrumbs + search + panel + attribution + nomenclature toggle (DISPATCHED — wave 3 parallel with P1.15)
-- `[ ] P1.14` UI ↔ 3D Engine integration + iPad touch input
-- `[~] P1.15` Content: first batch — 50-100 skeletal descriptions, pending status (DISPATCHED — wave 3 parallel with P1.13)
-- `[ ] P1.16` Content + QA: queue anatomist review batch
+- `[x] P1.13` UI: sidebar + breadcrumbs + search + panel + attribution + nomenclature toggle — DONE 2026-05-11. 13 new UI files, uiPreferencesStore, AppShell composes all chrome. Build 1130 KB raw / 310 KB gzipped + 15 KB CSS.
+- `[~] P1.14` UI ↔ 3D Engine integration + iPad touch input (DISPATCHED — wave 4 parallel with P1.16)
+- `[x] P1.15` Content: first batch — DONE 2026-05-11. 51 records authored, all confidence='pending'. New pipeline 06-validate-content/. 51/51 validate clean.
+- `[~] P1.16` Content + QA: queue anatomist review batch (DISPATCHED — wave 4 parallel with P1.14)
 - `[ ] P1.13–14` UI: layout + sidebar + breadcrumbs + search + panel + integration with 3D Engine
 - `[ ] P1.15–16` Content: first batch (50–100 structures) → anatomist review
 - `[ ] P1.17` QA: visual regression baselines, perf budgets, accuracy queue

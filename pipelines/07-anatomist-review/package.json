@@ -1,0 +1,12 @@
+{
+  "name": "p1-07-anatomist-review",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Phase 1 step P1.16 - generate the human-readable anatomist review packet (Markdown) + queue manifest (JSON) for content records, and promote pending->reviewed once the anatomist's manifest comes back. Reuses ajv from app/web/node_modules via relative import (zero npm deps in this pipeline).",
+  "scripts": {
+    "generate": "node generate-packet.mjs",
+    "promote": "node promote.mjs",
+    "promote:dry-run": "node promote.mjs --dry-run"
+  }
+}
