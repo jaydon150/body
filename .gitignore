@@ -39,4 +39,33 @@ test-results/
 # Scratch — always gitignored per Phase 0 spec
 scratch/
 
-# Note: data/raw/ and data/derived/ specific ignores will be added when content arrives in Phase 1+
+# ============================================================================
+# data/raw/ — raw upstream downloads (Phase 1+)
+# ----------------------------------------------------------------------------
+# Raw upstream archives and mesh bytes are reproducible: re-downloadable from
+# the URLs documented in each per-source README.md. They are gitignored to
+# keep the repo small and stay under LFS budget. Text-only provenance files
+# (README.md, LICENSE, license registry, the upstream TSV metadata that maps
+# IDs to mesh files) are KEPT IN GIT so the project's mapping/ontology layer
+# is committed without requiring re-download.
+# ============================================================================
+
+# Ignore everything under each data/raw/<source>/ folder by default...
+data/raw/*/*
+
+# ...except the explicit per-folder text provenance we want tracked.
+!data/raw/*/README.md
+!data/raw/*/LICENSE
+!data/raw/*/DOWNLOAD-INSTRUCTIONS.md
+!data/raw/*/.gitkeep
+
+# BodyParts3D upstream metadata TSVs and README — small, mapping-critical.
+# These are the FMA -> mesh-id lookup tables; they MUST be in git.
+!data/raw/bodyparts3d/*.txt
+!data/raw/bodyparts3d/README_e.html
+
+# Per-source license registry (text only).
+!data/raw/LICENSES/
+!data/raw/LICENSES/*.md
+
+# Note: data/derived/ specific ignores will be added as content lands in P1.04+.

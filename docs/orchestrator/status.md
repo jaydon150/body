@@ -1,20 +1,21 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.02)
-**Current phase:** Phase 1 in progress. Steps P1.01–P1.02 complete; P1.03 ready to dispatch.
+**Last updated:** 2026-05-11 (late evening, post-P1.03)
+**Current phase:** Phase 1 in progress. Steps P1.01–P1.03 complete; P1.04 ready to dispatch (Blender needed for P1.05 onward).
 **Overall health:** Green
 
 ---
 
 ## Right now
 
-- Phase 1 steps P1.01 and P1.02 **complete**. The skeletal sub-ontology is real: 125 UBERON-primary nodes + 125 typed edges populated in `data/canonical/ontology/` and validated against the schemas.
-- Notable catch in P1.02: the P1.01 pattern-inferred T8 row was wrong (would have caused a labeling bug downstream). Anatomy Domain's mechanical second-pass found the real T8 at `UBERON:0011050`. Agent-handoff design is paying off.
-- Two file-backed Task-subagent dispatches now executed cleanly. ADR 0003 is twice-proven.
+- Phase 1 steps P1.01, P1.02, P1.03 **complete**. The skeletal sub-ontology is real (125 UBERON-primary nodes + 125 typed edges). BodyParts3D archives are on disk (210 MB) with full provenance recorded per ADR 0006.
+- OpenAnatomy license verification fully resolved at canonical source.
+- Three file-backed Task-subagent dispatches now executed cleanly. ADR 0003 is thrice-proven.
+- LFS bandwidth preserved: raw mesh ZIPs gitignored, text provenance + FMA mapping tables tracked.
 
 ## Active work
 
-- **P1.03 (Asset Pipeline): download BodyParts3D into `data/raw/bodyparts3d/`** — ready to dispatch. First step that touches the asset side; will verify the BodyParts3D download URL is accessible and pull the archive. Does not yet need Blender (that's P1.05).
+- **P1.04 (Asset Pipeline): import IS-A archive — unzip OBJ → convert to glb** — ready to dispatch. Pivots through `isa_element_parts.txt` (FMA → FJ-prefix → OBJ file). Does not yet need Blender (that's P1.05 cleanup). Will produce working-tier glb files in `data/canonical/meshes/<UBERON-id>/` aligned with the ontology populated in P1.02.
 
 ## Blockers
 
@@ -23,7 +24,7 @@
 
 ## Next milestone
 
-**P1.03 dispatch.** Asset Pipeline verifies the BodyParts3D download URL is accessible and pulls the archive into `data/raw/bodyparts3d/`. Subsequent P1.04–P1.08 chain (import → clean → LOD → validate → bake registry) follows. Blender install confirmation needed before P1.05.
+**P1.04 dispatch.** Asset Pipeline unzips the IS-A archive, walks `isa_element_parts.txt` to map FMA IDs to FJ-prefix OBJ filenames, and converts each OBJ to glb keyed by the UBERON ID from the ontology (via the FMA→UBERON crosswalk built in P1.01 + P1.02). Output: working-tier glb files in `data/canonical/meshes/<UBERON-id>/`. **Blender not needed for this step** (OBJ→glb is doable in pure JS/Python without Blender). P1.05 cleanup is the Blender step.
 
 ## Upcoming gates (user approval required)
 

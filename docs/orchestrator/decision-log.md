@@ -90,6 +90,12 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **ADR 0006 (runtime attribution) operationalization confirmed.** Committed at `e60bb9e`. Phase 1 Spec v0.2 acceptance criterion #18 enforces it. Dispatch step P1.08 extends `pipelines/05-bake-registry` to write `asset.copyright` and `asset.extras.source` into every canonical glb. UI step P1.13 adds the "About this atlas" surface. No further drafting needed; will be exercised in P1.08 and P1.13.
 
+- **P1.03 dispatched and returned clean.** Asset Pipeline subagent pulled both BodyParts3D archives (IS-A 137 MB + PART-OF 62 MB) from `dbarchive.biosciencedbc.jp/data/bodyparts3d/LATEST/` plus 6 TSV mapping tables and the upstream README. Integrity-checked. README, LICENSE, license-registry entry, and TSV mapping tables tracked; the binary ZIPs gitignored. ADR 0006 provenance honored at the raw layer (next ADR-0006 step is canonical glb metadata baking in P1.08). *Reason:* user dispatched.
+
+- **P1.03 surfaced two new compliance items.** (1) Mirror page at `dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html` displays a CC BY 4.0 license summary; canonical project page at `lifesciencedb.jp/bp3d/info/license/index.html` declares CC BY-SA 2.1 Japan. Project follows canonical per ADR 0005 / 0002. **Pre-launch Compliance agent review must reconcile and document the discrepancy.** (2) The CC BY-SA 2.1 JP authoritative legal code is Japanese-only; the English deed is a summary, not the law. **Pre-launch legal review must address.** Both items filed in Asset Pipeline's state file open items.
+
+- **P1.03 surfaced a structural sharp edge for P1.04.** BodyParts3D OBJ filenames use an FJ-prefix (e.g. `FJ1252.obj`), not FMA-prefix. The FMA → FJ-id pivot lives in the TSV file `isa_element_parts.txt`. P1.04 (OBJ→glb conversion) MUST read this table; it cannot infer the mapping from filenames. Adds a small but critical dependency on the upstream TSV being in git (it is, per the gitignore exception).
+
 ---
 
 ## Conventions

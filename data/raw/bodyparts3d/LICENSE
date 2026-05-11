@@ -1,0 +1,99 @@
+BodyParts3D LICENSE — verbatim record
+
+================================================================================
+ATTRIBUTION REQUIREMENT (Verbatim)
+================================================================================
+
+Every distribution of this data, derivative works built on it, and runtime
+surfaces that display it MUST carry the following attribution string verbatim:
+
+    BodyParts3D, Copyright(C) 2008 Life Science Database Center
+    licensed by CC BY-SA 2.1 Japan
+
+(The "(C)" represents the copyright glyph; ASCII-safe rendering. The Unicode
+form "Copyright(c)" with the encircled-c glyph appears on the upstream pages.)
+
+
+================================================================================
+LICENSE: Creative Commons Attribution-ShareAlike 2.1 Japan (CC BY-SA 2.1 JP)
+================================================================================
+
+Source of this license declaration:
+    https://lifesciencedb.jp/bp3d/info/license/index.html
+    (verified 2026-05-11 by the body project)
+
+Canonical Creative Commons URLs:
+    Human-readable deed (English):  https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en
+    Full legal code (Japanese, authoritative):
+                                   https://creativecommons.org/licenses/by-sa/2.1/jp/legalcode.ja
+
+
+================================================================================
+DEED SUMMARY (English) — quoted from creativecommons.org/licenses/by-sa/2.1/jp/deed.en
+================================================================================
+
+You are free to:
+
+  Share  — copy and redistribute the material in any medium or format for any
+           purpose, even commercially.
+
+  Adapt  — remix, transform, and build upon the material for any purpose,
+           even commercially.
+
+  The licensor cannot revoke these freedoms as long as you follow the license
+  terms.
+
+
+Under the following conditions:
+
+  Attribution  — You must give appropriate credit, provide a link to the
+                 license, and indicate if changes were made. You may do so in
+                 any reasonable manner, but not in any way that suggests the
+                 licensor endorses you or your use.
+
+  ShareAlike   — If you remix, transform, or build upon the material, you
+                 must distribute your contributions under the same license as
+                 the original.
+
+  No additional restrictions — You may not apply legal terms or technological
+                 measures that legally restrict others from doing anything the
+                 license permits.
+
+
+Notices:
+
+  You do not have to comply with the license for elements of the material in
+  the public domain or where your use is permitted by an applicable exception
+  or limitation.
+
+  No warranties are given. The license may not give you all of the permissions
+  necessary for your intended use. For example, other rights such as publicity,
+  privacy, or moral rights may limit how you use the material.
+
+
+================================================================================
+NOTES ON THE UPSTREAM LICENSE PAGES (sharp edges)
+================================================================================
+
+1. The canonical license page at lifesciencedb.jp/bp3d/info/license/index.html
+   is in Japanese. The license name and attribution string above are mirrored
+   from that page. The English-language CC deed at the URL above states the
+   same terms.
+
+2. The Japanese legal code at creativecommons.org/licenses/by-sa/2.1/jp/legalcode.ja
+   is the AUTHORITATIVE text of the license; the English deed is a summary
+   only, not a substitute for the legal code.
+
+3. The LSDB Archive's own license page at
+   dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html displays a different
+   license summary (CC BY 4.0) — this refers to the LSDB Archive's aggregate
+   download surface, not the BodyParts3D source-specific license. The
+   BodyParts3D source license is CC BY-SA 2.1 Japan, per the canonical project
+   page at lifesciencedb.jp (verified 2026-05-11). The body project follows
+   the canonical version per ADR 0005. The discrepancy is recorded in
+   docs/agents/asset-pipeline.state.md as an open item for compliance review
+   pre-launch.
+
+4. Per ADR 0006, the attribution string MUST also be baked into every
+   canonical .glb the pipeline produces (asset.copyright field) and must
+   appear in the deployed web app's "About this atlas" surface.
