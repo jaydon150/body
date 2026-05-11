@@ -16,7 +16,8 @@
 
 ## Active work
 
-_None dispatched. Phase 1 gated on user approval of Phase 1 Spec v0.1 + answers to 7 open questions._
+- User-directed first model seed in progress: a selectable procedural femur proxy keyed to `UBERON:0000981` with FMA alias `FMA:9611`.
+- Formal Phase 1 remains gated on user approval of Phase 1 Spec v0.1 + answers to 7 open questions.
 
 ## Blockers
 
@@ -55,6 +56,7 @@ See [decision-log.md](decision-log.md). Latest:
 | Schema updates | ✅ four schemas updated for UBERON-primary | Non-breaking; all validate |
 | Master spec | ✅ refreshed | §3 §4 §5 §7 §11 |
 | Phase 1 Spec | ✅ drafted | Awaiting user approval |
+| First model seed | ⏳ in progress | Procedural femur proxy keyed to `UBERON:0000981`; not atlas-grade |
 | Local verify | ✅ green | Typecheck + 7 schemas + build all pass |
 | CI on main | ⏳ runs on next push | Push will follow this commit |
 

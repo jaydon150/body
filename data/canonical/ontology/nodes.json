@@ -1,0 +1,28 @@
+{
+  "version": "2026-05-11",
+  "nodes": [
+    {
+      "id": "UBERON:0000981",
+      "labels": [
+        {
+          "text": "Femur",
+          "lang": "en",
+          "source": "TA2 / UBERON"
+        },
+        {
+          "text": "os femoris",
+          "lang": "la",
+          "source": "TA2"
+        }
+      ],
+      "aliases": {
+        "fma": "FMA:9611",
+        "ta2": "1360",
+        "snomed": "71341001"
+      },
+      "kind": "structure",
+      "status": "pending"
+    }
+  ],
+  "edges": []
+}

@@ -16,13 +16,13 @@ This document is the single source of truth for what is decided and what is open
 - **Distribution model:** open, non-commercial. No commercial pivot planned.
 - **Repository:** GitHub private during early development; reserved name `body`. Public release contingent on Phase 0 completion and content readiness.
 
-## 2. Stack (locked)
+## 2. Stack (locked, refined 2026-05-11 evening)
 
-- **Platform:** web-first, desktop and laptop browsers
+- **Platforms:** web-first; **desktop browser and iPad as co-primary targets** (per Phase 1 Spec v0.2 user refinement). iPhone and Android phones remain out of scope.
 - **Engine:** Three.js via react-three-fiber
 - **Framework:** React + TypeScript + Vite
 - **Renderer baseline:** WebGL2, with WebGPU upgrade where available
-- **Out of scope for v1:** mobile, VR/AR, Unity/Unreal native, volumetric rendering
+- **Out of scope for v1:** phone form factors, VR/AR, Unity/Unreal native, volumetric rendering
 
 ## 3. Asset path (locked, refined by ADR 0005)
 
@@ -40,6 +40,7 @@ This document is the single source of truth for what is decided and what is open
 | Code | AGPL-3.0-or-later | `LICENSE` |
 | Anatomical content + data | CC-BY-SA-4.0 | `LICENSE-CONTENT` |
 | Project documentation | CC-BY-4.0 | `LICENSE-DOCS` |
+| Runtime attribution (in-asset + in-product) | per ADR 0006 | baked into glTF metadata + in-app "About this atlas" surface |
 | Upstream BodyParts3D | CC-BY-SA-2.1-JP (verified 2026-05-11) | `ATTRIBUTIONS.md` |
 | Upstream OpenAnatomy (Phase 2+) | 3D Slicer License | `ATTRIBUTIONS.md` |
 
@@ -101,6 +102,9 @@ Tissue, cellular, female anatomy, pathology overlays, mobile, and VR are reserve
 | Anatomist availability constrains review throughput | Batch reviews; queue managed by QA | QA |
 | FMA's public OBO track is stale; reliance on it as upstream is brittle | UBERON primary per ADR 0004; FMA used only as alias and via BodyParts3D's existing FMA mapping | Anatomy Domain |
 | FMA→UBERON crosswalk gaps for non-canonical structures | Project-local `BODY:NNNN` IDs for orphans; Anatomy Domain owns the crosswalk task list | Anatomy Domain |
+| Share-alike obligation traveling with deployed assets | Runtime attribution baked into glTF metadata + in-app surface per ADR 0006; CI fails on unattributed canonical meshes | Asset Pipeline + UI |
+| iPad GPU constraints vs draw-call ceiling | LOD downshift on tablet, instancing for repeated structures, aggressive perf budget | 3D Engine |
+| OpenAnatomy atlas-page license inheritance not fully verified | Re-verify at canonical OpenAnatomy source as Phase 2 entry prerequisite; do not import OpenAnatomy in Phase 1 | Research/Docs |
 
 ## 12. Out of scope (locked)
 
@@ -122,3 +126,4 @@ Tissue, cellular, female anatomy, pathology overlays, mobile, and VR are reserve
 |------|--------|--------|
 | 2026-05-11 | Initial spec committed at start of Phase 0 | Orchestrator |
 | 2026-05-11 | Phase 0 closed. §3 asset path refined per ADR 0005 (BodyParts3D primary + OpenAnatomy supplement; Z-Anatomy demoted). §4 license map split BodyParts3D and OpenAnatomy chains. §5 anatomical model flipped to UBERON-primary per ADR 0004. §7 Phase 0 marked closed; Phase 1 marked spec-drafting. §11 added two new risks. | Orchestrator |
+| 2026-05-11 (evening) | Phase 1 Spec v0.2 incorporates user refinements: iPad added to §2 as co-primary platform; §4 license map gains a runtime-attribution row pointing to ADR 0006; §11 risks expanded with runtime-attribution, iPad-GPU, and OpenAnatomy-verification entries. ADR 0006 (runtime attribution) drafted and accepted. | Orchestrator |

@@ -1,11 +1,19 @@
-# Phase 1 Spec v0.1
+# Phase 1 Spec v0.2
 
-**Phase:** 1 — First system slice (skeletal)
-**Status:** Drafting — awaiting user approval
+**Phase:** 1 — First system slice (skeletal interactive; skin and muscle as visual placeholders for peel plumbing)
+**Status:** Approved (with refinements); first dispatch ready
 **Author:** Orchestrator
-**Date:** 2026-05-11
+**Date:** 2026-05-11 (v0.1 → v0.2 revisions same day after user input)
 
-## Inherited state (from Phase 0 close + ADRs 0004/0005)
+## v0.1 → v0.2 changes
+
+- **Scope clarified.** Peel UX *validation* (does the interaction teach users anything) is **deferred to Phase 2** when muscle content lands. Phase 1 builds and exercises the peel plumbing on skin + muscle as visual placeholders, but cannot prove the UX is right.
+- **iPad added as co-primary target**, not secondary. Touch input, responsive layout, iPad-class GPU perf budgets are first-class.
+- **Peel preset naming** changes from `surface / subcutaneous / musculoskeletal` to plain `skin / muscle / bone` as the primary register, with a nomenclature toggle that exposes the clinical register as a secondary UI option.
+- **Runtime attribution** acceptance criterion added per ADR 0006. Asset Pipeline bakes provenance into glTF metadata; UI exposes an "About this atlas" surface.
+- **User's procedural femur proxy seed** acknowledged. The proxy keyed to `UBERON:0000981` (FMA alias `FMA:9611`) is a placeholder; BodyParts3D pipeline output replaces it once available. The proxy is the first content the registry must accommodate.
+
+## Inherited state (from Phase 0 close + ADRs 0004/0005/0006)
 
 - Repository structure, agents, contracts, app skeleton committed and pushed.
 - Stack locked: Vite + React + TypeScript + react-three-fiber, WebGL2 baseline.
@@ -16,17 +24,24 @@
 
 ## Goal — Phase 1 done means
 
-A working **skeletal-system vertical slice** running locally at `npm run dev`. A user can:
+A working **skeletal-system vertical slice** running locally at `npm run dev`, on desktop browser and iPad-class hardware. A user can:
 
 1. See the body with skin, muscle, and bone meshes loaded.
 2. Click any skeletal structure → its name and a reviewed description appear in a side panel.
-3. Use peel-mode presets to remove skin, then muscle, revealing the skeleton.
+3. Use peel-mode presets to toggle `skin / muscle / bone` visibility, revealing the skeleton.
 4. Use the sidebar tree to navigate from `Skeletal system → Axial → Vertebral column → Cervical → C1 (atlas)`.
 5. Search "atlas" and select C1 directly.
 6. Dive into a selected structure: camera focuses, siblings dim, breadcrumb updates, sidebar re-roots.
 7. Ascend via the breadcrumb to back out of the dive.
+8. Switch between plain and clinical nomenclature (skin ↔ surface, muscle ↔ subcutaneous, etc.) via a UI toggle.
+9. Find the "About this atlas" surface within three clicks; see verbatim upstream attribution per ADR 0006.
+10. Use the app fluently on iPad with touch input (drag-to-rotate, pinch-to-zoom, tap-to-select).
 
-Skin and muscle meshes are **loaded and visible**, but **non-interactive** in Phase 1 — clicking them surfaces a "Phase 2 content not yet authored" placeholder. This proves the peel mechanic without expanding the content scope to all three systems.
+Skin and muscle meshes are **loaded and visible** for the peel plumbing test, but **content is not yet authored** for them in Phase 1. Clicking a skin or muscle mesh surfaces a "Phase 2 content not yet authored" placeholder.
+
+### What Phase 1 does *not* prove
+
+**Peel UX validation is deferred to Phase 2.** Phase 1 confirms the peel toggle works mechanically — meshes hide and show, animate smoothly, perform within budget — but cannot confirm the *interaction teaches users anything* until muscle has real content underneath. The peel UX as an educational tool is validated when Phase 2 adds muscle content, not now.
 
 ## Acceptance criteria
 
@@ -37,35 +52,41 @@ Skin and muscle meshes are **loaded and visible**, but **non-interactive** in Ph
 | 3 | `mesh-asset-manifest.json` registers every imported mesh; every mesh's `id` resolves to an ontology node | Asset Pipeline + Anatomy Domain |
 | 4 | App renders the body with skin + muscle + bone, default materials, lit | 3D Engine |
 | 5 | GPU picking works; clicking any skeletal mesh emits a `select` event | 3D Engine |
-| 6 | Peel mode toggles between `surface` / `subcutaneous` / `musculoskeletal` presets; non-skeletal meshes hide accordingly | 3D Engine |
-| 7 | Selected structure gets an outline pass; camera animates to frame it | 3D Engine |
-| 8 | Sidebar tree displays the skeletal hierarchy from `Skeletal system` down to leaf bones | UI |
-| 9 | Breadcrumb bar shows the current dive-deeper depth and ascends on click | UI |
-| 10 | Search (Cmd/Ctrl+K) finds skeletal structures by label or synonym | UI |
-| 11 | Detail panel shows the selected structure's reviewed content record | UI |
-| 12 | At least 50 skeletal structures have `reviewed` content; anatomist sign-off logged | Content + QA |
-| 13 | All seven schemas validate; full ajv meta-schema validation in place (upgrade from Phase 0 placeholder) | Architect + QA |
-| 14 | Visual regression baselines committed for: loaded scene, peel transitions, dive-deeper transitions | QA |
-| 15 | Performance: stable 60 fps on mid-range hardware (Apple M-series / 4-year-old laptop); draw calls below budget; bundle gzipped under 1.5 MB | 3D Engine + DevOps |
-| 16 | CI green: typecheck + schema validation + build + visual regression | DevOps |
+| 6 | Peel mode toggles between `skin / muscle / bone` presets; non-skeletal meshes hide accordingly | 3D Engine |
+| 7 | Nomenclature toggle switches preset labels between plain (`skin / muscle / bone`) and clinical (`surface / subcutaneous / musculoskeletal`) registers everywhere they appear | UI |
+| 8 | Selected structure gets an outline pass; camera animates to frame it | 3D Engine |
+| 9 | Sidebar tree displays the skeletal hierarchy from `Skeletal system` down to leaf bones | UI |
+| 10 | Breadcrumb bar shows the current dive-deeper depth and ascends on click | UI |
+| 11 | Search (Cmd/Ctrl+K, or tap-search-icon on iPad) finds skeletal structures by label or synonym | UI |
+| 12 | Detail panel shows the selected structure's reviewed content record | UI |
+| 13 | At least 50 skeletal structures have `reviewed` content; anatomist sign-off logged | Content + QA |
+| 14 | All seven schemas validate; full ajv meta-schema validation in place (upgrade from Phase 0 placeholder) | Architect + QA |
+| 15 | Visual regression baselines committed for: loaded scene, peel transitions, dive-deeper transitions, at both desktop and iPad viewport sizes | QA |
+| 16 | Performance — **desktop:** stable 60 fps on mid-range hardware (Apple M-series / 4-year-old laptop); draw calls below budget; bundle gzipped under 1.5 MB | 3D Engine + DevOps |
+| 17 | Performance — **iPad co-primary:** stable 60 fps on iPad Air 4 / 9th-gen-class hardware (A14/A13 SoC); touch input (drag-rotate, pinch-zoom, tap-select) works; layout responsive at iPad portrait (768px) and landscape (1366px) | 3D Engine + UI + DevOps |
+| 18 | Runtime attribution per ADR 0006: every canonical glb carries `asset.copyright` + `asset.extras.source`; in-app "About this atlas" surface reachable in ≤ 3 clicks shows verbatim upstream attribution; `build-manifest.json` enumerates contributing sources | Asset Pipeline + UI + DevOps |
+| 19 | CI green: typecheck + schema validation + build + visual regression (desktop + iPad viewport snapshots) | DevOps |
 
 ## Scope locked
 
 - **Systems with full interactivity:** skeletal only.
 - **Systems present as non-interactive meshes:** integumentary (skin), muscular.
-- **Number of skeletal structures:** ~80–120. Major bones with sub-structures for the major ones (e.g. femur head/neck/shaft/condyles; vertebrae individually named C1–L5).
+- **Number of skeletal structures:** ~100 (default per user). Major bones with sub-structures for the flagship ones (e.g. femur head/neck/shaft/condyles; vertebrae individually named C1–L5).
 - **Floor:** organ-level. No tissue, no cellular.
 - **Body variant:** male.
+- **Targets:** desktop browser **and** iPad (co-primary). Apple M-series / 4-year-old laptop on desktop side; iPad Air 4 / 9th-gen-class on tablet side.
+- **Procedural femur proxy:** continues as a placeholder until pipeline output replaces it. Treated as the first registered asset in `mesh-asset-manifest.json` and the first content-record dry-run.
 
 ## Scope explicitly NOT in Phase 1
 
-- Skin / muscle ontology and content (Phase 2).
+- **Peel UX validation** (deferred to Phase 2 with muscle content; mechanical-peel plumbing is in scope).
+- Skin / muscle ontology and content authoring.
 - Female anatomy.
 - Functional anatomy (innervation, supply, attachments) — Phase 2+.
 - Pathology, clinical correlations.
 - Quizzes and learning paths.
 - Public deploy. App runs locally only.
-- Mobile, tablet, VR/AR.
+- iPhone, Android phone, VR/AR (only iPad as a tablet target).
 - Authentication, accounts, persistent user state.
 
 ## Folder additions / changes
@@ -95,29 +116,34 @@ Order matters: pipeline must precede renderer; renderer must precede UI integrat
 | 5 | Run `pipelines/02-clean-meshes` → Blender headless cleanup | Asset Pipeline | step 4 | clean glb |
 | 6 | Run `pipelines/03-decimate-lods` → generate LOD chains | Asset Pipeline | step 5 | LOD0/1/2 glb per mesh |
 | 7 | Run `pipelines/04-validate-ontology` → cross-check IDs | Asset Pipeline + Anatomy Domain | steps 2 + 6 | validation report, missing-ID list |
-| 8 | Run `pipelines/05-bake-registry` → produce `mesh-asset-manifest.json` | Asset Pipeline | step 7 | `data/derived/mesh-registry.json` |
+| 8 | Run `pipelines/05-bake-registry` → produce `mesh-asset-manifest.json` AND bake glTF `asset.copyright` + `asset.extras.source` per ADR 0006 | Asset Pipeline | step 7 | `data/derived/mesh-registry.json`, attribution baked into every glb |
 | 9 | Upgrade schema validation to full ajv meta-schema | Architect + QA | — | `app/web/scripts/validate-schemas.mjs` upgraded |
 | 10 | 3D Engine: load registry, render meshes, materials, lighting | 3D Engine | step 8 | `app/web/src/engine/`, `app/web/src/scene/` populated |
 | 11 | 3D Engine: GPU picking, selection state, outline pass | 3D Engine | step 10 | selection events emit correctly |
 | 12 | 3D Engine: peel-mode presets, dive-deeper camera animation | 3D Engine | step 11 | peel + dive verified |
-| 13 | UI: layout, sidebar tree, breadcrumbs, search, detail panel | UI | steps 2 + 11 | `app/web/src/ui/` populated |
-| 14 | UI ↔ 3D Engine integration | UI + 3D Engine | steps 12 + 13 | click ↔ panel, tree ↔ camera, search ↔ select all wired |
+| 13 | UI: layout, sidebar tree, breadcrumbs, search, detail panel, nomenclature toggle, "About this atlas" surface, responsive iPad layout | UI | steps 2 + 11 | `app/web/src/ui/` populated |
+| 14 | UI ↔ 3D Engine integration; touch input on iPad (drag-rotate, pinch-zoom, tap-select); attribution surface populated from registry | UI + 3D Engine | steps 8 + 12 + 13 | click/tap ↔ panel, tree ↔ camera, search ↔ select, peel ↔ visibility, attribution surface ↔ registry all wired |
 | 15 | Content first batch: draft 50–100 skeletal descriptions | Content | step 2 | content records, all `pending` |
 | 16 | Anatomist review batch | Content (via user) | step 15 | content records promoted to `reviewed` |
-| 17 | QA: visual regression baselines, perf budgets, accuracy queue | QA | step 14 | tests committed |
+| 17 | QA: visual regression baselines (desktop + iPad viewports), perf budgets (desktop + iPad GPU), accuracy queue | QA | step 14 | tests committed |
 | 18 | UX/Accessibility audit (Tier 2) | UX/A11y | step 14 | audit report, fixes filed |
 | 19 | Reviewer pass at each major handoff (3, 8, 14) | Reviewer | n/a | review reports |
 | 20 | End-to-end check + Phase 1 retro | Orchestrator | all above | retro doc, status update |
 
-## Open questions for user approval
+## Open questions — resolved in v0.2
 
-1. **Skeletal structure count.** I proposed 80–120. Confirm or set explicit count. (Higher = more anatomist review burden; lower = thinner Phase 1 demo.)
-2. **Peel preset names.** `surface` / `subcutaneous` / `musculoskeletal` — confirm wording, or pick different names that match the educational register you want.
-3. **BodyParts3D download.** I need a confirmed working download URL. The `lifesciencedb.jp/bp3d/` archive has historical URLs that may have moved. Asset Pipeline's first task is verifying access; if blocked, escalate.
-4. **Blender headless dependency.** Phase 1 pipeline `02-clean-meshes` requires Blender installed locally for headless invocation. Confirm Blender is available (or installable) on your machine. Not needed in CI — only for local pipeline runs.
-5. **Anatomist review cadence.** First batch of ~50 descriptions: target turnaround? Weekly? Monthly? Asks the QA agent to schedule the queue.
-6. **Performance target hardware.** I proposed "mid-range, 4-year-old laptop." Confirm or adjust.
-7. **Phase 1 close gate.** Hard criteria as listed, or do you want any criterion relaxed for a faster cycle? (My recommendation: hold all 16 acceptance criteria.)
+1. ✅ **Skeletal structure count:** ~100 (user default).
+2. ✅ **Peel preset names:** plain `skin / muscle / bone` primary, with a nomenclature toggle exposing clinical `surface / subcutaneous / musculoskeletal` as secondary.
+3. 🔍 **BodyParts3D download:** Asset Pipeline verifies at step 3; escalates only if blocked. No change from v0.1.
+4. ⏳ **Blender install on user's machine:** still open. Step 5 of dispatch depends on Blender being available locally. If absent, Orchestrator queues "install Blender" as a Phase 1 prerequisite ahead of step 5.
+5. ✅ **Anatomist review cadence:** 50 / batch / 1–2 wk turnaround as working assumption. **Revisit once an anatomist is confirmed** (user-flagged in v0.2).
+6. ✅ **Performance target:** mid-range 4-year-old laptop on desktop **AND** iPad Air 4 / 9th-gen-class on tablet (co-primary, per v0.2 update).
+7. ✅ **Phase 1 close gate:** hold all 19 acceptance criteria (was 16 in v0.1; 17–18 added in v0.2 for iPad perf and attribution).
+
+## Outstanding follow-ups (orchestrator owns)
+
+- **OpenAnatomy verification.** Partial verification done on 2026-05-11: the 3D Slicer License itself is BSD-permissive (verified at `github.com/Slicer/Slicer/blob/main/License.txt`). The OpenAnatomy atlas-page-level inheritance claim could not be verified during ingestion (two URL guesses 404'd). This is **not a Phase 1 blocker** because OpenAnatomy isn't imported in Phase 1; it **is a Phase 2 entry prerequisite.** Research/Docs owns the re-verification before Phase 2 opens.
+- **Blender install confirmation.** Awaiting user yes/no.
 
 ## Risks specific to Phase 1
 
@@ -129,6 +155,10 @@ Order matters: pipeline must precede renderer; renderer must precede UI integrat
 | Anatomist review batch slower than Phase 1 cadence | Don't block on full anatomist completion; ship Phase 1 with a subset reviewed, the rest queued | Content + QA |
 | Draw call ceiling hit early | Identify with browser perf tools at step 11; mitigate via instancing (vertebrae, ribs) before adding more meshes | 3D Engine |
 | Bundle size exceeds 1.5 MB target | Code-split Three.js via dynamic import; lazy-load LOD0 meshes; reserve WebGPU upgrade for Phase 2 | 3D Engine + DevOps |
+| iPad GPU is significantly slower than desktop; perf budget pressure on tablet target | LOD downshift on detected tablet user-agent; tighten draw-call budget for iPad; aggressive instancing for repeated structures (vertebrae, ribs) | 3D Engine |
+| iOS Safari WebGL2 quirks (historical) | Verify early via real-device test; fallback path is documented limitations rather than silent failures | 3D Engine + QA |
+| Touch input for dive-deeper and selection conflicts with rotate/pan gestures | Long-press for select vs drag-to-rotate; explicit one-finger orbit, two-finger pan, pinch zoom; test in UX/A11y audit | UI + UX/A11y |
+| Runtime attribution scope creep | Pipeline-side metadata baking is mechanical; UI "About" surface is bounded to listing sources from registry; resist adding history, contributor lists, etc. in Phase 1 | Asset Pipeline + UI |
 
 ## Estimated effort
 
@@ -143,9 +173,16 @@ The deep-research feed's "4–10 weeks" estimate covered a narrower goal (browse
 
 ## What I need from you to dispatch Phase 1
 
-1. **Approve Phase 1 Spec v0.1** as written, or push back on specific criteria.
-2. **Answers to the seven open questions above** (or "default" for each you want me to choose).
-3. **Confirm Blender installation status** on your machine. Required for local pipeline runs of `02-clean-meshes`.
-4. **First anatomist batch size + cadence.** Even a rough estimate ("50 structures, one week turnaround") unblocks Content + QA dispatching.
+v0.2 incorporates the user-approved refinements:
 
-Once approved, the first dispatch is Research/Docs (step 1) — non-blocking, can run in background while you confirm the remaining steps.
+- Plain `skin / muscle / bone` naming + nomenclature toggle
+- iPad as co-primary target
+- Runtime attribution acceptance criterion (ADR 0006)
+- Peel UX validation explicitly deferred to Phase 2
+- Anatomist cadence flagged for revisit
+
+**Outstanding before dispatch:**
+
+1. **Blender installation status** on your machine — required for local `02-clean-meshes` runs. Pre-step 5 of the dispatch sequence.
+
+**First dispatch is unblocked even with Blender open**: **Research/Docs step 1 — FMA→UBERON skeletal crosswalk** — has no dependency on Blender, BodyParts3D download, or anatomist availability. It can begin immediately on user "go."

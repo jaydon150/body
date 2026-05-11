@@ -1,0 +1,34 @@
+{
+  "version": "user-directed-seed-0.1.0",
+  "generated_at": "2026-05-11T05:30:00Z",
+  "entries": [
+    {
+      "id": "UBERON:0000981",
+      "lods": [
+        {
+          "level": 0,
+          "file": "procedural/femur-proxy-threejs",
+          "triangle_count": 3824,
+          "vertex_count": 2048,
+          "byte_size": 0,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [-1.12, -1.82, -0.38],
+        "max": [0.56, 1.88, 0.42]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "hand-authored procedural proxy",
+        "license": "CC-BY-SA-4.0",
+        "original_id": "FMA:9611",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "Built from primitive Three.js geometry as a first selectable skeletal proxy",
+          "Not an atlas-grade mesh; replace with BodyParts3D pipeline output"
+        ]
+      }
+    }
+  ]
+}

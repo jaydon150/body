@@ -54,6 +54,26 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **Phase 1 starter system confirmed.** Skeletal. Vertical slice covers: import BodyParts3D skeletal meshes → build UBERON-primary sub-ontology with FMA aliases → mesh registry + LODs → renderer with selection / peel / dive-deeper for skeletal → UI sidebar / search / breadcrumbs / panel → first content batch with anatomist review. Detailed in Phase 1 Spec v0.1.
 
+- **User-directed first model seed.** Started a hand-authored procedural femur proxy keyed to `UBERON:0000981` with `FMA:9611` as an alias. *Reason:* user asked to start making the 3D model immediately; this creates one selectable skeletal structure without pretending the formal BodyParts3D pipeline is complete. The proxy is not atlas-grade and must be replaced by BodyParts3D pipeline output.
+
+---
+
+## 2026-05-11 (late evening — Phase 1 Spec v0.2 refinements)
+
+- **Phase 1 framing clarified.** Phase 1 is whole-body skeletal *interactively populated*; skin and muscle meshes are *visual placeholders* for the peel plumbing. **Peel UX validation is explicitly deferred to Phase 2** (muscle content is the load-bearing layer for that judgement; absent muscle content, the peel toggle can be exercised but its educational UX cannot be validated). *Reason:* user surfaced the framing tension between "test peel end-to-end" and "only one system has content."
+
+- **iPad added as co-primary platform target** (not secondary). Touch input, responsive layout, iPad-class GPU perf budgets are first-class Phase 1 acceptance criteria. *Reason:* user override of the v0.1 desktop-only assumption.
+
+- **Peel preset naming flipped to plain.** Primary register: `skin / muscle / bone`. Clinical register: `surface / subcutaneous / musculoskeletal`. Switched via a UI nomenclature toggle. *Reason:* user prefers plain register for the educational-first audience; clinical register stays accessible via toggle for users who want it. New acceptance criterion #7 codifies this.
+
+- **Anatomist review cadence flagged for revisit.** v0.2 keeps the working assumption (50 / batch / 1–2 wk) but explicitly marks it for re-confirmation once a specific anatomist is engaged. *Reason:* user note that the cadence assumes facts not yet in evidence.
+
+- **Runtime attribution must travel with assets.** ADR 0006 accepted: every canonical glb bakes `asset.copyright` + `asset.extras.source`; the deployed app exposes an "About this atlas" surface; build manifest enumerates contributing sources. *Reason:* user point that share-alike notices must travel with the work — ATTRIBUTIONS.md at the repo root doesn't reach end users of the deployed app. ADR: 0006.
+
+- **OpenAnatomy license — partial verification.** The 3D Slicer License itself is BSD-permissive (verified at `github.com/Slicer/Slicer/blob/main/License.txt`). The research's "Section B" framing is misleading — there is no atlas-specific Section B; Part B is general software. OpenAnatomy atlas-page-level inheritance could not be directly verified during ingestion (URL guesses 404'd). **Phase 2 entry prerequisite:** Research/Docs re-verifies before any OpenAnatomy import. Not a Phase 1 blocker.
+
+- **Phase 1 Spec v0.1 → v0.2.** 16 acceptance criteria → 19. New: nomenclature toggle (#7), iPad perf (#17), runtime attribution (#18). Renumbered the rest. Open questions consolidated; 5 of 7 resolved, Blender install remains open, BodyParts3D download verifies-at-step-3 unchanged.
+
 ---
 
 ## Conventions

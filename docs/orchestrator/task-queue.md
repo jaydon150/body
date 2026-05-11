@@ -16,6 +16,7 @@ Active queue, in-progress items, and what's blocked. The orchestrator maintains 
 ## In progress
 
 - `[~] P1` Phase 1 Spec v0.1 drafted at [`docs/orchestrator/phase-1-spec.md`](phase-1-spec.md) — awaiting user approval and answers to 7 open questions before dispatch.
+- `[~] P1-seed` User-directed selectable procedural femur proxy keyed to `UBERON:0000981`; not a replacement for the Phase 1 BodyParts3D import plan.
 
 ## Phase 0 — Infrastructure (CLOSED 2026-05-11)
 
