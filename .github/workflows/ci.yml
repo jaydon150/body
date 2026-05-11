@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   web:
-    name: web — typecheck + schemas + build
+    name: web — typecheck + schemas + build + perf + baselines
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -41,6 +41,35 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Perf budget check
+        run: npm run perf:check
+
+      # Playwright Chromium for baseline capture. Cached at the Playwright
+      # browser-cache path (~/.cache/ms-playwright). Cache key keyed on the
+      # @playwright/test version so a bump invalidates the cache.
+      - name: Cache Playwright browsers
+        id: cache-playwright
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('app/web/package-lock.json') }}
+
+      - name: Install Playwright Chromium
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
+
+      - name: Capture visual regression baselines
+        # Phase 1 only captures; Phase 2 will diff against committed PNGs.
+        run: npm run capture:baselines
+
+      - name: Upload baseline screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendering-baselines
+          path: tests/rendering-snapshots/baseline-*.png
+          retention-days: 14
 
       - name: Upload build artifacts
         if: success()

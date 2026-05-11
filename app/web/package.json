@@ -11,7 +11,9 @@
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "validate:schemas": "node scripts/validate-schemas.mjs",
-    "verify": "npm run typecheck && npm run validate:schemas && npm run build"
+    "verify": "npm run typecheck && npm run validate:schemas && npm run build",
+    "perf:check": "node ../../pipelines/08-perf-budget/check.mjs",
+    "capture:baselines": "node ../../tests/rendering-snapshots/capture.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.114.0",
@@ -22,6 +24,7 @@
     "zustand": "^4.5.5"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@types/node": "^20.19.40",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

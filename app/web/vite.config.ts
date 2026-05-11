@@ -37,90 +37,100 @@ function canonicalMeshStaticPlugin(): Plugin {
     res.end('Not Found');
   };
 
+  const handler = async (
+    req: Connect.IncomingMessage,
+    res: import('node:http').ServerResponse,
+    next: Connect.NextFunction,
+  ): Promise<void> => {
+    if (!req.url) {
+      return next();
+    }
+    const url = new URL(req.url, 'http://localhost');
+    const path = url.pathname;
+
+    if (path === '/registry.json') {
+      try {
+        const s = await stat(registryPath);
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+        res.setHeader('Content-Length', s.size.toString());
+        res.setHeader('Cache-Control', 'no-cache');
+        createReadStream(registryPath).pipe(res);
+      } catch {
+        send404(req, res);
+      }
+      return;
+    }
+
+    if (path.startsWith('/meshes/')) {
+      const sub = decodeURIComponent(path.slice('/meshes/'.length));
+      // Guard: no parent-dir traversal, no absolute paths.
+      if (sub.includes('..') || sub.startsWith('/') || sub.includes('\0')) {
+        return send404(req, res);
+      }
+      const target = normalize(resolve(meshesRoot, sub));
+      // Belt-and-braces: ensure resolved path stays under meshesRoot.
+      if (!target.startsWith(meshesRoot + sep) && target !== meshesRoot) {
+        return send404(req, res);
+      }
+      try {
+        const s = await stat(target);
+        if (!s.isFile()) {
+          return send404(req, res);
+        }
+        res.setHeader('Content-Type', 'model/gltf-binary');
+        res.setHeader('Content-Length', s.size.toString());
+        res.setHeader('Cache-Control', 'no-cache');
+        createReadStream(target).pipe(res);
+      } catch {
+        send404(req, res);
+      }
+      return;
+    }
+
+    if (path.startsWith('/content/')) {
+      const sub = decodeURIComponent(path.slice('/content/'.length));
+      // Guard: no parent-dir traversal, no absolute paths.
+      if (sub.includes('..') || sub.startsWith('/') || sub.includes('\0')) {
+        return send404(req, res);
+      }
+      // Only serve .json files — refuse anything else for surface-area
+      // hygiene (this folder will only ever hold content records).
+      if (!sub.endsWith('.json')) {
+        return send404(req, res);
+      }
+      const target = normalize(resolve(contentRoot, sub));
+      if (!target.startsWith(contentRoot + sep) && target !== contentRoot) {
+        return send404(req, res);
+      }
+      try {
+        const s = await stat(target);
+        if (!s.isFile()) {
+          return send404(req, res);
+        }
+        res.setHeader('Content-Type', 'application/json; charset=utf-8');
+        res.setHeader('Content-Length', s.size.toString());
+        // Content records change as the Content agent reviews them; keep
+        // cache short so iteration is responsive.
+        res.setHeader('Cache-Control', 'no-cache');
+        createReadStream(target).pipe(res);
+      } catch {
+        send404(req, res);
+      }
+      return;
+    }
+
+    next();
+  };
+
   return {
     name: 'body-canonical-mesh-static',
-    apply: 'serve',
+    // apply: both serve (dev) and preview. P1.17 visual-regression baselines
+    // run against `vite preview` so the same middleware must register there.
     configureServer(server) {
-      server.middlewares.use(async (req, res, next) => {
-        if (!req.url) {
-          return next();
-        }
-        const url = new URL(req.url, 'http://localhost');
-        const path = url.pathname;
-
-        if (path === '/registry.json') {
-          try {
-            const s = await stat(registryPath);
-            res.setHeader('Content-Type', 'application/json; charset=utf-8');
-            res.setHeader('Content-Length', s.size.toString());
-            res.setHeader('Cache-Control', 'no-cache');
-            createReadStream(registryPath).pipe(res);
-          } catch {
-            send404(req, res);
-          }
-          return;
-        }
-
-        if (path.startsWith('/meshes/')) {
-          const sub = decodeURIComponent(path.slice('/meshes/'.length));
-          // Guard: no parent-dir traversal, no absolute paths.
-          if (sub.includes('..') || sub.startsWith('/') || sub.includes('\0')) {
-            return send404(req, res);
-          }
-          const target = normalize(resolve(meshesRoot, sub));
-          // Belt-and-braces: ensure resolved path stays under meshesRoot.
-          if (!target.startsWith(meshesRoot + sep) && target !== meshesRoot) {
-            return send404(req, res);
-          }
-          try {
-            const s = await stat(target);
-            if (!s.isFile()) {
-              return send404(req, res);
-            }
-            res.setHeader('Content-Type', 'model/gltf-binary');
-            res.setHeader('Content-Length', s.size.toString());
-            res.setHeader('Cache-Control', 'no-cache');
-            createReadStream(target).pipe(res);
-          } catch {
-            send404(req, res);
-          }
-          return;
-        }
-
-        if (path.startsWith('/content/')) {
-          const sub = decodeURIComponent(path.slice('/content/'.length));
-          // Guard: no parent-dir traversal, no absolute paths.
-          if (sub.includes('..') || sub.startsWith('/') || sub.includes('\0')) {
-            return send404(req, res);
-          }
-          // Only serve .json files — refuse anything else for surface-area
-          // hygiene (this folder will only ever hold content records).
-          if (!sub.endsWith('.json')) {
-            return send404(req, res);
-          }
-          const target = normalize(resolve(contentRoot, sub));
-          if (!target.startsWith(contentRoot + sep) && target !== contentRoot) {
-            return send404(req, res);
-          }
-          try {
-            const s = await stat(target);
-            if (!s.isFile()) {
-              return send404(req, res);
-            }
-            res.setHeader('Content-Type', 'application/json; charset=utf-8');
-            res.setHeader('Content-Length', s.size.toString());
-            // Content records change as the Content agent reviews them; keep
-            // cache short so iteration is responsive.
-            res.setHeader('Cache-Control', 'no-cache');
-            createReadStream(target).pipe(res);
-          } catch {
-            send404(req, res);
-          }
-          return;
-        }
-
-        next();
-      });
+      server.middlewares.use(handler);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(handler);
     },
   };
 }

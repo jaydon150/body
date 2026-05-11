@@ -124,3 +124,94 @@ A `.md` file:
 
 A real PDF generator (Puppeteer, LaTeX) is a heavier dependency and
 is reserved for Phase 2+ if the anatomist requests a formatted PDF.
+
+## Review state machine
+
+Each item in a batch's `manifest.json` moves through a small,
+linear set of states. The batch as a whole carries an overall
+`status` that summarises the items.
+
+### Per-item state diagram
+
+```
+                   generate-packet                    anatomist               promote.mjs
+   [content record  ─────────────► queued ─────────► in_review ─────────► one of:
+    confidence:                                       (optional)            approved        ─► reviewed
+    "pending"]                                                              approved_w_edits─► (stays pending; Content rewrites)
+                                                                            rejected        ─► (stays pending; Content/Anatomy decides)
+                                                                            needs_research  ─► (stays pending; Research/Docs picks up)
+```
+
+Transitions:
+
+| From          | To                    | Trigger                                                         | Side effect                                    |
+|---------------|-----------------------|-----------------------------------------------------------------|------------------------------------------------|
+| n/a           | `queued`              | `generate-packet.mjs` emits the manifest item                   | content record stays `confidence: "pending"`   |
+| `queued`      | `in_review`           | anatomist starts reading (optional intermediate)                | none                                           |
+| `queued`/`in_review` | `approved`     | anatomist signs off as-is                                       | `decision` field **required**                  |
+| `queued`/`in_review` | `approved_with_edits` | anatomist requires prose changes before sign-off         | Content agent rewrites; new batch queues       |
+| `queued`/`in_review` | `rejected`     | record is wrong / out of scope                                  | Content/Anatomy reassesses                     |
+| `queued`/`in_review` | `needs_research` | anatomist needs primary sources first                        | Research/Docs spike, then re-author            |
+| `approved`    | *promoted* (terminal) | `promote.mjs` writes `confidence: "reviewed"` to the record     | record now has `reviewed_by` + `last_updated`  |
+
+The four non-`approved` terminal labels are deliberately not auto-promoted.
+The reasoning is captured per row:
+
+- **`approved_with_edits`** — the prose itself needs Content-agent revision
+  before final sign-off. Auto-promoting would lock in un-revised text.
+- **`rejected`** — the record should not be in the canonical content tree
+  as authored. Removal vs rewrite is a Content/Anatomy decision; QA does
+  not silently delete records.
+- **`needs_research`** — escalation path is Research/Docs. After the
+  spike, Content re-authors and the structure re-enters a future batch.
+
+### Batch-level state diagram
+
+```
+   generate-packet.mjs       anatomist                       promote.mjs
+   ──────────────────►  queued  ───►  in_review  ───►  complete  ──────► (batch closed;
+                                                                          promoted items
+                                                                          have confidence:
+                                                                          "reviewed")
+```
+
+| State        | Meaning                                                                 | Allowed next            |
+|--------------|-------------------------------------------------------------------------|-------------------------|
+| `queued`     | Manifest generated. Anatomist has not started.                          | `in_review`             |
+| `in_review`  | At least one item is `in_review`/`approved`/`approved_with_edits`/etc.  | `complete`              |
+| `complete`   | Anatomist has signed off on every item. Manifest is ready for promote.  | (terminal)              |
+
+`promote.mjs` does not transition the batch status itself; the anatomist
+(or a future helper) sets `manifest.status = "complete"` before running
+promote. `promote.mjs` refuses to run if `anatomist.name` is still
+`TBD` or empty (the content-record schema requires `reviewed_by`).
+
+## How QA tracks batches across time
+
+- **One folder per batch.** Folder name pattern `YYYY-MM-DD-batch-N`,
+  matching `manifest.batch_id`. Folders are committed to git.
+- **Append-only.** A batch folder, once promoted, is **not** rewritten.
+  If a record needs re-review (e.g. an anatomist later disagrees with a
+  prior approval), a new batch is generated containing that record;
+  the old batch folder is preserved as historical record.
+- **Cross-batch audit = git log.** Because batch folders + content
+  records both live under version control, the full journey of any
+  record (`confidence: "pending"` → `reviewed`, who reviewed it, when,
+  what notes attached) is reconstructable from `git log` over the
+  content record and the manifest in the batch folder it appeared in.
+- **Triage signal.** A future helper script (proposed:
+  `pipelines/07-anatomist-review/triage-report.mjs`) walks every
+  `manifest.json` under `tests/review-queue/` and summarises non-
+  `approved` items across all batches so Orchestrator can route
+  follow-ups (Content rewrite for `approved_with_edits`,
+  Research/Docs for `needs_research`, Content/Anatomy review for
+  `rejected`). Filed as an open item in `docs/agents/qa.state.md`.
+
+### Counts as of Phase 1
+
+- 1 batch: `2026-05-11-batch-1/` — 51 items, all `status: "queued"`,
+  anatomist `TBD`. The packet is awaiting out-of-band review by a
+  university faculty anatomist; once the marked-up manifest comes
+  back, run `node pipelines/07-anatomist-review/promote.mjs --dry-run`
+  first, then live, then re-run
+  `node pipelines/06-validate-content/validate.mjs` to confirm.

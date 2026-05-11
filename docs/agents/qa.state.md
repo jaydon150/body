@@ -3,7 +3,7 @@
 Append-only state log. Most recent at top.
 
 **Initialized:** 2026-05-11
-**Last invocation:** 2026-05-11 — P1.16 (anatomist review queue, cross-domain Content + QA second invocation)
+**Last invocation:** 2026-05-11 — P1.17 (visual regression baselines + perf budgets + review-queue state machine, third QA invocation)
 
 ---
 
@@ -21,6 +21,29 @@ Append-only state log. Most recent at top.
 3. **(NEW, P1.09)** **CI runs `npm run validate:schemas` already (per `.github/workflows/ci.yml` step "Validate schemas").** No CI changes needed in P1.09 — the new ajv-backed validator is a drop-in replacement; the step still invokes the same script via npm. Confirmed end-to-end by running `npm run verify` locally.
 
 ## Decisions log
+
+### 2026-05-11 — P1.17 (visual regression baselines + perf budgets + review-queue state machine, third QA invocation)
+
+- **Playwright `@playwright/test ^1.59.1` + Chromium 147 added to `app/web` devDependencies.** Installed via `npm install --save-dev @playwright/test` then `npx playwright install chromium` (no `--with-deps`; system deps assumed pre-installed on Windows + GitHub-Actions ubuntu-latest). 3 new packages added to the lockfile; pre-existing 2 moderate-severity dep-audit findings unchanged (filed in P1.09 as a possible future "audit fix" dispatch).
+- **`vite.config.ts` `canonicalMeshStaticPlugin` extended to register under both `configureServer` and `configurePreviewServer`.** Previously `apply: 'serve'`-only; that gated the dev server's `/registry.json` + `/meshes/*` + `/content/*` routes to dev mode only. `vite preview` did not have those routes, so the baseline-capture script (which runs against the prod build for fidelity) would have rendered an empty scene. Lifting the apply gate and binding the same handler in `configurePreviewServer` is a minimal, surgical change — no production impact, since prod deploy is out of Phase 1 scope (the canonical mesh tree is dev-time only by design; ADR-eligible discussion in Phase 2 if and when prod deploy enters scope).
+- **New script `tests/rendering-snapshots/capture.mjs`** (~200 lines, zero new deps beyond Playwright). Spawns `vite preview` via the local `node_modules/vite/bin/vite.js` directly (bypassing `npm.cmd` to side-step Node 24 + Windows EINVAL on shimmed `.cmd` spawn). Polls until the server is reachable on :5173, then for each of three viewports (desktop 1920x1080, iPad-landscape 1366x1024, iPad-portrait 768x1024): launches a Chromium context, navigates, waits for `networkidle`, waits an additional 4 s for GLB streams + R3F render passes to settle, screenshots to `baseline-<viewport>.png`. Cleans up the preview server on exit via `taskkill /pid <pid> /f /t` on Windows or `SIGTERM` elsewhere. Playwright is imported via explicit relative-path `pathToFileURL` to `app/web/node_modules/@playwright/test/index.mjs` because Node ESM's package-lookup starts at the script's directory, not the cwd — same pattern as pipelines/06 + 07 for ajv.
+- **3 baselines captured, committed to git as ordinary PNG binaries (not LFS).** Sizes: desktop 96 KB, iPad-landscape 89 KB, iPad-portrait 70 KB. Inspected visually — skeleton renders at all viewports, UI chrome responsive (iPad portrait collapses sidebar to hamburger), peel/about/nomenclature controls visible. The skeleton's apparent horizontal orientation is the engine's initial camera state, not a capture bug.
+- **`pipelines/08-perf-budget/check.mjs`** (~170 lines, zero npm deps; Node built-ins only — `fs`, `path`, `zlib`, `url`). Three budgets, each independently asserted:
+  - main JS chunk gzipped < 320 KB — actual 303.27 KB (94.8% of budget, raw 1.08 MB)
+  - mesh-registry entries == 79 — actual 79
+  - total `lod*.glb` bytes < 16 MB — actual 13.71 MB across 237 glbs in 79 dirs (85.7% of budget)
+  Exits 0 on full pass, 1 on any violation, 2 on environment problem (dist missing, registry missing, meshes folder missing). Wired as `npm run perf:check` in `app/web/package.json`.
+- **`pipelines/08-perf-budget/package.json` + `README.md` + `.gitignore` follow the same convention as pipelines 06 + 07.** package.json has a single `check` script; README documents each budget's rationale and an exit-code table.
+- **CI workflow `.github/workflows/ci.yml` extended** with five new steps after `Build`:
+  1. `Perf budget check` — runs `npm run perf:check` (fails workflow on violation)
+  2. `Cache Playwright browsers` — `actions/cache@v4` keyed on `package-lock.json` hash, path `~/.cache/ms-playwright`
+  3. `Install Playwright Chromium` — conditional on cache miss
+  4. `Capture visual regression baselines` — runs `npm run capture:baselines`
+  5. `Upload baseline screenshots` — `actions/upload-artifact@v4`, name `rendering-baselines`, retention 14 days, `if: always()` so failures still upload for debugging
+  The `web` job's name updated to `web — typecheck + schemas + build + perf + baselines` to reflect the wider scope.
+- **`tests/review-queue/README.md` extended** with explicit per-item + batch-level state machine diagrams, transition tables, and "how QA tracks batches across time" guidance (one folder per batch, append-only, cross-batch audit via git log, triage signal via the proposed `triage-report.mjs`). Per-item terminal-state rationale documented for `approved_with_edits`, `rejected`, and `needs_research` (none auto-promote; each routes to a specific follow-up agent). Phase 1 counts inlined: 1 batch, 51 items, all queued, anatomist TBD.
+- **`tests/README.md` written** describing the overall four-category testing strategy: schema validation (mature), visual regression baselines (active), perf budgets (active), anatomist accuracy queue (active). Future categories enumerated: unit, integration, touch-input, dynamic-perf, a11y.
+- **End-to-end verification.** `cd app/web && npm run verify`: typecheck ✓, validate:schemas 11/11 ✓, vite build ✓ (646 modules, 311.52 kB gzipped — within budget). `npm run perf:check`: 3/3 budgets pass. `npm run capture:baselines`: 3/3 viewports captured cleanly. Review-queue manifest verified: 51 items, all `queued`, anatomist TBD. No regression in any prior CI step.
 
 ### 2026-05-11 — P1.16 (anatomist review queue, cross-domain Content + QA second invocation)
 
@@ -104,6 +127,8 @@ Append-only state log. Most recent at top.
 - **2 moderate-severity npm-audit findings** appeared during `npm install ajv ajv-formats`. They are in the existing dependency tree, not in the newly-added packages. Filed for a possible "audit fix" dispatch; not a P1.09 concern.
 
 ## Invocation history
+
+- **2026-05-11 — P1.17** (visual regression baselines + perf budgets + review-queue state machine, third QA invocation). Added Playwright + Chromium to `app/web` devDependencies. Created `tests/rendering-snapshots/capture.mjs` — 3 baselines captured cleanly (desktop / iPad-landscape / iPad-portrait), committed as binary PNGs (96 / 89 / 70 KB). Created `pipelines/08-perf-budget/` with `check.mjs` + supporting files; 3 budgets all pass (303.27 / 320 KB gzip JS; 79 / 79 registry entries; 13.71 / 16 MB total LOD bytes). Extended `vite.config.ts` to register canonical-mesh middleware under `configurePreviewServer` so `vite preview` serves the same routes as dev. Extended `.github/workflows/ci.yml` with perf-check + cached chromium install + baseline capture + artifact upload. Extended `tests/review-queue/README.md` with state-machine diagrams + cross-batch tracking docs. Wrote `tests/README.md` covering the four active test categories. `npm run verify` end-to-end clean.
 
 - **2026-05-11 — P1.16** (anatomist review queue, cross-domain Content + QA second invocation). Generated `tests/review-queue/2026-05-11-batch-1/review-packet.md` (51 sections, ~1960 lines) + `manifest.json` (51 items, all `status: "queued"`, anatomist TBD). Created `pipelines/07-anatomist-review/` with `generate-packet.mjs` + `promote.mjs` (dry-run-tested only this dispatch). Synthetic-manifest dry-run: 51 would-promote / 0 failed; no content records modified. `pipelines/06-validate-content` re-run: 51 pass / 0 fail. `app/web npm run verify`: 11/11 schemas + clean build.
 

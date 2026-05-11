@@ -1,0 +1,10 @@
+{
+  "name": "p1-08-perf-budget",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Phase 1 step P1.17 - enforce performance budgets: main JS chunk gzipped < 320 KB; mesh-registry.json entries == 79; total lod*.glb bytes < 16 MB. Zero npm deps (Node built-ins: fs, path, zlib).",
+  "scripts": {
+    "check": "node check.mjs"
+  }
+}

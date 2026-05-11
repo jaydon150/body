@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.11–P1.16 batch)
-**Current phase:** Phase 1 in progress. **P1.01–P1.16 complete.** Application side is wired end-to-end: 79-mesh BP3D skeleton renders, picking + outline + selection works, peel + dive plumbing in place, full UI chrome (Sidebar/Search/Breadcrumbs/DetailPanel/PeelControls/NomenclatureToggle/AttributionSurface), 51 pending content records authored + anatomist review packet queued. Remaining: P1.17 (QA visual + perf baselines), P1.18 (UX/a11y audit), P1.19 (Reviewer handoff passes), P1.20 (Phase 1 retro).
+**Last updated:** 2026-05-11 (late evening, post-P1.17 close)
+**Current phase:** Phase 1 in progress. **P1.01–P1.17 complete.** Application side is wired end-to-end: 79-mesh BP3D skeleton renders, picking + outline + selection works, peel + dive plumbing in place, full UI chrome (Sidebar/Search/Breadcrumbs/DetailPanel/PeelControls/NomenclatureToggle/AttributionSurface), 51 pending content records authored + anatomist review packet queued, **3 visual-regression baselines + 3 perf budgets all passing in CI**. Remaining: P1.18 (UX/a11y audit), P1.19 (Reviewer handoff passes), P1.20 (Phase 1 retro).
 **Overall health:** Green
 
 ---
@@ -20,7 +20,7 @@
 
 **Autonomous overnight schedule (2026-05-11, user asleep).** Five remote-agent routines scheduled at 1-hour intervals starting 10:30Z. Each clones `jaydon150/body`, dispatches one task, commits, pushes back. User wakes to commits or — if private-repo auth on Anthropic's CCR isn't set up — to error reports the user resolves by authorizing GitHub access at claude.ai. Schedule:
 
-- **10:30Z** — P1.17 (QA: visual regression baselines + perf budgets + accuracy queue)
+- **10:30Z** — P1.17 (QA: visual regression baselines + perf budgets + accuracy queue) — **DONE**
 - **11:30Z** — P1.18 (UX/Accessibility Tier 2 audit)
 - **12:30Z** — P1.19 (Reviewer Tier 2 handoff passes on P1.11–16 boundaries)
 - **13:30Z** — P1.20 (Phase 1 retro doc + close)
@@ -37,11 +37,11 @@ The vertical slice is functionally complete:
 
 ## Blockers
 
-- None. All 16 Phase 1 main steps complete.
+- None. P1.01–P1.17 complete.
 
 ## Next milestone
 
-**P1.17 dispatch (QA).** Visual regression baselines (desktop + iPad viewports), performance budgets (frame time, draw calls, bundle size), and the anatomist-review-queue management state machine (which queue currently has 51 pending records awaiting out-of-band review).
+**P1.18 dispatch (UX/Accessibility audit, Tier 2).** Audit the running Phase 1 vertical slice for keyboard nav, ARIA shape, colour contrast, touch-target sizing, motion preferences, focus management. After P1.18: P1.19 (Reviewer handoff passes at the major handoff boundaries) and P1.20 (Phase 1 retro + close).
 
 ## Upcoming gates (user approval required)
 
@@ -76,7 +76,9 @@ See [decision-log.md](decision-log.md). Latest:
 | ADR 0006 (runtime attribution) | ✅ accepted | Pipeline + UI changes scoped into Phase 1 |
 | P1.01 deliverable | ✅ landed | `docs/references/summaries/uberon-fma-skeletal-crosswalk.md` |
 | Agent dispatch mechanism (ADR 0003) | ✅ validated | First subagent dispatch ran clean |
-| Local verify | ✅ green | Typecheck + 7 schemas + build all pass |
+| Local verify | ✅ green | Typecheck + 11 schemas + build all pass (post-P1.17) |
+| P1.17 baselines | ✅ captured | 3 PNGs at `tests/rendering-snapshots/baseline-*.png` |
+| P1.17 perf budgets | ✅ all pass | JS gzip 303.27 KB / 320 KB; registry 79 / 79; LOD bytes 13.71 / 16 MB |
 | CI on main | ⏳ runs on next push | Pushed with each commit; check Actions tab |
 
 ## Pending external inputs

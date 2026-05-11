@@ -150,6 +150,26 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 ---
 
+## 2026-05-11 (late evening — P1.17 close)
+
+- **P1.17 dispatched and returned clean.** QA subagent added the visual-regression + perf-budget + accuracy-queue-state-machine infrastructure that closes acceptance criteria #15, #16, #17 (the static-budget half) and tightens #13 with explicit queue-state documentation. *Reason:* user dispatched as part of the autonomous overnight schedule.
+
+- **Playwright `^1.59.1` + Chromium 147 added to `app/web` devDependencies.** Chosen as the rendering-harness for visual regression. Chromium-only (no firefox/webkit) for Phase 1 to keep CI install time bounded; cross-browser regression coverage is reserved for Phase 2+. Three new packages in the lockfile; pre-existing 2 moderate-severity dep-audit findings unchanged.
+
+- **`canonicalMeshStaticPlugin` extended from `apply: 'serve'` to register under both `configureServer` (dev) and `configurePreviewServer` (vite preview).** Necessary because the visual-regression baselines run against `vite preview` (the prod-build artefact) and the canonical mesh tree is still served via dev-time middleware in Phase 1 (production deploy is out of Phase 1 scope). Net effect: the same `/registry.json`, `/meshes/*`, `/content/*` routes serve identically in dev and preview. *Trade-off considered:* alternative would be to bake the canonical mesh tree into `app/web/public/` so the prod build self-contained — rejected as it would either duplicate 14 MB of glbs (mass) or require symlinks on Windows (permission caveats). Keep the canonical tree as the single source of truth; the middleware bridges it to both dev and preview.
+
+- **Three perf budgets locked, all currently pass with comfortable headroom.** Main JS gzipped 303.27 KB / 320 KB budget (5.2% headroom — tight; future deps should pay attention). Mesh-registry entries exactly 79. Total LOD bytes 13.71 MB / 16 MB budget (14.3% headroom). Budgets live in `pipelines/08-perf-budget/check.mjs`. Acceptance criterion #16 calls for "bundle gzipped under 1.5 MB" as a generous outer bound; the 320 KB threshold sits well inside that and catches accidental dependency bloat early.
+
+- **Three viewport baselines committed as ordinary PNG binaries (not LFS).** Sizes 96 / 89 / 70 KB. Per `.gitattributes`, `*.png binary` (not LFS-tracked). Files at `tests/rendering-snapshots/baseline-{desktop,ipad-landscape,ipad-portrait}.png`. **Phase 1 captures only; diff-gating arrives in Phase 2** once enough baselines exist to establish a regression corpus and a perceptual-diff threshold can be tuned.
+
+- **Review-queue state machine documented explicitly** in `tests/review-queue/README.md`. Per-item transitions (`queued → in_review → approved | approved_with_edits | rejected | needs_research`) + per-batch transitions (`queued → in_review → complete`) + cross-batch tracking rules (one folder per batch, append-only, git-log as audit log, future `triage-report.mjs` as triage signal). Closes the QA hard-rule 4 audit-trail requirement at the documentation layer (the per-item audit was already satisfied operationally in P1.16).
+
+- **New `tests/README.md`** summarises the four-category testing strategy (schema, visual-regression, perf, accuracy) and enumerates future-but-not-yet-active categories (unit, integration, touch-input, dynamic-perf, a11y).
+
+- **CI workflow extended** with 5 new steps after `Build`: perf-check, cached chromium install, baseline capture, screenshot artifact upload (`if: always()`, 14-day retention), and the existing dist artifact upload moves to after this block. Workflow job renamed to `web — typecheck + schemas + build + perf + baselines` to reflect the wider scope. *Phase-1 scope:* CI runs the baseline capture and uploads artifacts but does **not** yet fail on visual diff (diff infrastructure is Phase 2 work).
+
+---
+
 ## Conventions
 
 - Decisions are immutable once logged. If a decision is reversed, append a new entry that supersedes it and reference the original by date + scope.
