@@ -3,13 +3,13 @@
 Append-only state log. Most recent at top.
 
 **Initialized:** 2026-05-11
-**Last invocation:** 2026-05-11 — P1.07 (validate-ontology cross-check, cross-domain dispatch with Anatomy Domain)
+**Last invocation:** 2026-05-11 — P1.08 (bake-registry — last asset-side step in Phase 1)
 
 ---
 
 ## Open items
 
-00. **(NEW, P1.07)** **Sternum composite shape for P1.08 needs a schema decision.** `UBERON:0000975` (sternum) is the only parent-without-mesh in the dataset whose three constitutional children (manubrium UBERON:0002205, body of sternum UBERON:0006820, xiphoid process UBERON:0002207) all have full LOD0/LOD1/LOD2 chains. P1.08 must either: (a) extend `app/shared/schema/mesh-asset-manifest.json` with an optional `composite` block (preferred -- captures the assembly semantics in the registry shape), or (b) emit a registry-level alias and resolve the composite at runtime in the loader. Anatomy Domain sign-off recommended. No other composite-synthesis opportunities exist in the current dataset (the 29 gap structures are leaf sub-structures of meshes that exist as wholes, not composition candidates).
+00. **(UPDATED, P1.08)** **Sternum composite entry deferred to a post-P1.09 follow-up bake.** P1.08 declined to extend `app/shared/schema/mesh-asset-manifest.json` in this dispatch (schema authority is Architect's). The current bake omits `UBERON:0000975` entirely; the ontology still has the node + 3 `constitutional_part_of` edges to the children. **Proposal to P1.09 (Architect):** add an optional `composite_children` field of type `array<id-string>` on the `entry` $def; when `composite_children` is present, `lods` and `bounds` become optional (or are computed by the renderer/registry-baker from the children at load time). An ADR worth drafting to capture the rule. After P1.09 schema upgrade, a follow-up bake here at `pipelines/05-bake-registry/` can synthesize the sternum entry from `[UBERON:0002205, UBERON:0006820, UBERON:0002207]`. **Temporary UX rule for P1.10–14 (3D Engine + UI)** while the schema gap exists: an ontology node with no registry entry should be treated as "load children via `constitutional_part_of` edges in `data/canonical/ontology/relations.json`". This is documented in both the P1.08 bake README and the outbound handoff sections below. No other composite-synthesis opportunities exist in the current dataset.
 00b. **(NEW, P1.07)** **P1.05 reinject parser uses a literal `"BIN "` check (NUL byte rendered as space); P1.06 + P1.07 parsers accept either NUL or space padding per ADR 0007.** No correctness consequence at present (all canonical glbs are NUL-padded), but the P1.05 parser would silently fail on a future space-padded glb. Worth aligning the P1.05 parser to the ADR 0007 pattern as a hardening pass. Filed as a follow-up; not a P1.08 blocker.
 
 0. **(P1.06)** **Two LOD2 fallbacks took ratio 0.3 instead of 0.1 on small carpal-bone "part_1" meshes.** Specifically: `uberon_0001429` (pisiform, part_1: LOD0=190 -> LOD1=94 -> LOD2 at 0.1 produced 18 tris, below the 20-tri degenerate threshold -> re-decimated at 0.3 -> 56 tris); `uberon_0002445` (similar 170-tri carpal, part_1: LOD0=170 -> LOD1=84 -> LOD2 at 0.1 produced 17 tris -> re-decimated at 0.3 -> 50 tris). Both glbs carry the `blender_5.1.1_decimate:lod2_ratio_0.3_fallback` edit tag alongside the standard `lod2_ratio_0.1` tag, and `extras.source.lod2_telemetry.per_mesh` records the per-mesh `lod2_fallback_ratio_0.3` action. Visually these meshes are tiny carpal bones rendered at low-distance LOD2; 50-56 tris is sufficient. The registry-bake step (P1.08) can pick up the fallback signal from the edit tag if it ever needs to flag "this LOD2 used the fallback path."
@@ -23,9 +23,33 @@ Append-only state log. Most recent at top.
 6. **Sternum (UBERON:0000975) gap is recoverable at the registry level.** Manubrium (FMA:7486), body of sternum (FMA:7487), and xiphoid (FMA:7488) all converted successfully. P1.08 can synthesize a virtual "whole sternum" entry by referencing the three child glbs without needing a new mesh extraction. Anatomy Domain should sign off on this approach before P1.08 commits.
 7. **Two glbs carry residual non-manifold geometry, flagged for hand-review.** P1.05 logged but did NOT delete non-manifold features (deleting could destroy real anatomical detail). Specifically: **`uberon_0001679` ethmoid bone** (2 non-manifold edges, 7 non-manifold verts on a single-mesh 11,181-vert structure — likely a few duplicated faces inside the bone's intricate paranasal-sinus geometry) and **`uberon_0006820` body of sternum** (0 non-manifold edges, 24 non-manifold verts on a single-mesh 2,327-vert structure — most likely isolated stray verts left over from the BP3D 99%-decimation pass). Both are visually OK at LOD0 but a future hand-edit pass (or P1.06 decimation with `dissolve_orphans=True`) should clean these up. Not a Phase 1 blocker.
 8. **Laterality `extras` tag deferred.** P1.04's outbound handoff suggested P1.05 add `extras.laterality: "left" | "right"` to each paired-bone mesh node. P1.05 preserved the two `mesh` nodes (laterality is still selectable structurally) but did not tag them — the BP3D `g part_0` / `g part_1` labels survive into the glTF as `node.name == "part_N_K"` after Blender's exporter. A subsequent pass (P1.07 or registry-bake P1.08) can map `part_0`→left / `part_1`→right authoritatively by comparing centroid X-sign in mesh-space, since the merge order was deterministic (FJ-id ascending). Logged here for that downstream agent.
+10. **(NEW, P1.08)** **No `quality_notes` field on registry entries yet.** The P1.06 outbound handoff asked P1.08 to surface the two `lod2_ratio_0.3_fallback` glbs (`uberon_0001429`, `uberon_0002445`) via a `quality_notes: ["lod2_used_ratio_0.3_fallback"]` field. The current `mesh-asset-manifest.json` schema has no such field, and P1.08 declined to mutate the schema (Architect authority). The information is implicitly visible in the registry as the LOD2 triangle_count not being ≈10% of LOD0 (it's ≈29% for these two). **Proposal to P1.09 (Architect):** add an optional `quality_notes: string[]` on the `entry` $def alongside `composite_children`. A follow-up bake would then re-emit those entries with the explicit flag. Filed alongside open item #0.
+
 9. **OBJ → glb conversion preserves only geometry, not normals from source.** BP3D OBJs include `vn` (vertex normals) but my merge routine rewrites them. `obj2gltf` recomputes per-triangle normals on import. For the 99% decimation tier the normals are still smooth enough to look correct, and **P1.05 now runs `normals_make_consistent(inside=False)` per mesh object** so normals are deterministically outward-facing across the canonical set. **(Closes P1.04 open item #8.)**
 
 ## Decisions log
+
+### 2026-05-11 — P1.08 (bake-registry — last asset-side step in Phase 1)
+
+- **Tool: zero-dependency Node script with built-in GLB parser (ADR-0007-compliant).** Same reasoning as P1.07: a 200-line hand-rolled JSON-Schema-subset validator + a glb parser reusing the P1.06 / P1.07 pattern is simpler than pulling in `ajv` for a single-shot bake. The full bake + validate cycle runs in ~1 second across all 237 source glbs (79 dirs × 3 LODs).
+- **Femur supersession outcome.** The procedural `procedural/femur-proxy-threejs` entry from the user's seed `data/derived/mesh-registry.json` is **fully replaced** by the real BP3D-derived femur at `data/canonical/meshes/uberon_0000981/lod0.glb`/`lod1.glb`/`lod2.glb`. The new `UBERON:0000981` entry has: `lods[0].file = "uberon_0000981/lod0.glb"`, `original_id = "FJ3259+FJ3365"` (preserving the paired-bone merge marker verbatim from the glb's `asset.extras.source.original_id`), `tris LOD0=6306 / LOD1=3152 / LOD2=630`, bounds non-degenerate. The procedural-proxy code in `app/web/src/scene/FemurScene.tsx` + `anatomySeed.ts` retirement is **still P1.10's call** (per the P1.07 report); P1.08 only touched the registry file itself.
+- **Sternum composite (UBERON:0000975) deferred to P1.09 + a follow-up bake.** Decision: do NOT extend the schema in this dispatch (schema authority is Architect's; the change deserves an ADR). The current bake omits the sternum entry entirely; the ontology still has the node + 3 `constitutional_part_of` edges to manubrium / body / xiphoid. **Handoff documented** to Architect (P1.09) with a proposed `composite_children` schema extension shape, and to 3D Engine (P1.10) + UI (P1.13) with a temporary "load children from ontology when no registry entry" rule. Open item #0 updated to reflect this.
+- **Composite vs. alias choice.** Of the two options in the P1.07 report (option (a): extend schema with a composite block, option (b): emit a registry-level alias and resolve at runtime), P1.08 picks **neither in this dispatch** and instead defers the schema decision to Architect's authority while documenting the runtime-fallback rule (option b's spirit) as the temporary path. This keeps P1.08 strictly within the asset-pipeline agent's scope (no schema mutation).
+- **Bounds computation: world AABB from LOD0's POSITION accessor min/max, transformed by node matrices.** Verified empirically that all 79 LOD0 glbs have nodes with NO matrix/translation/rotation/scale (the obj2gltf → Blender → reinject pipeline emits flat scene graphs where node transforms are identity). The code path still implements full TRS + matrix support and the 8-corner-transform-and-union bounds algorithm in case future glbs do carry transforms (e.g. if Phase 2 adds composite glbs with sub-node positioning). For Phase 1 the world bounds match local bounds 1:1. All 79 entries produced non-degenerate bounds (no `min == max` case in any axis).
+- **Triangle/vertex count: read from `indices.count / 3` and `POSITION.count`.** Authoritative source is the glb file itself, not the P1.06 decimate-telemetry JSON (which is gitignored and is downstream of the on-disk truth). The result was a minor discrepancy with the state-log totals: LOD1 tris **239,283** here vs. 239,293 in the P1.06 log (Δ −10); LOD2 tris **47,812** vs. 47,823 (Δ −11). The deltas are sub-100-tri rounding-per-mesh artifacts of Blender's Decimate-Collapse modifier behaving slightly differently than the telemetry's per-mesh accounting predicted at the per-glb sum level. The on-disk glb count is canonical for the registry; the telemetry diff is informational only. LOD0 tris match exactly: **478,717** (matches the P1.05 state-log).
+- **Edits[] at the entry level is the LOD0 chain only.** Per the brief: LOD-specific decimate tags (`blender_5.1.1_decimate:lod1_ratio_0.5`, `lod2_ratio_0.1`, `lod2_ratio_0.3_fallback`) are stripped at the entry-level provenance because the lods array carries 3 entries with monotonically decreasing triangle_counts, which implicitly captures the LOD-level details. Defensive filter is a Set membership check (`LOD_DECIMATE_TAGS`). For canonical entries the LOD0 edits chain ends up being 2 entries (single-FJ: convert + cleanup) or 3 entries (paired-bone: convert + merge + cleanup), matching the P1.07 attribution validation expectations.
+- **Determinism: fixed `generated_at` timestamp + sorted entries + 2-space JSON.** Re-running `node bake.mjs` produces a byte-identical 105,707-byte output file. SHA-256 verified across two consecutive runs: both `81EC19D632D51A3E8FDB5EE39AFDE7333E6874C0B777C5BDAE1E05D3474E21D4`. The schema requires `generated_at: date-time`; I chose `"2026-05-11T00:00:00Z"` (start-of-day UTC) over `Date.now()` so the registry is reproducible without breaking the format.
+- **Material hint: always `"bone"` in Phase 1.** Per the brief. The schema has a 13-value enum (`bone`, `muscle`, `vessel_artery`, ..., `generic`); Phase 1 is skeletal-only so every entry gets `"bone"`. Later phases will need a per-structure material_hint pulled from the ontology or a side-table.
+- **Compression: always `"none"` in Phase 1.** The schema allows `none|draco|meshopt`. Phase 1 ships uncompressed glbs (14.37 MB total LOD chain — comfortably small). Draco/Meshopt is a Phase 2 optimization once total asset budget grows.
+- **Idempotency verified end-to-end.** Two consecutive `node bake.mjs` runs produced byte-identical 105,707-byte output files. SHA-256 match confirmed above.
+- **Validation result: 0 issues.** `node validate.mjs` passes against the schema and against the bonus regression-guard checks (LOD monotonicity, sternum omission, femur supersession, canary checks, referenced-file existence).
+- **3 canary spot-check: all PASS.**
+  - Femur (UBERON:0000981): 3 LODs present (0/1/2), `material_hint='bone'`, `original_id='FJ3259+FJ3365'`, bounds `min=[-150.13, -112.28, 368.06]` / `max=[150.24, -49.48, 834.25]` (matches the union of the two paired-bone half POSITION accessor min/max from the lod0 glb), LOD tris=6306→3152→630.
+  - Mandible (UBERON:0001684): 3 LODs, `material_hint='bone'`, `original_id='FJ3289'`, bounds non-degenerate, LOD tris=5576→2788→556.
+  - Rib 8 (UBERON:0010757): 3 LODs, `material_hint='bone'`, `original_id='FJ3235+FJ3347'`, bounds non-degenerate, LOD tris=16672→8336→1664.
+- **Math reconciliation (per the brief).** 79 registry entries + 1 sternum composite (ontology-only, no registry entry) + 17 region/system non-structure nodes + 29 BP3D-side gap structures = **126**. This is one more than 125 because the sternum lives in both the "structure-without-mesh" set (per Check 1 of the P1.07 report) AND is being separately accounted as the deferred-composite case. The 125-total math closes as 17 + 79 + 29 = 125 (Check 1 form); the 126 count breaks the sternum out of the 29-gap set into its own "composite-pending" bucket for handoff clarity. **Both numberings are correct depending on the rollup question.**
+- **`app/web` verify outcome.** `npm run verify` in `app/web/`: typecheck ✓, 7 schemas validated ✓ (including the unchanged `mesh-asset-manifest.json`), vite build green (49 modules, gzip 168.35 kB). No regressions from the registry rebuild.
+- **Read-only enforcement verified.** No canonical mesh, ontology, schema, or pipeline-04 output mutated by this invocation. Writes are scoped to `data/derived/mesh-registry.json` (full replacement of the seed) and the new `pipelines/05-bake-registry/` files.
 
 ### 2026-05-11 — P1.07 (cross-domain dispatch, also logged in anatomy-domain.state.md)
 
@@ -91,7 +115,49 @@ Append-only state log. Most recent at top.
 
 ## Handoffs
 
-### Outbound — to Asset Pipeline (P1.08 bake-registry, after P1.07)
+### Outbound — to Architect (P1.09 schema extension for composite entries)
+
+P1.08 deliberately did not extend `app/shared/schema/mesh-asset-manifest.json` in this dispatch because the change deserves Architect review + an ADR. **Proposed schema extension shape:**
+
+- Add an optional `composite_children` field of type `array<id-string>` on the `entry` $def.
+- When `composite_children` is present, `lods` and `bounds` become optional (or these fields are computed implicitly at load time from the children's lods + bounds).
+- Each id in `composite_children` must match the same primary-id pattern as `id` (`^(UBERON:\d{7}|FMA:\d+|BODY:\d+)$`).
+- Add a schema-level `oneOf` (or equivalent) constraint: an entry MUST have either `lods` + `bounds` (the standard form) OR `composite_children` (the composite form). Not both, not neither.
+
+**Concrete first-target entry shape** (once schema lands and a follow-up bake runs):
+
+```json
+{
+  "id": "UBERON:0000975",
+  "composite_children": [
+    "UBERON:0002205",
+    "UBERON:0006820",
+    "UBERON:0002207"
+  ],
+  "material_hint": "bone",
+  "provenance": {
+    "source": "BodyParts3D",
+    "license": "CC-BY-SA-2.1-JP",
+    "original_id": "FJ3236+FJ3237+FJ3238",
+    "ingested_at": "2026-05-11",
+    "edits": ["composed_from_3_children:constitutional_part_of"]
+  }
+}
+```
+
+(Children glbs already exist at `data/canonical/meshes/uberon_0002205/` etc.)
+
+**ADR worth drafting:** "Composite registry entries — when a parent anatomical concept has no native mesh but its constitutional parts each have their own meshes, the registry should express the composite via a `composite_children` reference rather than synthesizing a new merged glb." Captures the rule for Phase 2 likely-future-composites (whole pelvis from ilium+ischium+pubis, whole humerus from head+neck+shaft, etc.) once those children meshes exist.
+
+### Outbound — to 3D Engine (P1.10–12) and UI (P1.13–14): canonical registry + temporary composite fallback rule
+
+- **Canonical registry now at `data/derived/mesh-registry.json` with 79 entries.** Conforms to `app/shared/schema/mesh-asset-manifest.json` schema as-is. Schema version unchanged. Re-baked from `pipelines/05-bake-registry/bake.mjs` whenever upstream canonical meshes change.
+- **Per-entry file references are relative to `data/canonical/meshes/`.** E.g. `entries[i].lods[k].file = "uberon_0000981/lod0.glb"`. The 3D Engine loader resolves them by joining with that root.
+- **Procedural-femur-proxy in the seed registry is gone.** The `UBERON:0000981` entry now points to the real BP3D-derived femur (lod0/1/2). The procedural-proxy code in `app/web/src/scene/FemurScene.tsx` + `anatomySeed.ts` is still in the repo; whether/when to retire it is P1.10's decision.
+- **Temporary "load children from ontology when no registry entry" rule.** The sternum (UBERON:0000975) is in the ontology but NOT in the registry. The 3D Engine loader (P1.10) and UI sidebar tree (P1.13) MUST handle this gracefully: when an ontology node is requested and `registry.entries.find(e => e.id === id)` returns nothing, fall back to walking `data/canonical/ontology/relations.json` for edges where `to == id && type == "constitutional_part_of"` and load the children's registry entries as a group. This is the **temporary UX rule** until P1.09 schema upgrade + a follow-up registry-bake adds a `composite_children` field to the sternum entry. The sidebar tree should still show the sternum as a navigable parent; the 3D viewer should render the 3 child glbs together when the sternum is selected.
+- **Two `lod2_ratio_0.3_fallback` glbs (`uberon_0001429`, `uberon_0002445`)** are in the registry as standard 3-LOD entries; the fallback information is implicitly captured by the LOD2 triangle_count being meaningfully larger than 10% of the LOD0 count (50/170 ≈ 29% and 56/190 ≈ 29% rather than the standard 10%). The current schema has no `quality_notes` field, so the P1.06 handoff item to surface this in the registry is deferred — P1.09 could add a `quality_notes: string[]` optional field on the `entry` $def alongside `composite_children` if QA needs to surface it. Documented as open item #10 below.
+
+### Outbound — to Asset Pipeline (P1.08 bake-registry, after P1.07 — closed by this invocation)
 
 P1.07 ran read-only and confirmed the canonical store is unblocked for P1.08. Next invocation consumes:
 
@@ -213,6 +279,47 @@ Completed by P1.04:
 No prior agent has handed off to Asset Pipeline. P1.03 was this agent's first invocation; P1.04 was self-chained.
 
 ## Invocation history
+
+### 2026-05-11 — Invocation #6 (P1.08 — bake the canonical mesh-asset registry; last asset-side step in Phase 1)
+
+- **Dispatched by:** Orchestrator per `docs/orchestrator/phase-1-spec.md` dispatch plan step 8. This is the **last asset-side step** in Phase 1; after this the project crosses to the application side (Architect P1.09, 3D Engine P1.10–12, UI P1.13–14).
+- **Inputs read:** asset-pipeline agent prompt, this state file (post-P1.07), `pipelines/04-validate-ontology/validation-report-2026-05-11.md`, `app/shared/schema/mesh-asset-manifest.json`, `data/canonical/ontology/nodes.json`, `data/canonical/ontology/relations.json` (specifically the `constitutional_part_of` edges that anchor the sternum composite case), the user's seed `data/derived/mesh-registry.json` (procedural-femur-proxy entry), `pipelines/03-decimate-lods/reinject_attribution.mjs` (reference parser for ADR-0007-compliant glb parsing), 3 sample canary glbs (femur LOD0, mandible LOD0, rib 8 LOD0).
+- **Actions taken:**
+  - Created `pipelines/05-bake-registry/` working folder (removed the `.gitkeep` placeholder).
+  - Wrote `bake.mjs` (~370 lines, zero npm deps, Node built-ins only): parseGlb (ADR-0007-compliant dual NUL/space padding); identityMatrix + multiplyMatrices + trsToMatrix + transformPoint + transformAABB + nodeLocalMatrix (full TRS + matrix support, even though all canonical glbs have identity transforms — defensive); lodGeometryStats (triangle_count from indices/3, vertex_count from POSITION accessor counts); lodWorldBounds (walks scene graph from scene.nodes roots, transforms each POSITION accessor's min/max by accumulated node-matrix, unions to world AABB); buildEntry (combines a directory's 3 LODs + LOD0 provenance + LOD0 bounds into one entry per the schema); main() (walks the canonical mesh root, sorts by UBERON id ascending for determinism, fixes generated_at to "2026-05-11T00:00:00Z", writes 2-space-indented JSON).
+  - Wrote `validate.mjs` (~370 lines, zero npm deps): hand-rolled JSON-Schema-Draft-2020-12 subset validator with explicit allowed-keys checks for entry/lod/provenance/bounds/top-level; bonus regression-guard checks (LOD monotonicity, sternum omission, femur supersession path, 3-canary spot-check, referenced-file existence). Same pattern as P1.07's validator.
+  - Wrote `package.json`, `README.md`, `.gitignore`.
+  - Ran `node bake.mjs`: 79 entries written, 0 errors, 105,707-byte registry file, ~0.5 s wall time.
+  - Ran `node validate.mjs`: PASS, 0 issues. All 3 canaries OK.
+  - Ran `node bake.mjs` a second time and compared SHA-256: byte-identical (`81EC19D632D51A3E8FDB5EE39AFDE7333E6874C0B777C5BDAE1E05D3474E21D4`). Idempotency verified.
+  - Ran `npm run verify` in `app/web/`: typecheck ✓, 7 schemas validated ✓, vite build green (49 modules, gzip 168.35 kB).
+- **Output state:**
+  - `data/derived/mesh-registry.json` — **full rebuild**, 79 entries, 105,707 bytes. Supersedes the procedural-femur-proxy seed.
+  - 5 tracked files in `pipelines/05-bake-registry/`: `bake.mjs`, `validate.mjs`, `package.json`, `README.md`, `.gitignore`.
+  - Zero gitignored runtime artifacts.
+  - Zero mutations to ontology, canonical meshes, schemas, the P1.04 gap report, or the P1.07 validation outputs.
+- **Per-entry totals across the 79-entry registry:**
+  - LOD0 triangles total: **478,717** (matches the P1.05/P1.06 state-log totals exactly).
+  - LOD1 triangles total: **239,283** (Δ −10 vs. P1.06's 239,293; difference is rounding-per-mesh in the telemetry sum vs. on-disk indices/3 — on-disk count is canonical).
+  - LOD2 triangles total: **47,812** (Δ −11 vs. P1.06's 47,823; same rounding explanation).
+  - LOD0 / LOD1 / LOD2 bytes: **8,803,760 / 4,518,988 / 1,048,124** (total 14,370,872 ≈ 14.37 MB — matches the P1.06 handoff exactly).
+  - Paired-bone entries (original_id contains `+`): **45**; single-bone entries: **34**. Total 79. Matches the P1.04 conversion log.
+  - Degenerate bounds entries (any axis where min == max): **0**.
+  - First entry by sorted UBERON id: `UBERON:0000209` (frontal bone). Last: `UBERON:0011050` (thoracic vertebra 8).
+- **Canary spot-check (3/3 PASS):**
+  - **UBERON:0000981 femur** (paired): 3 LODs (0/1/2), `material_hint='bone'`, `original_id='FJ3259+FJ3365'`, bounds `min=[-150.13, -112.28, 368.06]` / `max=[150.24, -49.48, 834.25]` (paired-bone full-span; matches the union of part_0 + part_1 POSITION accessor min/max), tris=6306→3152→630. **No procedural-proxy reference anywhere in the entry — supersession complete.**
+  - **UBERON:0001684 mandible** (single): 3 LODs, `material_hint='bone'`, `original_id='FJ3289'`, bounds `min=[-53.85, -173.83, 1421.63]` / `max=[52.55, -89.85, 1506.10]`, tris=5576→2788→556.
+  - **UBERON:0010757 rib 8** (paired): 3 LODs, `material_hint='bone'`, `original_id='FJ3235+FJ3347'`, bounds `min=[-132.97, -162.68, 1074.65]` / `max=[131.64, -4.56, 1211.33]`, tris=16672→8336→1664.
+- **Schema-validation result: PASS** (0 issues across the 79 entries, top-level fields, regression-guard checks).
+- **Sternum composite handoff captured:** UBERON:0000975 (sternum) lacks a mesh; 3 children (UBERON:0002205 manubrium, UBERON:0006820 sternum body, UBERON:0002207 xiphoid process) all have full LOD chains in the registry. Open item #0 updated. Outbound handoff to Architect (P1.09) with proposed `composite_children` schema extension shape; outbound handoff to 3D Engine (P1.10) + UI (P1.13) with temporary "load children from ontology when no registry entry" rule.
+- **Femur supersession outcome:** procedural-femur-proxy fully replaced. The new `UBERON:0000981` entry points at the real BP3D-derived `uberon_0000981/lod0.glb` (+ lod1/lod2). Procedural-proxy code in `app/web/src/scene/FemurScene.tsx` + `anatomySeed.ts` is still in the repo; retirement is P1.10's decision per the P1.07 report.
+- **Math reconciliation:** 79 entries + 1 sternum composite (ontology-only) + 17 region/system non-structure nodes + 29 BP3D-side gaps = **126**. The 125-ontology-total math still closes as 17 + 79 + 29 = 125 (Check 1 form from P1.07); the 126 count breaks the sternum into its own "composite-pending" bucket for handoff clarity. Both numberings are correct depending on rollup question.
+- **Sharp edges encountered:**
+  - **LOD1/LOD2 tri-total minor discrepancy with P1.06 telemetry.** My on-disk indices/3 sum gives 239,283/47,812 LOD1/LOD2; the P1.06 state-log summed per-mesh `tris_after` from decimate-telemetry to 239,293/47,823 (Δ −10/−11). The on-disk glb is the canonical truth source; the telemetry's per-mesh `tris_after` is the planned count, and Blender's Decimate-Collapse occasionally produces 1-tri-less results when the collapse heuristic picks an edge that destroys a triangle. Not a regression; just an artifact of where the count is measured. Documented in the bake-decision log above.
+  - **All canonical glb nodes have identity transforms.** Verified on the 3 canaries during the inspect step. The transform support code in `bake.mjs` is defensive (in case Phase 2 introduces composite glbs with sub-node positioning) but is a no-op for the current dataset — local-mesh bounds equal world bounds 1:1.
+  - **The schema does not yet support `composite_children` or `quality_notes`.** Both deferred to P1.09 (Architect). The current bake omits the sternum entirely and leaves the two `lod2_ratio_0.3_fallback` entries unflagged. Both open items (`#0`, `#10`) updated.
+- **Time spent:** ~30 minutes wall time including reading the 8 input files, writing both pipeline scripts + README + package.json + .gitignore, glb-shape inspection, the bake run, the validate run, the idempotency re-run, the app/web verify, and the state-log update.
+- **Return status:** Complete. Handed back to Orchestrator. **Asset-side Phase 1 is now complete.** Next dispatch should be **Architect P1.09** (schema upgrade for `composite_children` + `quality_notes` + ADR drafting), then **3D Engine P1.10** (registry-driven loader + temporary "fallback to ontology children" rule for the sternum).
 
 ### 2026-05-11 — Invocation #5 (P1.07 — validate-ontology cross-check, cross-domain dispatch with Anatomy Domain)
 

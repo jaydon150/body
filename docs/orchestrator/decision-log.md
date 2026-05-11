@@ -132,6 +132,12 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **First cross-domain subagent dispatch ran clean.** ADR 0003's file-backed Task-subagent pattern was tested operating across two agent scopes (Asset Pipeline + Anatomy Domain) within a single invocation. The subagent appended to both state files correctly. The pattern extends cleanly; future cross-cutting validation dispatches (e.g. pre-launch compliance review) can follow the same shape.
 
+- **P1.08 dispatched and returned clean. Asset side of Phase 1 complete.** Asset Pipeline subagent baked the canonical `mesh-asset-manifest.json` registry at `data/derived/mesh-registry.json`. **79 entries**, 105,707 bytes. Each entry: 3-LOD chain (LOD0/1/2 totals 478,717 / 239,283 / 47,812 triangles, on-target for the 50%/10% decimation targets), bounds computed from glb POSITION accessors, BodyParts3D provenance preserved, material_hint="bone" for all skeletal entries. **Femur supersession executed:** the user's procedural-femur-proxy seed entry has been replaced with the real BP3D-derived UBERON:0000981 entry. **Sternum composite (UBERON:0000975) intentionally omitted** from this bake — current `mesh-asset-manifest.json` schema lacks a `composite_children` field; deferred to P1.09 with proposed schema extension. Bake is byte-identical idempotent. Schema-validates, build green. *Reason:* user dispatched.
+
+- **Temporary UX rule landed for the sternum gap.** Until P1.09 schema upgrade ships a `composite_children` field and a follow-up small bake adds the sternum entry, the 3D Engine (P1.10+) and UI (P1.13+) must interpret "ontology node has no registry entry" as "load children via `constitutional_part_of` edges from the ontology." This applies only to UBERON:0000975 (sternum) for Phase 1. Documented in Asset Pipeline state's handoffs to 3D Engine and UI.
+
+- **Math reconcile pre-P1.09:** 79 registry entries (kind=structure with mesh) + 1 sternum-deferred (composite-pending) + 17 region/system nodes (no mesh expected) + 29 BP3D-side gaps (kind=structure, no upstream mesh) = 126. The sternum is double-counted (both in the 29-gap set AND in the deferred-composite bucket); both rollups are individually correct. Total distinct ontology nodes is still 125 per ADR 0001 and the P1.02 / P1.07 audits.
+
 ---
 
 ## Conventions

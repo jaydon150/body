@@ -1,32 +1,4157 @@
 {
-  "version": "user-directed-seed-0.1.0",
-  "generated_at": "2026-05-11T05:30:00Z",
+  "version": "p1.08-bake-1.0.0",
+  "generated_at": "2026-05-11T00:00:00Z",
   "entries": [
+    {
+      "id": "UBERON:0000209",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0000209/lod0.glb",
+          "triangle_count": 14510,
+          "vertex_count": 7303,
+          "byte_size": 263840,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0000209/lod1.glb",
+          "triangle_count": 7254,
+          "vertex_count": 3675,
+          "byte_size": 133536,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0000209/lod2.glb",
+          "triangle_count": 1449,
+          "vertex_count": 746,
+          "byte_size": 28396,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -63.3025016784668,
+          -177.38499450683594,
+          1520.8900146484375
+        ],
+        "max": [
+          61.99209976196289,
+          -106.63899993896484,
+          1629.93994140625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3200",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0000210",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0000210/lod0.glb",
+          "triangle_count": 26212,
+          "vertex_count": 13243,
+          "byte_size": 477312,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0000210/lod1.glb",
+          "triangle_count": 13104,
+          "vertex_count": 6689,
+          "byte_size": 241772,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0000210/lod2.glb",
+          "triangle_count": 2621,
+          "vertex_count": 1354,
+          "byte_size": 50812,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -76.1884994506836,
+          -131.68600463867188,
+          1517.800048828125
+        ],
+        "max": [
+          74.85649871826172,
+          14.952199935913086,
+          1636.27001953125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3274+FJ3380",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0000976",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0000976/lod0.glb",
+          "triangle_count": 7628,
+          "vertex_count": 3927,
+          "byte_size": 142220,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0000976/lod1.glb",
+          "triangle_count": 3813,
+          "vertex_count": 2019,
+          "byte_size": 73932,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0000976/lod2.glb",
+          "triangle_count": 761,
+          "vertex_count": 400,
+          "byte_size": 16744,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -240.84100341796875,
+          -100.22899627685547,
+          1029.199951171875
+        ],
+        "max": [
+          240.75999450683594,
+          -51.039100646972656,
+          1336.5400390625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3262+FJ3368",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0000979",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0000979/lod0.glb",
+          "triangle_count": 3356,
+          "vertex_count": 1682,
+          "byte_size": 62708,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0000979/lod1.glb",
+          "triangle_count": 1678,
+          "vertex_count": 843,
+          "byte_size": 32884,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0000979/lod2.glb",
+          "triangle_count": 334,
+          "vertex_count": 171,
+          "byte_size": 8684,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -109.35299682617188,
+          -114.83499908447266,
+          -6.095330238342285
+        ],
+        "max": [
+          109.45500183105469,
+          -51.98210144042969,
+          373.9200134277344
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3282+FJ3387",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
     {
       "id": "UBERON:0000981",
       "lods": [
         {
           "level": 0,
-          "file": "procedural/femur-proxy-threejs",
-          "triangle_count": 3824,
-          "vertex_count": 2048,
-          "byte_size": 0,
+          "file": "uberon_0000981/lod0.glb",
+          "triangle_count": 6306,
+          "vertex_count": 3157,
+          "byte_size": 115808,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0000981/lod1.glb",
+          "triangle_count": 3152,
+          "vertex_count": 1580,
+          "byte_size": 59420,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0000981/lod2.glb",
+          "triangle_count": 630,
+          "vertex_count": 319,
+          "byte_size": 14008,
           "compression": "none"
         }
       ],
       "bounds": {
-        "min": [-1.12, -1.82, -0.38],
-        "max": [0.56, 1.88, 0.42]
+        "min": [
+          -150.13400268554688,
+          -112.2760009765625,
+          368.0559997558594
+        ],
+        "max": [
+          150.23699951171875,
+          -49.482200622558594,
+          834.2520141601562
+        ]
       },
       "material_hint": "bone",
       "provenance": {
-        "source": "hand-authored procedural proxy",
-        "license": "CC-BY-SA-4.0",
-        "original_id": "FMA:9611",
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3259+FJ3365",
         "ingested_at": "2026-05-11",
         "edits": [
-          "Built from primitive Three.js geometry as a first selectable skeletal proxy",
-          "Not an atlas-grade mesh; replace with BodyParts3D pipeline output"
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001092",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001092/lod0.glb",
+          "triangle_count": 2094,
+          "vertex_count": 1046,
+          "byte_size": 39172,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001092/lod1.glb",
+          "triangle_count": 1046,
+          "vertex_count": 522,
+          "byte_size": 20604,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001092/lod2.glb",
+          "triangle_count": 208,
+          "vertex_count": 103,
+          "byte_size": 5504,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -41.364601135253906,
+          -87.64420318603516,
+          1462.2099609375
+        ],
+        "max": [
+          40.2307014465332,
+          -40.595802307128906,
+          1481.4300537109375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3176",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001093",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001093/lod0.glb",
+          "triangle_count": 2288,
+          "vertex_count": 1152,
+          "byte_size": 42880,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001093/lod1.glb",
+          "triangle_count": 1144,
+          "vertex_count": 580,
+          "byte_size": 22580,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001093/lod2.glb",
+          "triangle_count": 228,
+          "vertex_count": 117,
+          "byte_size": 5968,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -25.961599349975586,
+          -86.53910064697266,
+          1433.1700439453125
+        ],
+        "max": [
+          24.574199676513672,
+          -36.6708984375,
+          1478.3499755859375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3177",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001105",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001105/lod0.glb",
+          "triangle_count": 2322,
+          "vertex_count": 1165,
+          "byte_size": 44084,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001105/lod1.glb",
+          "triangle_count": 1160,
+          "vertex_count": 584,
+          "byte_size": 23556,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001105/lod2.glb",
+          "triangle_count": 230,
+          "vertex_count": 119,
+          "byte_size": 6792,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -145.27699279785156,
+          -147.0780029296875,
+          1308.530029296875
+        ],
+        "max": [
+          143.94200134277344,
+          -54.38750076293945,
+          1355.43994140625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3237+FJ3362",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001272",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001272/lod0.glb",
+          "triangle_count": 4706,
+          "vertex_count": 2353,
+          "byte_size": 86912,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001272/lod1.glb",
+          "triangle_count": 2352,
+          "vertex_count": 1176,
+          "byte_size": 44924,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001272/lod2.glb",
+          "triangle_count": 468,
+          "vertex_count": 234,
+          "byte_size": 11000,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -144.8719940185547,
+          -139.09500122070312,
+          751.9509887695312
+        ],
+        "max": [
+          144.75399780273438,
+          -1.1187800168991089,
+          958.0900268554688
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3152+FJ3288",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001423",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001423/lod0.glb",
+          "triangle_count": 1304,
+          "vertex_count": 656,
+          "byte_size": 25760,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001423/lod1.glb",
+          "triangle_count": 652,
+          "vertex_count": 330,
+          "byte_size": 14408,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001423/lod2.glb",
+          "triangle_count": 128,
+          "vertex_count": 68,
+          "byte_size": 4956,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -279.5350036621094,
+          -127.25199890136719,
+          805.8350219726562
+        ],
+        "max": [
+          279.14300537109375,
+          -61.10260009765625,
+          1035.050048828125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3277+FJ3349",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001424",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001424/lod0.glb",
+          "triangle_count": 1658,
+          "vertex_count": 836,
+          "byte_size": 32204,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001424/lod1.glb",
+          "triangle_count": 828,
+          "vertex_count": 421,
+          "byte_size": 17652,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001424/lod2.glb",
+          "triangle_count": 163,
+          "vertex_count": 86,
+          "byte_size": 5604,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -247.1790008544922,
+          -123.49400329589844,
+          805.0159912109375
+        ],
+        "max": [
+          247.1199951171875,
+          -44.55229949951172,
+          1052.469970703125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3286+FJ3391",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001427",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001427/lod0.glb",
+          "triangle_count": 634,
+          "vertex_count": 321,
+          "byte_size": 13688,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001427/lod1.glb",
+          "triangle_count": 316,
+          "vertex_count": 162,
+          "byte_size": 8336,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001427/lod2.glb",
+          "triangle_count": 62,
+          "vertex_count": 35,
+          "byte_size": 3760,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -273.05999755859375,
+          -126.66300201416016,
+          796.219970703125
+        ],
+        "max": [
+          272.97698974609375,
+          -111.5270004272461,
+          811.7899780273438
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3278+FJ3383",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001428",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001428/lod0.glb",
+          "triangle_count": 646,
+          "vertex_count": 330,
+          "byte_size": 13980,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001428/lod1.glb",
+          "triangle_count": 322,
+          "vertex_count": 168,
+          "byte_size": 8528,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001428/lod2.glb",
+          "triangle_count": 63,
+          "vertex_count": 36,
+          "byte_size": 3796,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -252.7239990234375,
+          -127.13099670410156,
+          797.2219848632812
+        ],
+        "max": [
+          252.88299560546875,
+          -110.62799835205078,
+          809.8880004882812
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3268+FJ3374",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001429",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001429/lod0.glb",
+          "triangle_count": 400,
+          "vertex_count": 204,
+          "byte_size": 9476,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001429/lod1.glb",
+          "triangle_count": 198,
+          "vertex_count": 103,
+          "byte_size": 6220,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001429/lod2.glb",
+          "triangle_count": 76,
+          "vertex_count": 42,
+          "byte_size": 4168,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -240.22000122070312,
+          -137.6580047607422,
+          789.6749877929688
+        ],
+        "max": [
+          240.02999877929688,
+          -127.03099822998047,
+          801.3250122070312
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3276+FJ3382",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001430",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001430/lod0.glb",
+          "triangle_count": 790,
+          "vertex_count": 399,
+          "byte_size": 16496,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001430/lod1.glb",
+          "triangle_count": 394,
+          "vertex_count": 201,
+          "byte_size": 9752,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001430/lod2.glb",
+          "triangle_count": 76,
+          "vertex_count": 42,
+          "byte_size": 4012,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -281.72198486328125,
+          -134.5760040283203,
+          785.7470092773438
+        ],
+        "max": [
+          281.7950134277344,
+          -117.70999908447266,
+          805.7930297851562
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3283+FJ3388",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001431",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001431/lod0.glb",
+          "triangle_count": 758,
+          "vertex_count": 389,
+          "byte_size": 16064,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001431/lod1.glb",
+          "triangle_count": 378,
+          "vertex_count": 199,
+          "byte_size": 9608,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001431/lod2.glb",
+          "triangle_count": 74,
+          "vertex_count": 42,
+          "byte_size": 4008,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -273.260986328125,
+          -128.4499969482422,
+          782.7219848632812
+        ],
+        "max": [
+          273.28900146484375,
+          -113.5270004272461,
+          795.3109741210938
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3284+FJ3389",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001432",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001432/lod0.glb",
+          "triangle_count": 830,
+          "vertex_count": 422,
+          "byte_size": 17292,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001432/lod1.glb",
+          "triangle_count": 414,
+          "vertex_count": 214,
+          "byte_size": 10188,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001432/lod2.glb",
+          "triangle_count": 81,
+          "vertex_count": 45,
+          "byte_size": 4120,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -264.48199462890625,
+          -127.49199676513672,
+          782.1640014648438
+        ],
+        "max": [
+          264.2879943847656,
+          -110.53399658203125,
+          804.5969848632812
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3257+FJ3361",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001433",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001433/lod0.glb",
+          "triangle_count": 974,
+          "vertex_count": 494,
+          "byte_size": 19888,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001433/lod1.glb",
+          "triangle_count": 486,
+          "vertex_count": 250,
+          "byte_size": 11488,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001433/lod2.glb",
+          "triangle_count": 97,
+          "vertex_count": 53,
+          "byte_size": 4408,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -251.92799377441406,
+          -133.98199462890625,
+          781.2559814453125
+        ],
+        "max": [
+          251.57000732421875,
+          -111.3219985961914,
+          800.6530151367188
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3261+FJ3367",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001446",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001446/lod0.glb",
+          "triangle_count": 2266,
+          "vertex_count": 1137,
+          "byte_size": 43076,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001446/lod1.glb",
+          "triangle_count": 1132,
+          "vertex_count": 570,
+          "byte_size": 23060,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001446/lod2.glb",
+          "triangle_count": 226,
+          "vertex_count": 117,
+          "byte_size": 6732,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -120.16500091552734,
+          -78.1688003540039,
+          -25.27989959716797
+        ],
+        "max": [
+          120.10800170898438,
+          -48.48740005493164,
+          359.1499938964844
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3260+FJ3366",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001450",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001450/lod0.glb",
+          "triangle_count": 2550,
+          "vertex_count": 1285,
+          "byte_size": 48336,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001450/lod1.glb",
+          "triangle_count": 1274,
+          "vertex_count": 647,
+          "byte_size": 25760,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001450/lod2.glb",
+          "triangle_count": 253,
+          "vertex_count": 134,
+          "byte_size": 7308,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -100.78099822998047,
+          -94.14849853515625,
+          -68.4906997680664
+        ],
+        "max": [
+          100.76799774169922,
+          -24.00510025024414,
+          -19.071199417114258
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3256+FJ3360",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001451",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001451/lod0.glb",
+          "triangle_count": 1460,
+          "vertex_count": 749,
+          "byte_size": 28924,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001451/lod1.glb",
+          "triangle_count": 730,
+          "vertex_count": 384,
+          "byte_size": 16176,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001451/lod2.glb",
+          "triangle_count": 145,
+          "vertex_count": 82,
+          "byte_size": 5400,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -96.75399780273438,
+          -121.09700012207031,
+          -30.974199295043945
+        ],
+        "max": [
+          96.643798828125,
+          -94.2760009765625,
+          -6.155799865722656
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3307+FJ3308",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001452",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001452/lod0.glb",
+          "triangle_count": 1948,
+          "vertex_count": 984,
+          "byte_size": 37496,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001452/lod1.glb",
+          "triangle_count": 974,
+          "vertex_count": 497,
+          "byte_size": 20352,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001452/lod2.glb",
+          "triangle_count": 194,
+          "vertex_count": 102,
+          "byte_size": 6184,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -94.12760162353516,
+          -140.5189971923828,
+          -45.27320098876953
+        ],
+        "max": [
+          94.1093978881836,
+          -111.98200225830078,
+          -14.192099571228027
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3271+FJ3377",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001453",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001453/lod0.glb",
+          "triangle_count": 916,
+          "vertex_count": 472,
+          "byte_size": 19016,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001453/lod1.glb",
+          "triangle_count": 456,
+          "vertex_count": 242,
+          "byte_size": 11112,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001453/lod2.glb",
+          "triangle_count": 90,
+          "vertex_count": 50,
+          "byte_size": 4300,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -102.00700378417969,
+          -130.53399658203125,
+          -34.43659973144531
+        ],
+        "max": [
+          101.95500183105469,
+          -109.58499908447266,
+          -11.310400009155273
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3264+FJ3370",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001454",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001454/lod0.glb",
+          "triangle_count": 1306,
+          "vertex_count": 657,
+          "byte_size": 25792,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001454/lod1.glb",
+          "triangle_count": 652,
+          "vertex_count": 330,
+          "byte_size": 14412,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001454/lod2.glb",
+          "triangle_count": 130,
+          "vertex_count": 69,
+          "byte_size": 5000,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -112.875,
+          -125.23200225830078,
+          -40.62710189819336
+        ],
+        "max": [
+          112.88500213623047,
+          -100.83799743652344,
+          -14.815400123596191
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3267+FJ3373",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001455",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001455/lod0.glb",
+          "triangle_count": 1818,
+          "vertex_count": 916,
+          "byte_size": 35088,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001455/lod1.glb",
+          "triangle_count": 909,
+          "vertex_count": 459,
+          "byte_size": 19060,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001455/lod2.glb",
+          "triangle_count": 179,
+          "vertex_count": 94,
+          "byte_size": 5896,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -115.08500671386719,
+          -116.76799774169922,
+          -51.522300720214844
+        ],
+        "max": [
+          115.13400268554688,
+          -83.16300201416016,
+          -21.85300064086914
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3258+FJ3364",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001676",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001676/lod0.glb",
+          "triangle_count": 12450,
+          "vertex_count": 6228,
+          "byte_size": 225680,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001676/lod1.glb",
+          "triangle_count": 6224,
+          "vertex_count": 3115,
+          "byte_size": 113912,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001676/lod2.glb",
+          "triangle_count": 1245,
+          "vertex_count": 623,
+          "byte_size": 24228,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -61.96120071411133,
+          -100.95899963378906,
+          1477.77001953125
+        ],
+        "max": [
+          60.705299377441406,
+          18.000999450683594,
+          1584.510009765625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3309",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001677",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001677/lod0.glb",
+          "triangle_count": 8154,
+          "vertex_count": 4083,
+          "byte_size": 148420,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001677/lod1.glb",
+          "triangle_count": 4076,
+          "vertex_count": 2044,
+          "byte_size": 75316,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001677/lod2.glb",
+          "triangle_count": 814,
+          "vertex_count": 397,
+          "byte_size": 16204,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -56.319801330566406,
+          -145.0189971923828,
+          1478.9100341796875
+        ],
+        "max": [
+          55.032901763916016,
+          -90.4126968383789,
+          1548.4599609375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3394",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001678",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001678/lod0.glb",
+          "triangle_count": 9864,
+          "vertex_count": 4996,
+          "byte_size": 181292,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001678/lod1.glb",
+          "triangle_count": 4932,
+          "vertex_count": 2530,
+          "byte_size": 92904,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001678/lod2.glb",
+          "triangle_count": 984,
+          "vertex_count": 514,
+          "byte_size": 20828,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -73.9894027709961,
+          -133.73599243164062,
+          1475.47998046875
+        ],
+        "max": [
+          72.58529663085938,
+          -35.01259994506836,
+          1551.530029296875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3281+FJ3386",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001679",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001679/lod0.glb",
+          "triangle_count": 22265,
+          "vertex_count": 11324,
+          "byte_size": 406888,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001679/lod1.glb",
+          "triangle_count": 11123,
+          "vertex_count": 5683,
+          "byte_size": 204948,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001679/lod2.glb",
+          "triangle_count": 2216,
+          "vertex_count": 1156,
+          "byte_size": 42848,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -21.509899139404297,
+          -167.1999969482422,
+          1497.280029296875
+        ],
+        "max": [
+          20.201400756835938,
+          -119.81600189208984,
+          1532.3399658203125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3199",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001680",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001680/lod0.glb",
+          "triangle_count": 1342,
+          "vertex_count": 675,
+          "byte_size": 26448,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001680/lod1.glb",
+          "triangle_count": 670,
+          "vertex_count": 339,
+          "byte_size": 14736,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001680/lod2.glb",
+          "triangle_count": 134,
+          "vertex_count": 71,
+          "byte_size": 5068,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -18.041900634765625,
+          -165.50999450683594,
+          1497.8699951171875
+        ],
+        "max": [
+          17.931100845336914,
+          -150.76400756835938,
+          1527.3499755859375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3265+FJ3371",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001681",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001681/lod0.glb",
+          "triangle_count": 854,
+          "vertex_count": 431,
+          "byte_size": 17656,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001681/lod1.glb",
+          "triangle_count": 426,
+          "vertex_count": 217,
+          "byte_size": 10332,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001681/lod2.glb",
+          "triangle_count": 82,
+          "vertex_count": 45,
+          "byte_size": 4124,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -9.148710250854492,
+          -190.83299255371094,
+          1501.170166015625
+        ],
+        "max": [
+          7.199930191040039,
+          -169.2899932861328,
+          1533.489990234375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3272+FJ3378",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001682",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001682/lod0.glb",
+          "triangle_count": 3674,
+          "vertex_count": 1844,
+          "byte_size": 68504,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001682/lod1.glb",
+          "triangle_count": 1836,
+          "vertex_count": 925,
+          "byte_size": 35804,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001682/lod2.glb",
+          "triangle_count": 364,
+          "vertex_count": 189,
+          "byte_size": 9292,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -28.810400009155273,
+          -149.96200561523438,
+          1470.1600341796875
+        ],
+        "max": [
+          27.45840072631836,
+          -103.31300354003906,
+          1513.4000244140625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3273+FJ3379",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001683",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001683/lod0.glb",
+          "triangle_count": 2990,
+          "vertex_count": 1505,
+          "byte_size": 56252,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001683/lod1.glb",
+          "triangle_count": 1494,
+          "vertex_count": 757,
+          "byte_size": 29716,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001683/lod2.glb",
+          "triangle_count": 297,
+          "vertex_count": 156,
+          "byte_size": 8096,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -64.5779037475586,
+          -161.4530029296875,
+          1480.6199951171875
+        ],
+        "max": [
+          63.24440002441406,
+          -121.74299621582031,
+          1536.739990234375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3287+FJ3392",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0001684",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0001684/lod0.glb",
+          "triangle_count": 5576,
+          "vertex_count": 2790,
+          "byte_size": 101924,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0001684/lod1.glb",
+          "triangle_count": 2788,
+          "vertex_count": 1396,
+          "byte_size": 52032,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0001684/lod2.glb",
+          "triangle_count": 556,
+          "vertex_count": 280,
+          "byte_size": 11852,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -53.84590148925781,
+          -173.83200073242188,
+          1421.6300048828125
+        ],
+        "max": [
+          52.554100036621094,
+          -89.85369873046875,
+          1506.0999755859375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3289",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0002205",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0002205/lod0.glb",
+          "triangle_count": 2546,
+          "vertex_count": 1281,
+          "byte_size": 47512,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0002205/lod1.glb",
+          "triangle_count": 1272,
+          "vertex_count": 644,
+          "byte_size": 24876,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0002205/lod2.glb",
+          "triangle_count": 254,
+          "vertex_count": 130,
+          "byte_size": 6436,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -27.44969940185547,
+          -178.58799743652344,
+          1280.27001953125
+        ],
+        "max": [
+          27.44969940185547,
+          -130.80099487304688,
+          1325.25
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3290",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0002207",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0002207/lod0.glb",
+          "triangle_count": 922,
+          "vertex_count": 463,
+          "byte_size": 18128,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0002207/lod1.glb",
+          "triangle_count": 460,
+          "vertex_count": 232,
+          "byte_size": 10096,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0002207/lod2.glb",
+          "triangle_count": 92,
+          "vertex_count": 48,
+          "byte_size": 3480,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -10.337800025939941,
+          -213.35299682617188,
+          1164.02001953125
+        ],
+        "max": [
+          10.603899955749512,
+          -198.50900268554688,
+          1184.5
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3153",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0002395",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0002395/lod0.glb",
+          "triangle_count": 2736,
+          "vertex_count": 1381,
+          "byte_size": 51756,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0002395/lod1.glb",
+          "triangle_count": 1368,
+          "vertex_count": 697,
+          "byte_size": 27520,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0002395/lod2.glb",
+          "triangle_count": 271,
+          "vertex_count": 146,
+          "byte_size": 7700,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -90.11360168457031,
+          -105.677001953125,
+          -31.305599212646484
+        ],
+        "max": [
+          90.17839813232422,
+          -48.754005432128906,
+          3.1109299659729004
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3280+FJ3385",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0002396",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0002396/lod0.glb",
+          "triangle_count": 7218,
+          "vertex_count": 3611,
+          "byte_size": 131480,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0002396/lod1.glb",
+          "triangle_count": 3608,
+          "vertex_count": 1806,
+          "byte_size": 66796,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0002396/lod2.glb",
+          "triangle_count": 720,
+          "vertex_count": 362,
+          "byte_size": 14804,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -6.111219882965088,
+          -165.8070068359375,
+          1474.5899658203125
+        ],
+        "max": [
+          4.811039924621582,
+          -110.74700164794922,
+          1518.1099853515625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3395",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0002397",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0002397/lod0.glb",
+          "triangle_count": 10522,
+          "vertex_count": 5446,
+          "byte_size": 196048,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0002397/lod1.glb",
+          "triangle_count": 5259,
+          "vertex_count": 2805,
+          "byte_size": 101476,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0002397/lod2.glb",
+          "triangle_count": 1049,
+          "vertex_count": 564,
+          "byte_size": 22424,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -47.61069869995117,
+          -184.02902221679688,
+          1463.989990234375
+        ],
+        "max": [
+          45.79520034790039,
+          -126.81400299072266,
+          1533.3499755859375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3269+FJ3375",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0002445",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0002445/lod0.glb",
+          "triangle_count": 474,
+          "vertex_count": 244,
+          "byte_size": 10876,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0002445/lod1.glb",
+          "triangle_count": 236,
+          "vertex_count": 125,
+          "byte_size": 6972,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0002445/lod2.glb",
+          "triangle_count": 80,
+          "vertex_count": 47,
+          "byte_size": 4308,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -242.76600646972656,
+          -129.8070068359375,
+          788.7689819335938
+        ],
+        "max": [
+          242.7310028076172,
+          -114.42500305175781,
+          802.5900268554688
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3285+FJ3390",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0002446",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0002446/lod0.glb",
+          "triangle_count": 616,
+          "vertex_count": 312,
+          "byte_size": 13368,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0002446/lod1.glb",
+          "triangle_count": 306,
+          "vertex_count": 157,
+          "byte_size": 8164,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0002446/lod2.glb",
+          "triangle_count": 60,
+          "vertex_count": 34,
+          "byte_size": 3728,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -102.28800964355469,
+          -122.7509994506836,
+          361.4859924316406
+        ],
+        "max": [
+          102.2239990234375,
+          -100.9010009765625,
+          400.7959899902344
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3275+FJ3381",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0003690",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0003690/lod0.glb",
+          "triangle_count": 9922,
+          "vertex_count": 4969,
+          "byte_size": 180292,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0003690/lod1.glb",
+          "triangle_count": 4960,
+          "vertex_count": 2487,
+          "byte_size": 91248,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0003690/lod2.glb",
+          "triangle_count": 991,
+          "vertex_count": 485,
+          "byte_size": 19380,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -59.59120178222656,
+          -81.39640045166016,
+          782.8369750976562
+        ],
+        "max": [
+          58.20289993286133,
+          7.253749847412109,
+          927.2000122070312
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3393",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004601",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004601/lod0.glb",
+          "triangle_count": 6552,
+          "vertex_count": 3280,
+          "byte_size": 120232,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004601/lod1.glb",
+          "triangle_count": 3276,
+          "vertex_count": 1642,
+          "byte_size": 61648,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004601/lod2.glb",
+          "triangle_count": 652,
+          "vertex_count": 330,
+          "byte_size": 14412,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -69.76409912109375,
+          -130.4239959716797,
+          1310.0699462890625
+        ],
+        "max": [
+          68.45459747314453,
+          -64.41459655761719,
+          1370.47998046875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3228+FJ3334",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004602",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004602/lod0.glb",
+          "triangle_count": 11188,
+          "vertex_count": 5598,
+          "byte_size": 203688,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004602/lod1.glb",
+          "triangle_count": 5592,
+          "vertex_count": 2800,
+          "byte_size": 103352,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004602/lod2.glb",
+          "triangle_count": 1116,
+          "vertex_count": 562,
+          "byte_size": 22772,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -96.97209930419922,
+          -167.15699768066406,
+          1273.510009765625
+        ],
+        "max": [
+          95.66100311279297,
+          -50.64680099487305,
+          1359.030029296875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3229+FJ3336",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004603",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004603/lod0.glb",
+          "triangle_count": 14508,
+          "vertex_count": 7258,
+          "byte_size": 263448,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004603/lod1.glb",
+          "triangle_count": 7252,
+          "vertex_count": 3630,
+          "byte_size": 133240,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004603/lod2.glb",
+          "triangle_count": 1448,
+          "vertex_count": 728,
+          "byte_size": 28744,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -108.9469985961914,
+          -179.26800537109375,
+          1243.8199462890625
+        ],
+        "max": [
+          107.63300323486328,
+          -36.82899856567383,
+          1335.97998046875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3230+FJ3338",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004604",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004604/lod0.glb",
+          "triangle_count": 17682,
+          "vertex_count": 8845,
+          "byte_size": 320588,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004604/lod1.glb",
+          "triangle_count": 8840,
+          "vertex_count": 4424,
+          "byte_size": 161824,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004604/lod2.glb",
+          "triangle_count": 1766,
+          "vertex_count": 887,
+          "byte_size": 34468,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -117.59300231933594,
+          -192.19500732421875,
+          1211.0999755859375
+        ],
+        "max": [
+          116.28099822998047,
+          -23.1919002532959,
+          1315.3499755859375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3231+FJ3340",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004605",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004605/lod0.glb",
+          "triangle_count": 19420,
+          "vertex_count": 9714,
+          "byte_size": 351872,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004605/lod1.glb",
+          "triangle_count": 9708,
+          "vertex_count": 4858,
+          "byte_size": 177448,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004605/lod2.glb",
+          "triangle_count": 1940,
+          "vertex_count": 974,
+          "byte_size": 37608,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -127.0790023803711,
+          -197.68800354003906,
+          1172.1600341796875
+        ],
+        "max": [
+          125.76799774169922,
+          -12.722700119018555,
+          1291.3199462890625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3232+FJ3342",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004606",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004606/lod0.glb",
+          "triangle_count": 20510,
+          "vertex_count": 10259,
+          "byte_size": 371492,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004606/lod1.glb",
+          "triangle_count": 10254,
+          "vertex_count": 5131,
+          "byte_size": 187284,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004606/lod2.glb",
+          "triangle_count": 2050,
+          "vertex_count": 1029,
+          "byte_size": 39592,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -134.3489990234375,
+          -193.5050048828125,
+          1137.9000244140625
+        ],
+        "max": [
+          133.0540008544922,
+          -3.6414101123809814,
+          1266.8299560546875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3233+FJ3344",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004607",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004607/lod0.glb",
+          "triangle_count": 20064,
+          "vertex_count": 10036,
+          "byte_size": 363448,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004607/lod1.glb",
+          "triangle_count": 10032,
+          "vertex_count": 5020,
+          "byte_size": 183284,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004607/lod2.glb",
+          "triangle_count": 2004,
+          "vertex_count": 1006,
+          "byte_size": 38756,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -137.0850067138672,
+          -180.20799255371094,
+          1105.18994140625
+        ],
+        "max": [
+          135.7779998779297,
+          -4.486909866333008,
+          1240.27001953125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3234+FJ3346",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004608",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004608/lod0.glb",
+          "triangle_count": 15152,
+          "vertex_count": 7580,
+          "byte_size": 275044,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004608/lod1.glb",
+          "triangle_count": 7576,
+          "vertex_count": 3792,
+          "byte_size": 139072,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004608/lod2.glb",
+          "triangle_count": 1512,
+          "vertex_count": 760,
+          "byte_size": 29900,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -129.09800720214844,
+          -135.6320037841797,
+          1050.0899658203125
+        ],
+        "max": [
+          127.78299713134766,
+          -7.527659893035889,
+          1185.3699951171875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3236+FJ3348",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004609",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004609/lod0.glb",
+          "triangle_count": 13646,
+          "vertex_count": 6827,
+          "byte_size": 247936,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004609/lod1.glb",
+          "triangle_count": 6822,
+          "vertex_count": 3415,
+          "byte_size": 125504,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004609/lod2.glb",
+          "triangle_count": 1364,
+          "vertex_count": 686,
+          "byte_size": 27236,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -123.64800262451172,
+          -117.71499633789062,
+          1022.9600219726562
+        ],
+        "max": [
+          122.3489990234375,
+          -11.354499816894531,
+          1158.989990234375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3225+FJ3330",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004610",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004610/lod0.glb",
+          "triangle_count": 9732,
+          "vertex_count": 4870,
+          "byte_size": 177480,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004610/lod1.glb",
+          "triangle_count": 4864,
+          "vertex_count": 2436,
+          "byte_size": 90244,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004610/lod2.glb",
+          "triangle_count": 972,
+          "vertex_count": 490,
+          "byte_size": 20172,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -111.35299682617188,
+          -96.01830291748047,
+          1008.0599975585938
+        ],
+        "max": [
+          110.05400085449219,
+          -17.96139907836914,
+          1121.739990234375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3226+FJ3331",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004611",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004611/lod0.glb",
+          "triangle_count": 5636,
+          "vertex_count": 2822,
+          "byte_size": 103744,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004611/lod1.glb",
+          "triangle_count": 2816,
+          "vertex_count": 1412,
+          "byte_size": 53368,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004611/lod2.glb",
+          "triangle_count": 560,
+          "vertex_count": 284,
+          "byte_size": 12756,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -86.533203125,
+          -66.09729766845703,
+          1011.3300170898438
+        ],
+        "max": [
+          85.22109985351562,
+          -27.99220085144043,
+          1089.1700439453125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3227+FJ3332",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004612",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004612/lod0.glb",
+          "triangle_count": 2030,
+          "vertex_count": 1027,
+          "byte_size": 38316,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004612/lod1.glb",
+          "triangle_count": 1014,
+          "vertex_count": 519,
+          "byte_size": 20332,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004612/lod2.glb",
+          "triangle_count": 203,
+          "vertex_count": 110,
+          "byte_size": 5648,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -29.84280014038086,
+          -87.81320190429688,
+          1417
+        ],
+        "max": [
+          28.5393009185791,
+          -38.13309860229492,
+          1445.739990234375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3161",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004613",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004613/lod0.glb",
+          "triangle_count": 2410,
+          "vertex_count": 1201,
+          "byte_size": 44792,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004613/lod1.glb",
+          "triangle_count": 1204,
+          "vertex_count": 598,
+          "byte_size": 23372,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004613/lod2.glb",
+          "triangle_count": 240,
+          "vertex_count": 116,
+          "byte_size": 6012,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -27.753400802612305,
+          -89.10810089111328,
+          1404.5999755859375
+        ],
+        "max": [
+          26.377500534057617,
+          -40.693599700927734,
+          1432.1400146484375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3164",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004614",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004614/lod0.glb",
+          "triangle_count": 2196,
+          "vertex_count": 1106,
+          "byte_size": 41224,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004614/lod1.glb",
+          "triangle_count": 1098,
+          "vertex_count": 557,
+          "byte_size": 21748,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004614/lod2.glb",
+          "triangle_count": 219,
+          "vertex_count": 115,
+          "byte_size": 5868,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -29.697799682617188,
+          -90.77259826660156,
+          1393.77001953125
+        ],
+        "max": [
+          28.333200454711914,
+          -36.08250045776367,
+          1417.989990234375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3167",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004615",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004615/lod0.glb",
+          "triangle_count": 2374,
+          "vertex_count": 1189,
+          "byte_size": 44284,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004615/lod1.glb",
+          "triangle_count": 1186,
+          "vertex_count": 595,
+          "byte_size": 23192,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004615/lod2.glb",
+          "triangle_count": 237,
+          "vertex_count": 118,
+          "byte_size": 6044,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -31.265199661254883,
+          -91.6709976196289,
+          1381.5899658203125
+        ],
+        "max": [
+          29.94770050048828,
+          -29.179399490356445,
+          1404.739990234375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3170",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004616",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004616/lod0.glb",
+          "triangle_count": 1820,
+          "vertex_count": 937,
+          "byte_size": 34908,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004616/lod1.glb",
+          "triangle_count": 909,
+          "vertex_count": 481,
+          "byte_size": 18792,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004616/lod2.glb",
+          "triangle_count": 181,
+          "vertex_count": 102,
+          "byte_size": 5324,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -33.22930145263672,
+          -90.03189849853516,
+          1364.7099609375
+        ],
+        "max": [
+          31.93160057067871,
+          -21.266399383544922,
+          1391.840087890625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3172",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004617",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004617/lod0.glb",
+          "triangle_count": 2972,
+          "vertex_count": 1486,
+          "byte_size": 55000,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004617/lod1.glb",
+          "triangle_count": 1486,
+          "vertex_count": 743,
+          "byte_size": 28544,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004617/lod2.glb",
+          "triangle_count": 296,
+          "vertex_count": 148,
+          "byte_size": 7120,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -35.77980041503906,
+          -109.4800033569336,
+          1015.2000122070312
+        ],
+        "max": [
+          34.46139907836914,
+          -29.222400665283203,
+          1071.97998046875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3157",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004618",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004618/lod0.glb",
+          "triangle_count": 3214,
+          "vertex_count": 1613,
+          "byte_size": 59500,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004618/lod1.glb",
+          "triangle_count": 1606,
+          "vertex_count": 809,
+          "byte_size": 30844,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004618/lod2.glb",
+          "triangle_count": 321,
+          "vertex_count": 161,
+          "byte_size": 7576,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -40.35089874267578,
+          -114.72000122070312,
+          992.3159790039062
+        ],
+        "max": [
+          39.06079864501953,
+          -34.34880065917969,
+          1039.760009765625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3159",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004619",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004619/lod0.glb",
+          "triangle_count": 3272,
+          "vertex_count": 1639,
+          "byte_size": 60472,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004619/lod1.glb",
+          "triangle_count": 1636,
+          "vertex_count": 821,
+          "byte_size": 31316,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004619/lod2.glb",
+          "triangle_count": 327,
+          "vertex_count": 164,
+          "byte_size": 7692,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -40.20289993286133,
+          -115.35299682617188,
+          967.6929931640625
+        ],
+        "max": [
+          38.840999603271484,
+          -29.513999938964844,
+          1009.72998046875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3162",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004620",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004620/lod0.glb",
+          "triangle_count": 3512,
+          "vertex_count": 1756,
+          "byte_size": 64720,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004620/lod1.glb",
+          "triangle_count": 1756,
+          "vertex_count": 878,
+          "byte_size": 33408,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004620/lod2.glb",
+          "triangle_count": 350,
+          "vertex_count": 175,
+          "byte_size": 8088,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -42.7661018371582,
+          -110.40499877929688,
+          938.6640014648438
+        ],
+        "max": [
+          41.415401458740234,
+          -26.156200408935547,
+          983.4020385742188
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3165",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004621",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004621/lod0.glb",
+          "triangle_count": 3892,
+          "vertex_count": 1946,
+          "byte_size": 71556,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004621/lod1.glb",
+          "triangle_count": 1946,
+          "vertex_count": 973,
+          "byte_size": 36828,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004621/lod2.glb",
+          "triangle_count": 388,
+          "vertex_count": 194,
+          "byte_size": 8776,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -51.000701904296875,
+          -99.07649993896484,
+          904.594970703125
+        ],
+        "max": [
+          49.57360076904297,
+          -18.2450008392334,
+          954.8330078125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3168",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004626",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004626/lod0.glb",
+          "triangle_count": 1700,
+          "vertex_count": 850,
+          "byte_size": 32100,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004626/lod1.glb",
+          "triangle_count": 850,
+          "vertex_count": 425,
+          "byte_size": 17096,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004626/lod2.glb",
+          "triangle_count": 170,
+          "vertex_count": 85,
+          "byte_size": 4844,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -37.382999420166016,
+          -86.87190246582031,
+          1347.219970703125
+        ],
+        "max": [
+          35.91619873046875,
+          -17.086700439453125,
+          1376.9000244140625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3158",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004627",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004627/lod0.glb",
+          "triangle_count": 1938,
+          "vertex_count": 969,
+          "byte_size": 36388,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004627/lod1.glb",
+          "triangle_count": 968,
+          "vertex_count": 484,
+          "byte_size": 19212,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004627/lod2.glb",
+          "triangle_count": 192,
+          "vertex_count": 96,
+          "byte_size": 5244,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -35.92210006713867,
+          -82.67579650878906,
+          1326.5899658203125
+        ],
+        "max": [
+          34.578399658203125,
+          -12.120499610900879,
+          1360.3599853515625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3160",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004628",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004628/lod0.glb",
+          "triangle_count": 2038,
+          "vertex_count": 1019,
+          "byte_size": 38188,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004628/lod1.glb",
+          "triangle_count": 1018,
+          "vertex_count": 509,
+          "byte_size": 20120,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004628/lod2.glb",
+          "triangle_count": 202,
+          "vertex_count": 101,
+          "byte_size": 5428,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -32.96609878540039,
+          -76.73629760742188,
+          1302.22998046875
+        ],
+        "max": [
+          31.840900421142578,
+          -1.3601100444793701,
+          1341.8499755859375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3163",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004629",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004629/lod0.glb",
+          "triangle_count": 2066,
+          "vertex_count": 1033,
+          "byte_size": 38692,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004629/lod1.glb",
+          "triangle_count": 1032,
+          "vertex_count": 516,
+          "byte_size": 20368,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004629/lod2.glb",
+          "triangle_count": 206,
+          "vertex_count": 103,
+          "byte_size": 5500,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -35.461700439453125,
+          -69.60489654541016,
+          1277.739990234375
+        ],
+        "max": [
+          34.28200149536133,
+          -0.19789600372314453,
+          1321.4100341796875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3166",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004630",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004630/lod0.glb",
+          "triangle_count": 2280,
+          "vertex_count": 1143,
+          "byte_size": 42612,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004630/lod1.glb",
+          "triangle_count": 1140,
+          "vertex_count": 573,
+          "byte_size": 22388,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004630/lod2.glb",
+          "triangle_count": 228,
+          "vertex_count": 117,
+          "byte_size": 5964,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -36.1515007019043,
+          -66.00900268554688,
+          1239.77001953125
+        ],
+        "max": [
+          34.88970184326172,
+          0.018549900501966476,
+          1297.27001953125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3169",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004631",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004631/lod0.glb",
+          "triangle_count": 2248,
+          "vertex_count": 1124,
+          "byte_size": 41968,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004631/lod1.glb",
+          "triangle_count": 1124,
+          "vertex_count": 562,
+          "byte_size": 22028,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004631/lod2.glb",
+          "triangle_count": 224,
+          "vertex_count": 112,
+          "byte_size": 5816,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -36.422698974609375,
+          -65.22090148925781,
+          1209.3800048828125
+        ],
+        "max": [
+          35.03390121459961,
+          -1.192430019378662,
+          1269.0799560546875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3171",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004632",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004632/lod0.glb",
+          "triangle_count": 2574,
+          "vertex_count": 1287,
+          "byte_size": 47836,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004632/lod1.glb",
+          "triangle_count": 1286,
+          "vertex_count": 643,
+          "byte_size": 24940,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004632/lod2.glb",
+          "triangle_count": 256,
+          "vertex_count": 128,
+          "byte_size": 6396,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -37.22629928588867,
+          -66.97920227050781,
+          1179.300048828125
+        ],
+        "max": [
+          36.32059860229492,
+          -0.6714929938316345,
+          1241.800048828125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3173",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004633",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004633/lod0.glb",
+          "triangle_count": 2586,
+          "vertex_count": 1293,
+          "byte_size": 48052,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004633/lod1.glb",
+          "triangle_count": 1292,
+          "vertex_count": 646,
+          "byte_size": 25052,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004633/lod2.glb",
+          "triangle_count": 258,
+          "vertex_count": 129,
+          "byte_size": 6432,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -34.394798278808594,
+          -77.65290069580078,
+          1126.6300048828125
+        ],
+        "max": [
+          32.99800109863281,
+          -6.156060218811035,
+          1184.840087890625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3175",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004634",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004634/lod0.glb",
+          "triangle_count": 2790,
+          "vertex_count": 1398,
+          "byte_size": 51796,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004634/lod1.glb",
+          "triangle_count": 1394,
+          "vertex_count": 700,
+          "byte_size": 26960,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004634/lod2.glb",
+          "triangle_count": 278,
+          "vertex_count": 142,
+          "byte_size": 6868,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -33.65679931640625,
+          -84.05780029296875,
+          1099.77001953125
+        ],
+        "max": [
+          32.245201110839844,
+          -7.822500228881836,
+          1157.1300048828125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3154",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004635",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004635/lod0.glb",
+          "triangle_count": 2674,
+          "vertex_count": 1337,
+          "byte_size": 49636,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004635/lod1.glb",
+          "triangle_count": 1336,
+          "vertex_count": 668,
+          "byte_size": 25844,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004635/lod2.glb",
+          "triangle_count": 266,
+          "vertex_count": 133,
+          "byte_size": 6580,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -26.76099967956543,
+          -92.53240203857422,
+          1075.719970703125
+        ],
+        "max": [
+          25.559301376342773,
+          -13.008899688720703,
+          1129.27001953125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3155",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0004636",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0004636/lod0.glb",
+          "triangle_count": 2772,
+          "vertex_count": 1386,
+          "byte_size": 51400,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0004636/lod1.glb",
+          "triangle_count": 1386,
+          "vertex_count": 693,
+          "byte_size": 26748,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0004636/lod2.glb",
+          "triangle_count": 276,
+          "vertex_count": 138,
+          "byte_size": 6760,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -22.38640022277832,
+          -101.38500213623047,
+          1049.9599609375
+        ],
+        "max": [
+          21.054800033569336,
+          -22.56089973449707,
+          1101.5899658203125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3156",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0005922",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0005922/lod0.glb",
+          "triangle_count": 1452,
+          "vertex_count": 773,
+          "byte_size": 29456,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0005922/lod1.glb",
+          "triangle_count": 724,
+          "vertex_count": 410,
+          "byte_size": 16768,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0005922/lod2.glb",
+          "triangle_count": 142,
+          "vertex_count": 80,
+          "byte_size": 5332,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -16.532100677490234,
+          -169.47999572753906,
+          1478.52001953125
+        ],
+        "max": [
+          15.939900398254395,
+          -129.96099853515625,
+          1498.47998046875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3263+FJ3369",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0006820",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0006820/lod0.glb",
+          "triangle_count": 4638,
+          "vertex_count": 2736,
+          "byte_size": 95000,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0006820/lod1.glb",
+          "triangle_count": 2318,
+          "vertex_count": 1558,
+          "byte_size": 53104,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0006820/lod2.glb",
+          "triangle_count": 461,
+          "vertex_count": 264,
+          "byte_size": 10896,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -23.614900588989258,
+          -213.83200073242188,
+          1179.6500244140625
+        ],
+        "max": [
+          23.95560073852539,
+          -165.16600036621094,
+          1289.6400146484375
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3178",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0006849",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0006849/lod0.glb",
+          "triangle_count": 54278,
+          "vertex_count": 27143,
+          "byte_size": 979324,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0006849/lod1.glb",
+          "triangle_count": 27138,
+          "vertex_count": 13573,
+          "byte_size": 491184,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0006849/lod2.glb",
+          "triangle_count": 5426,
+          "vertex_count": 2717,
+          "byte_size": 100364,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -166.46400451660156,
+          -102.85600280761719,
+          1183.949951171875
+        ],
+        "max": [
+          166.46400451660156,
+          5.082749843597412,
+          1349.8599853515625
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3279+FJ3384",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0010757",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0010757/lod0.glb",
+          "triangle_count": 16672,
+          "vertex_count": 8340,
+          "byte_size": 302408,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0010757/lod1.glb",
+          "triangle_count": 8336,
+          "vertex_count": 4172,
+          "byte_size": 152752,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0010757/lod2.glb",
+          "triangle_count": 1664,
+          "vertex_count": 836,
+          "byte_size": 32636,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -132.96800231933594,
+          -162.67799377441406,
+          1074.6500244140625
+        ],
+        "max": [
+          131.63800048828125,
+          -4.564489841461182,
+          1211.3299560546875
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3235+FJ3347",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "merged_2_fj_obj_into_one_glb",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
+        ]
+      }
+    },
+    {
+      "id": "UBERON:0011050",
+      "lods": [
+        {
+          "level": 0,
+          "file": "uberon_0011050/lod0.glb",
+          "triangle_count": 2424,
+          "vertex_count": 1212,
+          "byte_size": 45124,
+          "compression": "none"
+        },
+        {
+          "level": 1,
+          "file": "uberon_0011050/lod1.glb",
+          "triangle_count": 1212,
+          "vertex_count": 606,
+          "byte_size": 23612,
+          "compression": "none"
+        },
+        {
+          "level": 2,
+          "file": "uberon_0011050/lod2.glb",
+          "triangle_count": 242,
+          "vertex_count": 121,
+          "byte_size": 6140,
+          "compression": "none"
+        }
+      ],
+      "bounds": {
+        "min": [
+          -33.659400939941406,
+          -72.02760314941406,
+          1153.75
+        ],
+        "max": [
+          32.1526985168457,
+          -0.9317960143089294,
+          1213.050048828125
+        ]
+      },
+      "material_hint": "bone",
+      "provenance": {
+        "source": "BodyParts3D",
+        "license": "CC-BY-SA-2.1-JP",
+        "original_id": "FJ3174",
+        "ingested_at": "2026-05-11",
+        "edits": [
+          "obj_to_glb_conversion",
+          "blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"
         ]
       }
     }

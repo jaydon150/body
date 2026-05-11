@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.07)
-**Current phase:** Phase 1 in progress. Steps P1.01–P1.07 complete; P1.08 (bake-registry) ready to dispatch.
+**Last updated:** 2026-05-11 (late evening, post-P1.08)
+**Current phase:** Phase 1 in progress. **Asset side complete (P1.01–P1.08).** Crossing to application side next: P1.09 (Architect + QA schema upgrade) ready to dispatch.
 **Overall health:** Green
 
 ---
@@ -18,7 +18,7 @@
 
 ## Active work
 
-- **P1.08 (bake-registry) ready to dispatch.** Walks `data/canonical/meshes/` + ontology to produce the canonical `mesh-asset-manifest.json`. Synthesizes the sternum composite. Supersedes the user's procedural-femur-proxy seed entry. Last asset-side step before the project crosses to the application side (P1.09 schema upgrade, P1.10+ 3D Engine + UI + Content).
+- **P1.09 (Architect + QA schema upgrade) ready to dispatch.** Upgrade schema validation from the Phase 0 placeholder (JSON-parse + key checks) to full ajv meta-schema + data-against-schema validation. Also adds `composite_children` field to `mesh-asset-manifest.json` per P1.08 handoff, unblocking the sternum-composite entry in a future small bake. Architect drafts the schema change as an ADR-worthy decision.
 
 ## Blockers
 
@@ -27,7 +27,7 @@
 
 ## Next milestone
 
-**P1.08 dispatch.** Asset Pipeline bakes the canonical `mesh-asset-manifest.json` from the validated canonical store + ontology. Asset side closes here; application-side begins next.
+**P1.09 dispatch.** Architect tightens schema validation tooling (ajv-based) and extends the mesh-asset-manifest schema with `composite_children` to unblock the sternum composite. After P1.09, the application side begins in earnest with P1.10–12 (3D Engine wiring the registry to the canvas — this is when the dev server starts showing real anatomy).
 
 ## Upcoming gates (user approval required)
 

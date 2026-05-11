@@ -1,0 +1,11 @@
+{
+  "name": "p1-05-bake-registry",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Phase 1 step P1.08 — bake the canonical mesh-asset registry from data/canonical/meshes/uberon_*/. Writes data/derived/mesh-registry.json conforming to app/shared/schema/mesh-asset-manifest.json. Zero npm dependencies (Node built-ins only).",
+  "scripts": {
+    "bake": "node bake.mjs",
+    "validate": "node validate.mjs"
+  }
+}
