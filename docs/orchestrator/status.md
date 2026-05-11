@@ -1,7 +1,7 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.04)
-**Current phase:** Phase 1 in progress. Steps P1.01–P1.04 complete; P1.05 blocked on Blender install confirm; P1.07 (validate-ontology) can run in parallel.
+**Last updated:** 2026-05-11 (late evening, post-P1.05)
+**Current phase:** Phase 1 in progress. Steps P1.01–P1.05 complete; P1.06 (LOD decimation) ready to dispatch.
 **Overall health:** Green
 
 ---
@@ -18,8 +18,8 @@
 
 ## Active work
 
-- **P1.05 (Blender headless cleanup) — BLOCKED on user confirming Blender 4.x is installed and on PATH.** Asset Pipeline flagged this in the outbound handoff.
-- **P1.07 (validate-ontology cross-check) can run in parallel** with the Blender question — it doesn't need Blender, just reads the existing glb set against the ontology. Could be dispatched next while Blender install resolves.
+- **P1.06 (LOD decimation, Blender) ready to dispatch.** Generates LOD1 (~50%) and LOD2 (~10%) chains alongside the existing LOD0 for each of the 79 cleaned glbs.
+- **P1.07 (validate-ontology cross-check)** remains independent and could run before or after P1.06. Natural sequence: P1.06 → P1.07.
 
 ## Blockers
 
@@ -28,7 +28,7 @@
 
 ## Next milestone
 
-**Either P1.07 (validate-ontology cross-check) — proceeds without Blender — OR P1.05 (Blender cleanup) once user confirms Blender 4.x is installed.** Recommendation: dispatch P1.07 next while Blender confirmation lands in parallel. Validate-ontology will surface any registry/ontology drift before cleanup is applied.
+**P1.06 dispatch.** Asset Pipeline runs Blender headless decimate to generate LOD1 (~50% triangle target) and LOD2 (~10% triangle target) for each of the 79 cleaned glbs. Preserves attribution metadata via the same pre-snapshot + reinject pattern P1.05 validated.
 
 ## Upcoming gates (user approval required)
 

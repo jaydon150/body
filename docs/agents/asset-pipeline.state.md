@@ -3,7 +3,7 @@
 Append-only state log. Most recent at top.
 
 **Initialized:** 2026-05-11
-**Last invocation:** 2026-05-11 — P1.04 (BP3D OBJ → glb conversion + attribution baking)
+**Last invocation:** 2026-05-11 — P1.05 (Blender headless cleanup + attribution re-injection)
 
 ---
 
@@ -15,10 +15,23 @@ Append-only state log. Most recent at top.
 4. **No FJ-id → individual-file checksum manifest yet.** A future hardening step could add a per-file SHA256 sidecar to detect raw-data corruption. Deferred — `unzip -l` integrity check is sufficient for now.
 5. **29 skeletal sub-structures lack BP3D meshes.** Logged in `pipelines/01-import-bp3d/gap-report-2026-05-11.md`. Pattern: BP3D models the parent bone (femur, humerus, scapula, hip bone) as a single OBJ but does not ship its named sub-features (head/neck/shaft/condyles, glenoid/acromion/coracoid, ilium/ischium/pubis). Phalanges (manus and pes proximal/middle/distal) and coccyx + whole-sternum also miss. **For Phase 1**: Anatomy Domain should decide per-structure whether the missing nodes become procedural-decomposition tasks (Blender splits the parent), hand-author tasks, or remain "concept-only" anatomy graph nodes with no mesh until Phase 2. The femur seed already has a procedural proxy registered in `data/derived/mesh-registry.json` covering FMA:9611; the femur sub-features are the strongest candidates for procedural decomposition because the parent-mesh anatomy is well known.
 6. **Sternum (UBERON:0000975) gap is recoverable at the registry level.** Manubrium (FMA:7486), body of sternum (FMA:7487), and xiphoid (FMA:7488) all converted successfully. P1.08 can synthesize a virtual "whole sternum" entry by referencing the three child glbs without needing a new mesh extraction. Anatomy Domain should sign off on this approach before P1.08 commits.
-7. **No vertex-merge / cleanup applied to merged paired-bone glbs.** When left + right halves are concatenated, the two halves are kept as separate `mesh` nodes inside the glTF (separate primitives) rather than welded. This is correct for distinguishing sides in the runtime (a click should select one side, not the pair), but P1.05 cleanup may want to verify normals are consistent across the two halves and tag each `mesh` with a `laterality` extras tag. Logged for P1.05.
-8. **OBJ → glb conversion preserves only geometry, not normals from source.** BP3D OBJs include `vn` (vertex normals) but my merge routine rewrites them. `obj2gltf` recomputes per-triangle normals on import. For the 99% decimation tier the normals are still smooth enough to look correct, but the cleanup step (P1.05) should regenerate normals consistently per glb.
+7. **Two glbs carry residual non-manifold geometry, flagged for hand-review.** P1.05 logged but did NOT delete non-manifold features (deleting could destroy real anatomical detail). Specifically: **`uberon_0001679` ethmoid bone** (2 non-manifold edges, 7 non-manifold verts on a single-mesh 11,181-vert structure — likely a few duplicated faces inside the bone's intricate paranasal-sinus geometry) and **`uberon_0006820` body of sternum** (0 non-manifold edges, 24 non-manifold verts on a single-mesh 2,327-vert structure — most likely isolated stray verts left over from the BP3D 99%-decimation pass). Both are visually OK at LOD0 but a future hand-edit pass (or P1.06 decimation with `dissolve_orphans=True`) should clean these up. Not a Phase 1 blocker.
+8. **Laterality `extras` tag deferred.** P1.04's outbound handoff suggested P1.05 add `extras.laterality: "left" | "right"` to each paired-bone mesh node. P1.05 preserved the two `mesh` nodes (laterality is still selectable structurally) but did not tag them — the BP3D `g part_0` / `g part_1` labels survive into the glTF as `node.name == "part_N_K"` after Blender's exporter. A subsequent pass (P1.07 or registry-bake P1.08) can map `part_0`→left / `part_1`→right authoritatively by comparing centroid X-sign in mesh-space, since the merge order was deterministic (FJ-id ascending). Logged here for that downstream agent.
+9. **OBJ → glb conversion preserves only geometry, not normals from source.** BP3D OBJs include `vn` (vertex normals) but my merge routine rewrites them. `obj2gltf` recomputes per-triangle normals on import. For the 99% decimation tier the normals are still smooth enough to look correct, and **P1.05 now runs `normals_make_consistent(inside=False)` per mesh object** so normals are deterministically outward-facing across the canonical set. **(Closes P1.04 open item #8.)**
 
 ## Decisions log
+
+### 2026-05-11 — P1.05
+
+- **Tool: Blender 5.1.1 headless `--background --python` not bmesh-via-CLI nor pure-Python (`pygltflib` / `trimesh`).** The agent prompt requires `bpy.ops.mesh.remove_doubles()` + `bpy.ops.mesh.normals_make_consistent(inside=False)`, both of which are operator-bound to Blender's edit-mode context. Pure-Python glTF libraries can weld duplicates but cannot reproduce Blender's normal-consistency walk, and re-implementing that in Python would be a meaningful project of its own. Blender 5.1.1 was already installed at `C:\Program Files\Blender Foundation\Blender 5.1\blender.exe`; the version check returned cleanly. Total Blender wall time for all 79 glbs: 9.83 s (mean ~0.12 s/glb, dominated by Blender's startup overhead per `--background` launch — but only one launch, since `clean_glbs.py` iterates inside the same `bpy` process).
+- **Tool sequence: Blender → direct GLB JSON-chunk surgery, not Blender → `gltf-pipeline.processGlb`.** P1.04 used `gltf-pipeline.processGlb` for attribution baking; I considered re-using it but rejected it for P1.05's reinject step. `processGlb` re-validates the whole glTF tree and would resist the asymmetry where the JSON chunk is updated but the BIN chunk is byte-stable. Direct GLB binary surgery — parse the 12-byte header, locate chunk 0 (JSON) and chunk 1 (BIN), mutate the JSON object, re-encode JSON with 4-byte padding per spec, splice the unchanged BIN back in — is ~100 lines of pure-Node and zero npm dependencies. The reinject pass for 79 glbs took under 1 second.
+- **Pre-clean metadata snapshot phase is non-negotiable.** Blender's glTF exporter silently replaces `asset.copyright` with `"Blender 5.1.1"` and drops `asset.extras` (verified empirically on the femur smoke test — first export ran with `export_extras=True` but the field came out empty in the round-trip). I changed the export call to `export_extras=False, export_copyright=""` to be explicit and rely entirely on the reinject step. The pre-clean snapshot of `pre-clean-metadata.json` captures every glb's `asset.copyright` + `asset.extras` *before* Blender touches them, so the reinject step has an authoritative source — never re-typing the attribution string.
+- **`remove_doubles` threshold 1e-4 m (0.1 mm).** Conservative. BP3D meshes are in approximate human-scale metres (a femur is ~0.45 m end-to-end). 0.1 mm welds true coincident vertices (typical at OBJ-group seams, paired-bone halves where the two halves don't quite meet, etc.) but won't collapse legitimate close-but-distinct features.
+- **Non-manifold geometry: tag-and-log, do not auto-delete.** Two of the 79 glbs have residual non-manifold features (`uberon_0001679` ethmoid bone: 2 edges + 7 verts; `uberon_0006820` body of sternum: 24 verts). Both are anatomically real structures whose BP3D mesh has noisy intricate geometry that a naive `delete_loose` would alter. Logged in open items #7 for hand-review.
+- **Paired-bone laterality preserved structurally.** Blender's glTF importer maps each OBJ `g group` to a separate `Object` (`part_0_1`, `part_1_1` after Blender's renaming). My script processes each as its own mesh and the exporter re-emits them as separate glTF `mesh` nodes. This satisfies P1.04's outbound handoff (laterality stays selectable at runtime). The semantic `left`/`right` `extras` tag is deferred (see open item #8).
+- **Backup-and-restore on failure.** Each glb is `shutil.copy2`'d to `lod0.glb.original-backup` before Blender touches it; on success the backup is unlinked, on failure the backup is copied back in place. 0 failures across the 79-glb pass — backup mechanism never triggered, but the safety net stayed in place.
+- **Idempotency verified empirically.** The femur was processed twice (once during the single-glb smoke test, then again during the full pass). After the smoke test the femur was 3157 verts; the full pass re-welded it as 3157 → 3157 (no further changes, deterministic). The `edits[]` array also deduplicated correctly — the cleanup tag appears once, not twice, in `asset.extras.source.edits[]`.
+- **`extras.source.cleanup_telemetry` added beyond the prompt's required fields.** The prompt asked for `edits[]` appended with a cleanup string. I also embedded the per-glb non-manifold counts and verts/tris before-after into `extras.source.cleanup_telemetry` so a downstream agent (QA, registry-bake) can surface "this mesh has X non-manifold features" without re-parsing `clean-telemetry.json`. Schema-compatible — `extras` is freeform by glTF spec.
 
 ### 2026-05-11 — P1.04
 
@@ -40,7 +53,32 @@ Append-only state log. Most recent at top.
 
 ## Handoffs
 
-### Outbound — to Asset Pipeline (next invocation, P1.05 cleanup)
+### Outbound — to Asset Pipeline (next invocation, P1.06 LOD chain generation)
+
+The next agent run consumes:
+
+- 79 canonical glbs under `data/canonical/meshes/uberon_NNNNNNN/lod0.glb` (~8.36 MB total after weld). All carry `asset.copyright` and `asset.extras.source` per ADR 0006, plus `extras.source.edits[]` containing the cleanup tag and `extras.source.cleanup_telemetry`. Sizes range 9.7 KB (pisiform) to 916 KB (scapula), mean 110.9 KB. **Net welding removed 23,343 vertices / 19 triangles across the 79 meshes** (8.9% vert reduction, 0.004% tri reduction — the tri delta is tiny because welding mostly collapses coincident verts on shared edges/seams, not whole triangles).
+- 79 `source.txt` files updated with a `## Cleanup (P1.05)` section showing per-glb before/after geometry, non-manifold counts, and file-size delta.
+- `pipelines/02-clean-meshes/` complete: `clean_glbs.py`, `reinject_attribution.mjs`, `update_source_txt.mjs`, `verify.mjs`, `run.ps1`, `package.json`, `README.md`, `.gitignore`. Idempotent — re-running reproduces the same output.
+- `pipelines/02-clean-meshes/clean-telemetry.json` per-run telemetry (gitignored). 79 successes, 0 failures. Total wall time 9.83 s for the Blender pass + <1 s for reinject.
+
+**Pipeline 03-decimate-lods responsibilities (P1.06):**
+
+1. **Generate LOD chain per glb.** Per the agent prompt's hard rules: minimum LOD0 (cleaned master) + LOD2 (~10% of LOD0). LOD1 (~50%) is optional but recommended for the runtime's mid-range tier. Each LOD goes alongside `lod0.glb` as `lod1.glb` / `lod2.glb` in the same directory.
+2. **Use Blender's Decimate modifier (Collapse mode), not Quadric Edge Collapse via Python.** Same toolchain as P1.05: invoke Blender headless with a Python script. The Decimate modifier is content-aware and preserves silhouette better than naive vertex-cluster reduction. Set `ratio=0.5` for LOD1 and `ratio=0.1` for LOD2; for the smallest glbs (pisiform at 9.7 KB) LOD2 may be the same as LOD0 — that's acceptable, drop the LOD2 entry from the registry rather than emitting a duplicate.
+3. **Preserve attribution across LODs.** Same pattern as P1.05: snapshot the source metadata before decimation, run Blender, reinject `asset.copyright` and `asset.extras.source` into each output LOD. Append a new `edits[]` entry per LOD level (e.g. `"blender_5.1.1_decimate:collapse_ratio_0.5"` for LOD1).
+4. **Two non-manifold meshes need a decision per node.** `uberon_0001679` (ethmoid bone) and `uberon_0006820` (body of sternum) have residual non-manifold features (see open item #7). Decimating non-manifold geometry can produce weird tearing; the safest path is to log the issue and either (a) flag the structure for hand-edit and produce only LOD0 + LOD2 (skipping LOD1) for now, or (b) accept the visual artefacts on these two meshes since LOD2 is low-detail enough to mask them. Recommend option (b) with a note in the decimation report.
+5. **Sub-structure synthesis (deferred to P1.08 or hand-author task).** The 29 gap structures from the gap report still need a decision per node — unchanged from the P1.04 handoff. P1.06 only decimates existing canonical glbs.
+
+### Outbound — older P1.04 handoff (closed by this invocation)
+
+Completed by P1.05:
+- Blender 4.x/5.x cleanup pass run against `data/canonical/meshes/<id>/lod0.glb` (Blender 5.1.1 verified). ✓
+- `asset.copyright` and `asset.extras.source` preserved across the round-trip via the pre-Blender snapshot + post-Blender JSON-chunk reinject. Verified independently on three samples (femur, mandible, rib 8) and on all 79 via `reinject-report.json`. ✓
+- Paired-bone glbs retain their two `mesh` nodes (laterality remains selectable). The semantic `extras.laterality` tag is logged for a downstream pass (open item #8). ✓
+- 2 glbs flagged with residual non-manifold geometry (open item #7), not auto-deleted. ✓
+
+### Outbound — original P1.04 handoff to Asset Pipeline (P1.05 — closed by this invocation)
 
 The next agent run consumes:
 
@@ -70,6 +108,51 @@ Completed by P1.04:
 No prior agent has handed off to Asset Pipeline. P1.03 was this agent's first invocation; P1.04 was self-chained.
 
 ## Invocation history
+
+### 2026-05-11 — Invocation #3 (P1.05 — Blender headless cleanup + attribution re-injection)
+
+- **Dispatched by:** Orchestrator per `docs/orchestrator/phase-1-spec.md` dispatch plan step 5. Self-chained from P1.04 within the asset-pipeline agent; gated on the user confirming Blender 5.1.1 is installed at `C:\Program Files\Blender Foundation\Blender 5.1\blender.exe`.
+- **Inputs read:** asset-pipeline agent prompt, this state file (post-P1.04 — own previous-invocation log), ADR 0006 (runtime attribution), sample `source.txt` for femur (UBERON:0000981), the pipeline 01 reference implementation (`convert.js`, `verify.js`, `package.json`, `.gitignore`).
+- **Actions taken:**
+  - Created `pipelines/02-clean-meshes/` working folder (removed the placeholder `.gitkeep`).
+  - Wrote `clean_glbs.py` (Blender 5.1.1 Python, ~250 lines): per-mesh `remove_doubles(threshold=1e-4)` + `normals_make_consistent(inside=False)` + non-manifold edge/vert counters. Backs up each glb to `lod0.glb.original-backup` before touching; deletes the backup on success, restores it on failure. Emits `clean-telemetry.json` per-run.
+  - Wrote `reinject_attribution.mjs` (Node ESM, zero npm deps, ~200 lines): two modes — `--snapshot` (walks every glb pre-Blender and saves `pre-clean-metadata.json`); `--reinject` (post-Blender, walks the cleaned glbs, splices the original `asset.copyright` + `asset.extras.source` back via direct GLB JSON-chunk surgery, appends the cleanup edit tag to `edits[]`, embeds non-manifold + verts/tris telemetry into `extras.source.cleanup_telemetry`). Both rebuild the GLB binary with proper 4-byte JSON chunk padding per the glTF spec.
+  - Wrote `update_source_txt.mjs` (Node ESM, ~80 lines): appends an idempotent `## Cleanup (P1.05)` section to each glb's sibling `source.txt`. Re-runs replace the prior block rather than accumulate.
+  - Wrote `verify.mjs` (Node ESM, ~75 lines): the verification gate. Parses femur / mandible / rib 8 cleaned glbs, asserts attribution survives + cleanup edit tag is present + mesh count > 0.
+  - Wrote `run.ps1` (PowerShell orchestrator): 5-step pipeline (snapshot → Blender → reinject → update source.txt → verify) with a `-SmokeTarget` flag for single-glb runs and `-SkipBlender` / `-SkipReinject` / `-SkipSnapshot` for partial re-runs. Pre-flight checks Blender path + runs `npm install` if `node_modules` is missing.
+  - Wrote `package.json`, `README.md`, `.gitignore` — same shape as P1.04's pipeline.
+  - Ran single-glb smoke test on the femur (UBERON:0000981 / FMA:9611): cleaned 3197→3157 verts across 2 mesh objects (paired bone preserved), 0 non-manifold, file 117 KB → 115 KB. Attribution survived intact.
+  - Ran full 79-glb pass: 9.83 s Blender + <1 s reinject + <1 s source.txt update. 79/79 successes, 0 failures.
+  - Verification gate passed (3 sample glbs, attribution + cleanup tag + structure all OK).
+  - Ran `npm run verify` in `app/web/`: typecheck ✓, 7 schemas validated ✓, vite build green (49 modules, gzip 168.35 kB).
+- **Output state:**
+  - **79 canonical glbs rewritten in place** in `data/canonical/meshes/uberon_*/lod0.glb`. Per-glb backup files removed (0 failures meant 0 restores).
+  - **79 `source.txt` files updated** with the cleanup section.
+  - 7 pipeline scripts + README + package.json + .gitignore in `pipelines/02-clean-meshes/` (tracked).
+  - Gitignored: `clean-telemetry.json`, `pre-clean-metadata.json`, `reinject-report.json`, `p1.05-full-run.log`, `node_modules/`, `package-lock.json`, any `.original-backup` files.
+- **Geometry deltas across the 79-glb canonical set:**
+  - Vertices: **262,862 → 239,519** (welded **23,343 vertices**, 8.9% reduction).
+  - Triangles: **478,736 → 478,717** (Δ −19; welding collapses coincident verts on shared edges/seams, not whole triangles).
+  - Non-manifold edges total: **2** (all on `uberon_0001679` ethmoid bone).
+  - Non-manifold verts total: **31** (7 on ethmoid, 24 on `uberon_0006820` body of sternum).
+  - Bytes: **9,354,944 → 8,761,408** (**−593,536 bytes, −579.62 KB, −6.34%**). Cleaned glbs shrunk thanks to fewer vert/normal/uv entries in the BIN chunk.
+- **Top welding wins (by vert delta):**
+  - `uberon_0000210` (mandibular nerve / cranial nerve V3 in BP3D's pivot) — 16,395 → 13,110 (−3,285 verts)
+  - `uberon_0002397` — 7,090 → 5,243 (−1,847)
+  - `uberon_0006820` (body of sternum, single mesh) — 3,691 → 2,327 (−1,364)
+  - `uberon_0001679` (ethmoid bone, single mesh) — 12,484 → 11,181 (−1,303)
+  - `uberon_0000209` — 8,472 → 7,257 (−1,215)
+- **Three-sample verification output (femur, mandible, rib 8):**
+  - femur: 2 meshes, 115,808 B, edits=`["obj_to_glb_conversion","merged_2_fj_obj_into_one_glb","blender_5.1.1_cleanup:remove_doubles+normals_make_consistent"]`, non-manifold 0/0 — PASS
+  - mandible: 1 mesh, 101,924 B, edits=`["obj_to_glb_conversion","blender_5.1.1_cleanup:..."]`, non-manifold 0/0 — PASS
+  - rib 8: 2 meshes, 302,408 B, edits=`["obj_to_glb_conversion","merged_2_fj_obj_into_one_glb","blender_5.1.1_cleanup:..."]`, non-manifold 0/0 — PASS
+- **Sharp edges encountered:**
+  - Blender's glTF exporter (`io_scene_gltf2`) in 5.1 silently overwrites `asset.copyright` even with `export_copyright=""` (it writes the Blender-version string by default unless the field is explicitly cleared after the fact). Resolved by always running the reinject step — it's the safety net, not an optimization.
+  - Blender's `--background` mode exits 0 by default regardless of script outcome; explicit `sys.exit(rc)` at the end of `clean_glbs.py` is what surfaces failures to the PowerShell orchestrator.
+  - The JSON chunk in GLB v2 must be padded to a 4-byte boundary with 0x20 (space) characters — not 0x00. The BIN chunk is padded with 0x00. Getting this wrong produces a glb that some viewers (and our verifier) parse fine but other glTF tools reject. The direct-surgery code path handles both.
+  - The femur was processed twice (smoke test + full pass) — confirmed idempotent: second pass welded 0 additional verts, the `edits[]` array deduplicated the cleanup tag rather than appending it twice.
+- **Time spent:** ~25 minutes wall time including writing all 7 pipeline files, smoke test debugging, full run, verification, state-log update.
+- **Return status:** Complete. Handed back to Orchestrator with summary. Next Asset Pipeline invocation is **P1.06 (LOD chain generation via Blender Decimate modifier)** per the updated handoff above.
 
 ### 2026-05-11 — Invocation #2 (P1.04 — OBJ → glb conversion + attribution baking)
 

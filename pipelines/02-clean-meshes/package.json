@@ -1,0 +1,13 @@
+{
+  "name": "02-clean-meshes",
+  "version": "1.0.0",
+  "description": "P1.05 mesh cleanup: Blender headless weld/normals + attribution re-injection.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "snapshot": "node reinject_attribution.mjs --snapshot",
+    "reinject": "node reinject_attribution.mjs --reinject",
+    "verify": "node verify.mjs"
+  },
+  "dependencies": {}
+}

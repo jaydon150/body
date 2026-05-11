@@ -1,0 +1,11 @@
+# P1.05 telemetry / per-run artefacts. Re-derivable from a re-run.
+clean-telemetry.json
+pre-clean-metadata.json
+reinject-report.json
+
+# Backup glbs created during processing -- removed on success, only present on failure.
+**/*.original-backup
+
+# npm install artefacts.
+node_modules/
+package-lock.json

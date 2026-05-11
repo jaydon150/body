@@ -30,3 +30,29 @@ The attribution string above is also baked into the glb's
 asset.copyright field; asset.extras.source carries the full
 structured provenance record. This file is the redundant human-
 readable backup that travels with the asset on disk.
+
+## Cleanup (P1.05)
+
+Pipeline:       pipelines/02-clean-meshes (P1.05)
+Cleaned at:     2026-05-11
+Tooling:        Blender 5.1.1 headless --background + reinject_attribution.mjs (direct GLB JSON-chunk surgery)
+Edits applied:
+  - remove_doubles (threshold 1e-4 m / 0.1 mm)
+  - normals_make_consistent (inside=False)
+  - non_manifold_logged (no auto-delete)
+
+Geometry:
+  Mesh objects:       2
+  Vertices before:    1185
+  Vertices after:     1165  (delta -20)
+  Triangles before:   2322
+  Triangles after:    2322  (delta 0)
+  Non-manifold edges: 0
+  Non-manifold verts: 0
+
+Filesize:
+  Bytes before:       44928
+  Bytes after:        43532  (delta -1396)
+
+Edit tag (also in glb's asset.extras.source.edits[]):
+  blender_5.1.1_cleanup:remove_doubles+normals_make_consistent

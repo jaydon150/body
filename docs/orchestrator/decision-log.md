@@ -108,6 +108,14 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **P1.05 (Blender cleanup) blocked.** Asset Pipeline flagged in its outbound handoff that the user needs to confirm Blender 4.x is installed and on PATH before P1.05 dispatches. **P1.07 (validate-ontology) can proceed in parallel** — it has no Blender dependency.
 
+- **Blender install verified.** User reported Blender installed; orchestrator smoke-tested per the Phase 0 retro lesson. Found **Blender 5.1.1 (build 2026-04-14)** at `C:\Program Files\Blender Foundation\Blender 5.1\blender.exe` — not on PATH (consistent with the `gh` install pattern; winget install + stale shell PATH). One major version newer than the Phase 1 Spec assumed. `bpy` mesh-cleanup operators (`remove_doubles`, `normals_make_consistent`) are stable across 4.x ↔ 5.x for our needs. Phase 1 Spec open-question #4 marked RESOLVED.
+
+- **P1.05 dispatched and returned clean.** Asset Pipeline subagent ran Blender headless cleanup on all 79 glbs. **0 failures.** Vertex count -8.9% (262,862 → 239,519), file-size -6.34% (9.35 MB → 8.76 MB). 9.83s Blender pass + sub-second reinject + sub-second source.txt updates. Idempotent (re-running on same glb yields no further welds; `edits[]` dedup'd). *Reason:* user dispatched.
+
+- **Confirmed empirically: Blender 5.1's glTF exporter overwrites `asset.copyright` and drops `asset.extras` unconditionally**, despite documented `export_copyright` / `export_extras` flags. The pre-Blender metadata snapshot + post-Blender attribution re-injection is the only reliable path. Generalizes: any future Blender-touching pipeline step in this project must follow the same snapshot-and-reinject pattern. Worth promoting to an ADR if more Blender steps land (P1.06 will exercise it again — if it holds, we have enough evidence for the ADR).
+
+- **Two glbs flagged for hand-review** as P1.05 by-products: `uberon_0001679` (ethmoid bone, 2 non-manifold edges + 7 verts on intricate paranasal-sinus geometry — likely real anatomical complexity that auto-remediation would destroy) and `uberon_0006820` (sternum body, 24 non-manifold verts — stray verts from BP3D's 99% decimation tier). Both filed in Asset Pipeline state open items. Not Phase 1 blockers; anatomist review path or P1.06 decimation may incidentally resolve them.
+
 ---
 
 ## Conventions

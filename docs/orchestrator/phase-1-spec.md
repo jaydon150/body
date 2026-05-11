@@ -135,7 +135,7 @@ Order matters: pipeline must precede renderer; renderer must precede UI integrat
 1. ✅ **Skeletal structure count:** ~100 (user default).
 2. ✅ **Peel preset names:** plain `skin / muscle / bone` primary, with a nomenclature toggle exposing clinical `surface / subcutaneous / musculoskeletal` as secondary.
 3. 🔍 **BodyParts3D download:** Asset Pipeline verifies at step 3; escalates only if blocked. No change from v0.1.
-4. ⏳ **Blender install on user's machine:** still open. Step 5 of dispatch depends on Blender being available locally. If absent, Orchestrator queues "install Blender" as a Phase 1 prerequisite ahead of step 5.
+4. ✅ **Blender install on user's machine:** **RESOLVED 2026-05-11.** Blender 5.1.1 (build 2026-04-14) at `C:\Program Files\Blender Foundation\Blender 5.1\blender.exe`. Not on PATH; full path invocation. Major version 5.x rather than the 4.x the spec assumed — mesh-cleanup `bpy` operators we need are stable across the version gap.
 5. ✅ **Anatomist review cadence:** 50 / batch / 1–2 wk turnaround as working assumption. **Revisit once an anatomist is confirmed** (user-flagged in v0.2).
 6. ✅ **Performance target:** mid-range 4-year-old laptop on desktop **AND** iPad Air 4 / 9th-gen-class on tablet (co-primary, per v0.2 update).
 7. ✅ **Phase 1 close gate:** hold all 19 acceptance criteria (was 16 in v0.1; 17–18 added in v0.2 for iPad perf and attribution).
