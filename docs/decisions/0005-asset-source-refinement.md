@@ -70,5 +70,7 @@ The "build on top of existing, do not sculpt from scratch" stance from ADR 0002 
 - `docs/references/summaries/ontology-and-dataset-review.md` — the analysis that prompted this ADR
 - `docs/references/raw/2026-05-11-ontology-and-dataset-review.md` — source material
 - BodyParts3D license: https://lifesciencedb.jp/bp3d/info/license/index.html (verified 2026-05-11, CC BY-SA 2.1 Japan)
-- OpenAnatomy: https://www.openanatomy.org/
+- OpenAnatomy license: https://www.openanatomy.org/atlas-pages/slicer-license.html (verified 2026-05-11) — atlases inherit the 3D Slicer License at the canonical project level
+- Per-atlas LICENSE file example: https://github.com/mhalle/spl-brain-atlas/blob/master/LICENSE.md (verified 2026-05-11) — SPL brain atlas explicitly references the 3D Slicer License
+- 3D Slicer License source: https://github.com/Slicer/Slicer/blob/main/License.txt — BSD-style three-part agreement, Part B governs downloads, no share-alike, attribution required, clinical use discouraged
 - Zygote licensing: see source citation in references summary

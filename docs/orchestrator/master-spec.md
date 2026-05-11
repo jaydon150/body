@@ -104,7 +104,7 @@ Tissue, cellular, female anatomy, pathology overlays, mobile, and VR are reserve
 | FMA→UBERON crosswalk gaps for non-canonical structures | Project-local `BODY:NNNN` IDs for orphans; Anatomy Domain owns the crosswalk task list | Anatomy Domain |
 | Share-alike obligation traveling with deployed assets | Runtime attribution baked into glTF metadata + in-app surface per ADR 0006; CI fails on unattributed canonical meshes | Asset Pipeline + UI |
 | iPad GPU constraints vs draw-call ceiling | LOD downshift on tablet, instancing for repeated structures, aggressive perf budget | 3D Engine |
-| OpenAnatomy atlas-page license inheritance not fully verified | Re-verify at canonical OpenAnatomy source as Phase 2 entry prerequisite; do not import OpenAnatomy in Phase 1 | Research/Docs |
+| ~~OpenAnatomy atlas-page license inheritance not fully verified~~ | **RESOLVED 2026-05-11.** Verified at `openanatomy.org/atlas-pages/slicer-license.html` and per-atlas LICENSE files. Atlases inherit 3D Slicer License (BSD-style, permissive, no share-alike, attribution required). ADR 0005 references updated. | Research/Docs |
 
 ## 12. Out of scope (locked)
 

@@ -86,6 +86,10 @@ Format: `YYYY-MM-DD | scope | decision | rationale | reference`.
 
 - **`synonyms.json` schema gap surfaced.** P1.02 subagent's open-items list flags that the current `anatomical-id-schema.json` has no `$defs.synonym_entry` definition; the subagent produced a placeholder structure. Architect's P1.09 schema upgrade should resolve this; or earlier if a synonyms-specific schema is needed before P1.09.
 
+- **OpenAnatomy license verification — RESOLVED 2026-05-11 (late evening).** User pushed back on the earlier "partial verification" status after the BodyParts3D miss. Orchestrator re-ran WebSearch + WebFetch against canonical sources: `openanatomy.org/atlas-pages/slicer-license.html` (project-level: atlases use the 3D Slicer License) and `github.com/mhalle/spl-brain-atlas/blob/master/LICENSE.md` (per-atlas LICENSE file). 3D Slicer License is BSD-style, three-part agreement, Part B governs downloads, permissive, no share-alike, attribution required, clinical use discouraged. The research report's substance was correct; the "Section B" gloss was sloppy. ADR 0005's reference list updated. master-spec.md risk row closed. Phase 1 Spec follow-up marked resolved. *Reason:* user-directed rigor pass.
+
+- **ADR 0006 (runtime attribution) operationalization confirmed.** Committed at `e60bb9e`. Phase 1 Spec v0.2 acceptance criterion #18 enforces it. Dispatch step P1.08 extends `pipelines/05-bake-registry` to write `asset.copyright` and `asset.extras.source` into every canonical glb. UI step P1.13 adds the "About this atlas" surface. No further drafting needed; will be exercised in P1.08 and P1.13.
+
 ---
 
 ## Conventions

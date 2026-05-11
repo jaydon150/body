@@ -142,7 +142,7 @@ Order matters: pipeline must precede renderer; renderer must precede UI integrat
 
 ## Outstanding follow-ups (orchestrator owns)
 
-- **OpenAnatomy verification.** Partial verification done on 2026-05-11: the 3D Slicer License itself is BSD-permissive (verified at `github.com/Slicer/Slicer/blob/main/License.txt`). The OpenAnatomy atlas-page-level inheritance claim could not be verified during ingestion (two URL guesses 404'd). This is **not a Phase 1 blocker** because OpenAnatomy isn't imported in Phase 1; it **is a Phase 2 entry prerequisite.** Research/Docs owns the re-verification before Phase 2 opens.
+- **OpenAnatomy verification — RESOLVED 2026-05-11 (late evening).** Full verification at the canonical OpenAnatomy project page `openanatomy.org/atlas-pages/slicer-license.html` AND at a per-atlas LICENSE file `github.com/mhalle/spl-brain-atlas/blob/master/LICENSE.md`. Atlases inherit the 3D Slicer License (BSD-style, three-part agreement, Part B governs downloads). Permissive. No share-alike. Commercial use permitted with attribution and clinical-use disclaimer. The research report's substance was right; only its "Section B" gloss was sloppy. ADR 0005 references updated accordingly.
 - **Blender install confirmation.** Awaiting user yes/no.
 
 ## Risks specific to Phase 1
