@@ -15,22 +15,22 @@ Active queue, in-progress items, and what's blocked. The orchestrator maintains 
 
 ## In progress
 
-- `[~] P0` Phase 0 — Infrastructure (orchestrator)
+_None. Phase 0 closed. Awaiting Phase 1 dispatch._
 
-## Phase 0 — Infrastructure
+## Phase 0 — Infrastructure (CLOSED 2026-05-11)
 
 - `[x] P0` Folder skeleton at `~/desktop/body/` (orchestrator)
 - `[x] P0` Git init, LFS install, long-paths enabled, `.gitignore` + `.gitattributes` (orchestrator)
 - `[x] P0` License files (AGPL-3.0, CC-BY-SA-4.0, CC-BY-4.0) + README + ATTRIBUTIONS (orchestrator)
-- `[~] P0` Orchestrator artifacts: master-spec, system-map, task-queue, decision-log, status, retro-template (orchestrator)
-- `[ ] P0` ADRs: 0001 graph-not-tree, 0002 asset-source, 0003 agent-mechanism (architect via orchestrator)
-- `[ ] P0` Tier 1 agent prompts + empty state files (orchestrator)
-- `[ ] P0` Seven cross-agent contract JSON Schema stubs (architect)
-- `[ ] P0` `app/web/` skeleton: Vite + React + TypeScript + R3F, renders empty canvas (3D Engine)
-- `[ ] P0` CI skeleton at `.github/workflows/ci.yml` (DevOps)
-- `[ ] P0` End-to-end check: typecheck clean, schema validation passes, app builds (QA + DevOps)
-- `[ ] P0` Create GitHub private repo `body`, push initial commit (DevOps)
-- `[ ] P0` Phase 0 retro doc (orchestrator)
+- `[x] P0` Orchestrator artifacts: master-spec, system-map, task-queue, decision-log, status, retro-template (orchestrator)
+- `[x] P0` ADRs: 0001 graph-not-tree, 0002 asset-source, 0003 agent-mechanism + 0000 ADR template (orchestrator)
+- `[x] P0` Tier 1 agent prompts + empty state files (orchestrator). Tier 2 + 3 stubs included.
+- `[x] P0` Seven cross-agent contract JSON Schema stubs (orchestrator-as-architect)
+- `[x] P0` `app/web/` skeleton: Vite + React + TypeScript + R3F, renders empty canvas (orchestrator-as-3D-Engine)
+- `[x] P0` CI skeleton at `.github/workflows/ci.yml` + schema validation tooling (orchestrator-as-DevOps + QA)
+- `[x] P0` End-to-end check: typecheck clean, schema validation passes, app builds (verified locally `npm run verify`)
+- `[x] P0` Create GitHub private repo `jaydon150/body`, push initial commit `311e18a` (orchestrator-as-DevOps)
+- `[x] P0` Phase 0 retro doc at `docs/orchestrator/retros/phase-0-retro.md`
 
 ## Phase 1 — First system slice (blocked until Phase 0 closed)
 
@@ -54,3 +54,4 @@ Placeholders. Expanded once Phase 1 vertical slice is accepted.
 Specialists append here when they complete or block a task. Format: `YYYY-MM-DD | agent | task | note`.
 
 - 2026-05-11 | orchestrator | Phase 0 dispatched after user approval of Phase 0 Spec v0.1.
+- 2026-05-11 | orchestrator | Phase 0 closed. All 12 spec tasks completed. Initial commit `311e18a` pushed to `jaydon150/body` (private). Local `npm run verify` passes. Retro at `docs/orchestrator/retros/phase-0-retro.md`. Awaiting user sign-off and deep-research feed before Phase 1 spec drafting.

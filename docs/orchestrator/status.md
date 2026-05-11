@@ -3,62 +3,83 @@
 One-page snapshot of where the project is right now. Updated by the orchestrator at each significant transition.
 
 **Last updated:** 2026-05-11
-**Current phase:** Phase 0 — Infrastructure
+**Current phase:** Phase 0 — Infrastructure (CLOSED, awaiting user sign-off)
 **Overall health:** Green
 
 ---
 
 ## Right now
 
-Phase 0 dispatched and in progress. Infrastructure-only work — no anatomical content yet.
+Phase 0 fully complete and committed. Initial commit `311e18a` pushed to private repo `jaydon150/body`. Retro filed. No active work — awaiting:
+
+1. User sign-off to formally close Phase 0
+2. Deep-research feed paste-in (blocks Phase 1 ontology / dataset decisions)
+
+## Phase 0 — what landed
+
+All 12 spec tasks complete. See [retros/phase-0-retro.md](retros/phase-0-retro.md) for full retro.
+
+Headline:
+- Folder structure + Git LFS + long-paths
+- AGPL-3.0 + CC-BY-SA-4.0 + CC-BY-4.0 license set committed verbatim
+- ATTRIBUTIONS chain documented
+- Six orchestrator artifacts populated
+- Three foundational ADRs (0001 graph-not-tree, 0002 asset-source, 0003 agent-mechanism) + 0000 template
+- 16 agent prompts + 16 state files
+- Seven cross-agent contract JSON Schema stubs (all validate)
+- Web skeleton: Vite + React + TypeScript + R3F, renders empty canvas, typecheck clean, builds in ~2.8s
+- CI workflow ready (will run on next push)
+- Initial commit pushed to `jaydon150/body` private repo
 
 ## Active work
 
-- Orchestrator artifacts being committed.
-- Agent prompts + state scaffolds queued.
-- Contract JSON Schema stubs queued.
-- App skeleton + CI queued.
-- GitHub private repo + initial push queued.
+_None. Awaiting user sign-off and deep-research input._
 
 ## Blockers
 
-- None active for Phase 0.
-- Deep research feed (external) still pending — does **not** block Phase 0; **does** block start of Phase 1.
+- **Phase 1 start blocked on deep-research feed.** User has external research running on FMA / UBERON / TA2 + dataset inventory; Research/Docs agent will ingest on arrival.
+- **Phase 1 content authoring blocked on anatomist availability.** User has university faculty access as reviewers; first batch must be queued before content authoring dispatches.
 
-## Next milestone
+## Next milestones
 
-**Phase 0 done:** folder + agents + contracts + CI + app skeleton + first commit pushed to private GitHub repo `body`. Retro doc written. User approves phase close.
+1. User sign-off → formal Phase 0 close.
+2. Deep-research feed lands → Research/Docs ingests → ADR + master-spec update for ontology/dataset choices.
+3. Phase 1 Spec v0.1 drafted → user approval → Phase 1 dispatch.
 
 ## Upcoming gates (user approval required)
 
-1. End of Phase 0 — full Phase 0 acceptance review.
-2. Start of Phase 1 — Phase 1 Spec v0.1 drafted from master spec + deep-research-informed ontology decisions.
+- Phase 1 Spec v0.1 (drafting blocked on research feed)
+- Phase 1 starter system dispatch (skeletal proposed)
+- First anatomy content batch dispatch
 
 ## Recent decisions
 
-See [decision-log.md](decision-log.md) for full chronological record. Latest:
+See [decision-log.md](decision-log.md) for full chronological record. No new decisions in the last update.
 
-- 2026-05-11: License configuration B locked (AGPL + CC-BY-SA + CC-BY).
-- 2026-05-11: Asset path locked to Z-Anatomy / BodyParts3D, build-on-top-of.
-- 2026-05-11: Agent roster restructured from pasted plan (16 agents, 3 tiers, see system-map).
+## Working assumptions validated this phase
 
-## Working assumptions to validate
-
-- Git Credential Manager handles GitHub auth at push time (user reported "auth done"; `gh` CLI not installed; will validate at push step).
-- Node 24.x and npm 11.x are sufficient for Vite + R3F scaffold (verified locally; will validate at scaffold step).
-- University anatomist reviewer pool is reachable for Phase 1 content review (user-supplied; will validate before Phase 1 content begins).
+- Git Credential Manager: validated when `gh` was installed and `git push` succeeded via `gh`'s configured credentials.
+- Node 24.x and npm 11.x: validated — `npm install` and `vite build` ran clean.
+- `gh` CLI installation: validated post-install at `C:\Program Files\GitHub CLI\gh.exe`; PATH not refreshed in the current shell, mitigated by full-path invocation. Surfaced as a Phase 0 retro lesson.
 
 ## Health signals
 
 | Signal | State | Notes |
 |--------|-------|-------|
-| Folder structure | ✅ laid down | Per spec |
-| Git + LFS | ✅ initialized | Long-paths enabled, LFS rules in `.gitattributes` |
-| Licenses | ✅ verbatim | Fetched from gnu.org and creativecommons.org |
-| Master spec | ✅ committed | First version |
-| ADRs | ⏳ pending | Three foundational ADRs queued |
-| Agent prompts | ⏳ pending | Tier 1 agents queued |
-| Contract schemas | ⏳ pending | Seven stubs queued |
-| App skeleton | ⏳ pending | Vite + R3F scaffold queued |
-| CI | ⏳ pending | Workflow file queued |
-| Initial push | ⏳ pending | Will check auth at push time |
+| Folder structure | ✅ committed | Per spec |
+| Git + LFS | ✅ active | Long-paths enabled, LFS rules in `.gitattributes` |
+| Licenses | ✅ verbatim, committed | From gnu.org and creativecommons.org |
+| Master spec | ✅ committed | v0.1 |
+| ADRs | ✅ 0001/0002/0003 committed | 0000 template included |
+| Agent prompts | ✅ 16 of 16 committed | Tier 1 detailed; Tier 2/3 stubs |
+| Contract schemas | ✅ 7 committed | All validate locally |
+| App skeleton | ✅ built | tsc + vite green |
+| CI | ✅ wired | Will fire on next push |
+| Remote repo | ✅ live | `jaydon150/body` private |
+| Initial push | ✅ done | Commit `311e18a` |
+| Phase 0 retro | ✅ filed | See `retros/phase-0-retro.md` |
+
+## Pending external inputs (orchestrator watching for)
+
+- Deep-research output from user's parallel chat (FMA / UBERON / TA2 + dataset inventory + licensing/segment/hybrid recommendation)
+- Anatomist reviewer confirmation (capacity, cadence, batch size expectation)
