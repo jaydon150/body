@@ -18,7 +18,13 @@
 
 ## Active work
 
-_None dispatched. Phase 1 closing-stretch agents (P1.17 QA, P1.18 UX/A11y Tier 2, P1.19 Reviewer Tier 2, P1.20 retro) await user "go."_
+**Autonomous overnight schedule (2026-05-11, user asleep).** Five remote-agent routines scheduled at 1-hour intervals starting 10:30Z. Each clones `jaydon150/body`, dispatches one task, commits, pushes back. User wakes to commits or — if private-repo auth on Anthropic's CCR isn't set up — to error reports the user resolves by authorizing GitHub access at claude.ai. Schedule:
+
+- **10:30Z** — P1.17 (QA: visual regression baselines + perf budgets + accuracy queue)
+- **11:30Z** — P1.18 (UX/Accessibility Tier 2 audit)
+- **12:30Z** — P1.19 (Reviewer Tier 2 handoff passes on P1.11–16 boundaries)
+- **13:30Z** — P1.20 (Phase 1 retro doc + close)
+- **14:30Z** — Phase 2 Spec v0.1 draft (orchestrator-direct; needs user approval before any P2 dispatch)
 
 The vertical slice is functionally complete:
 - Loading the dev server renders 79 BP3D skeletal meshes
