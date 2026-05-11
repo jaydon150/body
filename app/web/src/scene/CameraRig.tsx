@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib';
@@ -17,6 +17,45 @@ import {
   selectFocusedId,
   useDiveStore,
 } from '../state/diveStore';
+
+/**
+ * Reads `prefers-reduced-motion: reduce` once at mount and stays subscribed
+ * to changes (user can toggle the OS setting mid-session). Returns the
+ * current value; consumers re-render when it flips.
+ *
+ * Per the UX/Accessibility agent's hard rule #4: when reduced motion is
+ * preferred, the dive-deeper / selection-camera animations are replaced
+ * with a snap-to. The CSS global rule in index.css zeroes
+ * animation-duration + transition-duration, but the camera lerp is
+ * JS-driven (useFrame) and is not subject to that — this hook lets the rig
+ * branch on the same preference.
+ *
+ * SSR-safe: window/matchMedia checks guarded so a future SSR build won't
+ * crash. Phase 1 ships client-only so the guards are belt-and-braces.
+ */
+function usePrefersReducedMotion(): boolean {
+  const [prefers, setPrefers] = useState<boolean>(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return false;
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mql = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = (e: MediaQueryListEvent) => setPrefers(e.matches);
+    // Safari < 14 uses addListener; modern browsers use addEventListener.
+    if ('addEventListener' in mql) {
+      mql.addEventListener('change', onChange);
+      return () => mql.removeEventListener('change', onChange);
+    }
+    // @ts-expect-error - legacy
+    mql.addListener(onChange);
+    return () => {
+      // @ts-expect-error - legacy
+      mql.removeListener(onChange);
+    };
+  }, []);
+  return prefers;
+}
 
 interface CameraRigProps {
   bounds: CombinedBounds;
@@ -83,6 +122,7 @@ export function CameraRig({ bounds, entries }: CameraRigProps) {
 
   const focusedId = useDiveStore(selectFocusedId);
   const diveStartedAt = useDiveStore(selectDiveStartedAt);
+  const reducedMotion = usePrefersReducedMotion();
 
   // Index of own-mesh entries by id so the lerp lookup is O(1).
   const ownEntryById = useMemo(() => {
@@ -145,6 +185,24 @@ export function CameraRig({ bounds, entries }: CameraRigProps) {
         combinedBounds: bounds,
       });
     }
+    // Reduced-motion path — snap to target rather than lerping. Per UX/A11y
+    // agent hard rule #4, deep-zoom transitions and selection-camera
+    // animations are replaced with snap-to when the user prefers reduced
+    // motion. The global CSS rule zeroes CSS-driven animation/transition,
+    // but the camera lerp is JS-driven (useFrame); without this branch the
+    // 600ms ease-in-out-quad would run unconditionally, violating the
+    // preference. Applied in P1.18 UX/A11y audit (UA-005).
+    if (reducedMotion) {
+      // Clear any in-flight animation so a subsequent useFrame tick
+      // doesn't continue lerping.
+      animRef.current = null;
+      camera.position.copy(toPose.position);
+      controls.target.copy(toPose.target);
+      camera.lookAt(toPose.target);
+      controls.update();
+      controls.enabled = true;
+      return;
+    }
     animRef.current = {
       from: fromPose,
       to: toPose,
@@ -155,7 +213,7 @@ export function CameraRig({ bounds, entries }: CameraRigProps) {
     // doesn't fight the lerp. Re-enabled on completion below.
     controls.enabled = false;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [focusedId, diveStartedAt, bounds, initialFrame, ownEntryById]);
+  }, [focusedId, diveStartedAt, bounds, initialFrame, ownEntryById, reducedMotion]);
 
   useFrame(() => {
     const anim = animRef.current;

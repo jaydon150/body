@@ -120,9 +120,17 @@ function SearchPalette({ onClose, onPick }: SearchPaletteProps) {
       className="search-backdrop"
       role="dialog"
       aria-modal="true"
-      aria-label={t('search.placeholder')}
+      aria-labelledby="search-dialog-title"
       onClick={onBackdropClick}
     >
+      {/* Visually-hidden heading provides a stable, semantic name for the
+          dialog (WAI-ARIA APG Dialog pattern). Previously the dialog's name
+          came from `aria-label` set to the placeholder string ("Search
+          structures..."), which is content, not a name. Fixed P1.18
+          UX/A11y audit UA-006. */}
+      <h2 id="search-dialog-title" className="visually-hidden">
+        {t('search.dialog.title')}
+      </h2>
       <div className="search-palette">
         <input
           ref={inputRef}
@@ -135,7 +143,7 @@ function SearchPalette({ onClose, onPick }: SearchPaletteProps) {
             setActiveIndex(0);
           }}
           onKeyDown={onKeyDown}
-          aria-label={t('search.placeholder')}
+          aria-label={t('search.dialog.title')}
           aria-autocomplete="list"
           aria-controls="search-palette__results"
           aria-activedescendant={

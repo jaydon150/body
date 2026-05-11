@@ -1,8 +1,8 @@
 # Project Status
 
-**Last updated:** 2026-05-11 (late evening, post-P1.17 close)
-**Current phase:** Phase 1 in progress. **P1.01–P1.17 complete.** Application side is wired end-to-end: 79-mesh BP3D skeleton renders, picking + outline + selection works, peel + dive plumbing in place, full UI chrome (Sidebar/Search/Breadcrumbs/DetailPanel/PeelControls/NomenclatureToggle/AttributionSurface), 51 pending content records authored + anatomist review packet queued, **3 visual-regression baselines + 3 perf budgets all passing in CI**. Remaining: P1.18 (UX/a11y audit), P1.19 (Reviewer handoff passes), P1.20 (Phase 1 retro).
-**Overall health:** Green
+**Last updated:** 2026-05-11 (late evening, post-P1.18 close)
+**Current phase:** Phase 1 in progress. **P1.01–P1.18 complete.** Application side is wired end-to-end: 79-mesh BP3D skeleton renders, picking + outline + selection works, peel + dive plumbing in place, full UI chrome (Sidebar/Search/Breadcrumbs/DetailPanel/PeelControls/NomenclatureToggle/AttributionSurface), 51 pending content records authored + anatomist review packet queued, **3 visual-regression baselines + 3 perf budgets all passing in CI**, **WCAG 2.2 AA audit complete with 4 fixes landed and 1 deferred design decision (UA-009 long-press feedback)**. Remaining: P1.19 (Reviewer handoff passes), P1.20 (Phase 1 retro).
+**Overall health:** Green (one open design decision flagged from P1.18 — does not block reviewer/retro)
 
 ---
 
@@ -21,7 +21,7 @@
 **Autonomous overnight schedule (2026-05-11, user asleep).** Five remote-agent routines scheduled at 1-hour intervals starting 10:30Z. Each clones `jaydon150/body`, dispatches one task, commits, pushes back. User wakes to commits or — if private-repo auth on Anthropic's CCR isn't set up — to error reports the user resolves by authorizing GitHub access at claude.ai. Schedule:
 
 - **10:30Z** — P1.17 (QA: visual regression baselines + perf budgets + accuracy queue) — **DONE**
-- **11:30Z** — P1.18 (UX/Accessibility Tier 2 audit)
+- **11:30Z** — P1.18 (UX/Accessibility Tier 2 audit) — **DONE**
 - **12:30Z** — P1.19 (Reviewer Tier 2 handoff passes on P1.11–16 boundaries)
 - **13:30Z** — P1.20 (Phase 1 retro doc + close)
 - **14:30Z** — Phase 2 Spec v0.1 draft (orchestrator-direct; needs user approval before any P2 dispatch)
@@ -37,11 +37,11 @@ The vertical slice is functionally complete:
 
 ## Blockers
 
-- None. P1.01–P1.17 complete.
+- None for P1.19/P1.20 close. **One open design decision flagged from P1.18:** UA-009 long-press visual feedback (touch user has no signal during 500 ms long-press budget). Recommended a CSS-only radial-progress ring at the pointer position with reduced-motion opacity-step fallback (~40 LoC + ~30 lines CSS); awaiting user/orchestrator decision on the affordance form before UI-agent implementation. Does not block reviewer pass or retro doc; would block "shippable to actual iPad users" claim.
 
 ## Next milestone
 
-**P1.18 dispatch (UX/Accessibility audit, Tier 2).** Audit the running Phase 1 vertical slice for keyboard nav, ARIA shape, colour contrast, touch-target sizing, motion preferences, focus management. After P1.18: P1.19 (Reviewer handoff passes at the major handoff boundaries) and P1.20 (Phase 1 retro + close).
+**P1.19 dispatch (Reviewer Tier 2 handoff passes).** Audit the major Phase 1 handoff boundaries (3 raw-asset, 8 baked-registry, 14 UI↔engine integration) for completeness, contract integrity, and asset-chain trust. After P1.19: P1.20 (Phase 1 retro + close).
 
 ## Upcoming gates (user approval required)
 
@@ -77,8 +77,9 @@ See [decision-log.md](decision-log.md). Latest:
 | P1.01 deliverable | ✅ landed | `docs/references/summaries/uberon-fma-skeletal-crosswalk.md` |
 | Agent dispatch mechanism (ADR 0003) | ✅ validated | First subagent dispatch ran clean |
 | Local verify | ✅ green | Typecheck + 11 schemas + build all pass (post-P1.17) |
-| P1.17 baselines | ✅ captured | 3 PNGs at `tests/rendering-snapshots/baseline-*.png` |
-| P1.17 perf budgets | ✅ all pass | JS gzip 303.27 KB / 320 KB; registry 79 / 79; LOD bytes 13.71 / 16 MB |
+| P1.17 baselines | ✅ captured | 3 PNGs at `tests/rendering-snapshots/baseline-*.png`; re-captured post-P1.18 with new `--text-muted` token |
+| P1.17 perf budgets | ✅ all pass | JS gzip 303.45 KB / 320 KB; registry 79 / 79; LOD bytes 13.71 / 16 MB |
+| P1.18 WCAG 2.2 AA | ✅ MET | 21-finding audit; 5 fixes applied (`--text-muted` contrast bump, reduced-motion snap for dive lerp, scene-host focus ring, Search dialog `aria-labelledby`, sidebar disclosure 44 px on coarse pointer); 1 deferred design decision (UA-009 long-press feedback) |
 | CI on main | ⏳ runs on next push | Pushed with each commit; check Actions tab |
 
 ## Pending external inputs

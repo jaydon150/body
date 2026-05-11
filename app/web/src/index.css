@@ -17,7 +17,13 @@
 
   --text-primary: #e8e0d3;
   --text-secondary: #b3a695;
-  --text-muted: #7a7068;
+  /* --text-muted was #7a7068 in P1.13 — 3.17:1 against bg-rail-hover,
+     3.45:1 against bg-rail — a WCAG 2.2 AA failure for normal body text
+     (1.4.3, 4.5:1 minimum). Bumped to #a49a8c (5.53:1 worst case against
+     bg-rail-hover, 6.60:1 best case against bg-shell). Fix applied
+     P1.18 UX/A11y audit; see docs/references/audits/2026-05-11-ux-a11y-audit.md
+     UA-001. */
+  --text-muted: #a49a8c;
   --text-accent: #ebe0c9;
 
   --accent-cyan: #3aa5d9;
@@ -60,6 +66,28 @@ button {
 :focus-visible {
   outline: 2px solid var(--accent-cyan);
   outline-offset: 2px;
+}
+
+/* ============================================================
+ * Visually-hidden utility (a11y — screen-reader-only)
+ *
+ * Used for headings that label dialogs / regions / live regions for
+ * assistive tech but are not visually rendered. Pattern matches the
+ * widely-cited "sr-only" recipe. Applied in P1.18 UX/A11y audit
+ * (UA-006) to give Search a stable dialog name via aria-labelledby
+ * rather than aria-label tied to the placeholder string.
+ * ============================================================ */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+  white-space: nowrap;
 }
 
 /* ============================================================
@@ -336,12 +364,37 @@ button {
 .sidebar__row--depth-4 { padding-left: 3.8rem; }
 
 .sidebar__disclosure {
-  flex: 0 0 1rem;
+  /* Visually narrow but hit area expanded to 44px square via the
+     `::before` overlay below on coarse pointers — the disclosure span is
+     where the row's onClick checks `target.dataset.role` to decide
+     expand-vs-select, so the tappable area MUST be the span itself, not
+     the parent row. WCAG 2.5.5 / 2.5.8. */
+  flex: 0 0 1.4rem;
   text-align: center;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   color: var(--text-muted);
   pointer-events: auto;
   font-size: 0.85rem;
+  position: relative;
+  /* Height 44 on coarse pointers; on fine pointers the parent row's
+     min-height carries it. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.6rem;
+}
+
+@media (pointer: coarse) {
+  .sidebar__disclosure {
+    flex: 0 0 var(--touch-target);
+    min-height: var(--touch-target);
+  }
+  .sidebar__disclosure::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    /* Transparent overlay enlarges the tappable area. */
+  }
 }
 
 .sidebar__disclosure--leaf {
@@ -943,6 +996,17 @@ button {
   height: 100%;
   width: 100%;
   background: var(--bg-canvas);
+  /* The host div is focusable (tabIndex=0) so keyboard users can grab the
+     canvas to trigger Enter-dive. Without an inset focus ring, a keyboard
+     user cannot tell when focus has landed on the 3D viewer — WCAG 2.2 AA
+     2.4.7 / 2.4.11. Inset because the canvas fills 100% — an outline
+     outside the box would be clipped by neighbouring panels. */
+  position: relative;
+}
+
+.scene-host:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: -2px;
 }
 
 .scene-host canvas {

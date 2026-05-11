@@ -41,6 +41,7 @@ const en: StringTable = {
   'search.empty': 'Type to search anatomical structures',
   'search.no_results': 'No matches',
   'search.shortcut_hint': 'Ctrl/Cmd + K',
+  'search.dialog.title': 'Search anatomical structures',
 
   'detail.aria': 'Selected structure detail',
   'detail.empty.title': 'No structure selected',
