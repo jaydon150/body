@@ -3,18 +3,28 @@
 Append-only state log. Most recent at top.
 
 **Initialized:** 2026-05-11
-**Last invocation:** 2026-05-11 — P1.19 dispatch (Reviewer Tier 2 handoff passes)
+**Last invocation:** 2026-05-11 — P1.20 (Phase 1 retro + close, orchestrator-direct)
 
 ---
 
 ## Open items
 
-1. **(NEW, P1.19)** **Three Reviewer must-close-before-retro items.** R1 selection-intent enum widening (3D Engine ~15 LoC); R2 useStructureContent strict cross-check soft-fail (UI ~5 LoC); R3 AttributionSurface comment correction (UI+Architect ~15 lines prose). Total <60 LoC. User decision needed on whether to dispatch these as one batched fix dispatch before P1.20 retro, or fold into Phase 2 prep.
-2. **(NEW, P1.19)** **Six Reviewer carry-into-Phase-2 items.** R4 Vite path-helper factor; R5 sternum all-dim regression (~3 LoC; the only newly-discovered finding the producing agents missed); R6 visceral-preset escape; R7 FrameIntentBridge docs; R8 pending-content prod gate; R9 content-record validator in `npm run verify`. All filed in `reviewer.state.md`.
-3. **(INHERITED, P1.18)** **UA-009 long-press visual feedback design decision.** Form needs deciding (radial-progress ring vs flash vs hold-bar) before UI agent can implement. ~40 LoC + ~30 lines CSS once decided.
-4. **(INHERITED, P1.09)** **Architect's four open items not yet mirrored as Phase 2 backlog.** Reviewer recommendation: add four `[ ] P2` rows in `task-queue.md` for sternum composite bake, build-manifest.attributions per ADR 0006, quality_notes field, synonyms.json physical removal.
+1. **(CARRIED, P1.20)** **Three Reviewer must-close items deferred into Phase 2 prep per user direction.** R1 selection-intent enum widening (3D Engine ~15 LoC); R2 useStructureContent strict cross-check soft-fail (UI ~5 LoC); R3 AttributionSurface comment correction (UI+Architect ~15 lines prose). Total <60 LoC. Filed as P2-prep rows in `task-queue.md`; user decision still pending on whether to bundle as a pre-P2.01 fix-pass or fold into Phase 2 early dispatches.
+2. **(CARRIED, P1.20)** **Six Reviewer carry-into-Phase-2 items** mirrored into `task-queue.md` Phase 2 prep section. R4 Vite path-helper factor; R5 sternum all-dim regression (~3 LoC); R6 visceral-preset escape; R7 FrameIntentBridge docs; R8 pending-content prod gate; R9 content-record validator in `npm run verify`.
+3. **(CARRIED, P1.20)** **Architect's four open items mirrored as P2-prep rows.** Sternum composite bake, build-manifest.attributions per ADR 0006, quality_notes field, synonyms.json physical removal.
+4. **(CARRIED, P1.20)** **UA-009 long-press visual feedback design decision.** Mirrored into P2-prep. ~40 LoC + ~30 lines CSS once form decided.
+5. **(NEW, P1.20)** **Anatomist identity is the hard Phase 2 entry gate.** 51 `pending` content records await a named university-faculty reviewer. The promotion pipeline (`pipelines/07-anatomist-review/promote.mjs`) is dry-run-tested and refuses to run with a TBD anatomist. Filed as the top-priority Phase 2 prerequisite.
+6. **(NEW, P1.20)** **Phase 2 Spec v0.1 drafting is the next orchestrator task.** Inputs: this retro, the Reviewer Tier 2 report, all `[ ] P2-prep` rows in the task queue. Scope: widen to skin + muscle; activate the peel UX validation that Phase 1 descoped.
 
 ## Decisions log
+
+### 2026-05-11 — P1.20 (Phase 1 retro + close)
+
+- **Wrote Phase 1 retro orchestrator-direct.** Per dispatch brief ("no subagent dispatch needed"), authored `docs/orchestrator/retros/phase-1-retro.md` against `docs/orchestrator/retro-template.md` from primary sources (master-spec, task-queue, decision-log, all 16 agent state files, git log). Retro covers every template section honestly: 17/19 acceptance criteria fully met, 1 descoped, 1 queued behind TBD anatomist; multi-store coupling and late schema tightening called out as Phase 1 anti-patterns; Reviewer Tier 2 dispatch named as the highest-leverage process improvement.
+- **Closed Phase 1 in master-spec.md §7 with the 2026-05-11 date.** Phase 2 promoted from "not started" to "spec drafting". Change-log entry appended.
+- **Did not dispatch the three Reviewer must-close fixes (R1/R2/R3) before retro.** Per the user's "no subagent dispatch needed" framing of the P1.20 brief. Mirrored as `[ ] P2-prep` rows in `task-queue.md` so they remain visible.
+- **status.md re-baselined for Phase 1 close.** "Right now" / "Active work" / "Blockers" / "Next milestone" / "Health signals" all re-written to reflect Phase 1 closed + Phase 2 spec drafting. Working-assumptions section rotated to Phase 2 candidates.
+- **task-queue.md condensed.** Phase 1 dispatch rows kept for audit trail but the in-progress section cleared; the Phase 2 placeholder expanded to enumerate the 9+ pre-dispatch backlog items inherited from Phase 1.
 
 ### 2026-05-11 — P1.19 dispatch
 
@@ -24,6 +34,12 @@ Append-only state log. Most recent at top.
 - **Did not dispatch fixes for R1/R2/R3 in this turn.** User's brief was to dispatch P1.19, produce report, mark done, commit + push. Whether to bundle the three must-close fixes into a pre-retro dispatch or fold them into Phase 2 prep is a user decision; surfaced in `status.md` Blockers section and in the handoff note.
 
 ## Handoffs
+
+### From P1.20 — to next orchestrator session (Phase 2 spec drafting)
+
+- **Required reading before drafting Phase 2 Spec v0.1:** this retro (`docs/orchestrator/retros/phase-1-retro.md`), the Reviewer report (`docs/orchestrator/reviews/2026-05-11-phase-1-handoffs.md`), and the P2-prep section of `task-queue.md`.
+- **Phase 2 Spec v0.1 must answer:** (a) which system goes next — muscle or skin — and why; (b) production-deploy path for canonical meshes; (c) anatomist engagement plan with cadence committed; (d) whether the three Reviewer must-close items land as a pre-P2.01 fix-pass or fold into Phase 2 early dispatches; (e) whether Compliance activates pre-Phase-2 or post-Phase-2 (the two pre-launch items in Asset Pipeline state need a home).
+- **Phase 1 architectural debt list:** multi-store coupling without an event contract (Reviewer cross-cutting observation a); selection-intent runtime/schema drift (R1); Vite middleware path-pattern duplicated three times without a Windows test (R4); P1.05 reinject parser drift from ADR 0007 (Asset Pipeline open item 00b). Address before adding more stores or middleware routes in Phase 2.
 
 ### From P1.19 — to user (decision needed on wake)
 
@@ -37,6 +53,17 @@ Append-only state log. Most recent at top.
 - **Phase 1 retro should record:** (a) Phase 1 spec acceptance status — every numbered criterion met or explicitly deferred; (b) the agent-pattern that worked (file-backed Task subagent dispatch, ADR 0003 proven across N invocations); (c) the agent-pattern that needs adjustment (multi-store coupling without an event-emission contract — Reviewer's cross-cutting observation (a)); (d) the Reviewer-as-Tier-2 finding that this dispatch was the right scope and severity discipline for the project's size.
 
 ## Invocation history
+
+### 2026-05-11 — P1.20 (Phase 1 retro + close, orchestrator-direct)
+
+**Dispatch summary:** No subagent invoked. Orchestrator read the retro template, master-spec, task-queue, decision-log, phase-1-spec, status, and all 16 agent state files, plus git log. Synthesized into `docs/orchestrator/retros/phase-1-retro.md` covering every template section. Updated master-spec.md §7 + change-log to mark Phase 1 closed 2026-05-11 (Phase 2 promoted to "spec drafting"). Updated status.md (header, Right Now, Blockers, Next milestone, Upcoming gates, Health signals, Working assumptions, Pending external inputs) for Phase 1 close. Updated task-queue.md: P1.14 + P1.16 + P1.20 marked `[x]`; In Progress section reset; Phase 2 placeholder expanded with 9 `[ ] P2-prep` rows mirroring Phase 1 carry-forward. Appended P1.20 entry to this state file.
+
+**Files written:**
+- `docs/orchestrator/retros/phase-1-retro.md` (new)
+- `docs/orchestrator/master-spec.md` (§7 phasing + header status + change-log)
+- `docs/orchestrator/status.md` (re-baselined for Phase 1 close)
+- `docs/orchestrator/task-queue.md` (P1.14 / P1.16 / P1.20 marked done; In Progress reset; Phase 2 prep expanded)
+- `docs/agents/orchestrator.state.md` (this entry)
 
 ### 2026-05-11 — P1.19 dispatch (Reviewer Tier 2 handoff passes)
 

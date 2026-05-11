@@ -2,7 +2,7 @@
 
 **Project:** `body` — interactive 3D human-body atlas
 **Root:** `C:\Users\Jaydon\Desktop\body\`
-**Status:** Phase 0 — Infrastructure
+**Status:** Phase 1 — First system slice (skeletal) closed; Phase 2 spec drafting next
 **Last updated:** 2026-05-11
 
 This document is the single source of truth for what is decided and what is open. Append to the decision log when anything here changes. Sections marked "locked" do not change without an ADR.
@@ -66,11 +66,13 @@ Configuration B per the licensing decision. Choice documented in [ADR 0002](../d
 | Phase | Goal | Status |
 |-------|------|--------|
 | 0 — Infrastructure | folder, agents, contracts, CI, app skeleton | **closed 2026-05-11** |
-| 1 — First system slice | one system end-to-end (skeletal as starter) | spec drafting |
-| 2 — Widen | second and third systems, refine interaction model | not started |
+| 1 — First system slice | one system end-to-end (skeletal as starter) | **closed 2026-05-11** |
+| 2 — Widen | second and third systems, refine interaction model | spec drafting |
 | 3 — Depth | organ-level focus on flagship structures | not started |
 | 4 — Content scale + a11y + i18n + compliance review | not started | not started |
 | 5 — Open academic launch | public repository, DOI via Zenodo or similar | not started |
+
+Phase 1 close: 19 acceptance criteria met or explicitly descoped (peel UX validation deferred to Phase 2 pre-dispatch; 51 `reviewed` content records queued behind a TBD anatomist). Reviewer Tier 2 verdict PASS-WITH-CONCERNS; 3 must-close items (<60 LoC) and 6 carry-into-Phase-2 items routed via [`retros/phase-1-retro.md`](retros/phase-1-retro.md).
 
 Tissue, cellular, female anatomy, pathology overlays, mobile, and VR are reserved for **post-v1** consideration.
 
@@ -127,3 +129,4 @@ Tissue, cellular, female anatomy, pathology overlays, mobile, and VR are reserve
 | 2026-05-11 | Initial spec committed at start of Phase 0 | Orchestrator |
 | 2026-05-11 | Phase 0 closed. §3 asset path refined per ADR 0005 (BodyParts3D primary + OpenAnatomy supplement; Z-Anatomy demoted). §4 license map split BodyParts3D and OpenAnatomy chains. §5 anatomical model flipped to UBERON-primary per ADR 0004. §7 Phase 0 marked closed; Phase 1 marked spec-drafting. §11 added two new risks. | Orchestrator |
 | 2026-05-11 (evening) | Phase 1 Spec v0.2 incorporates user refinements: iPad added to §2 as co-primary platform; §4 license map gains a runtime-attribution row pointing to ADR 0006; §11 risks expanded with runtime-attribution, iPad-GPU, and OpenAnatomy-verification entries. ADR 0006 (runtime attribution) drafted and accepted. | Orchestrator |
+| 2026-05-11 (P1.20 close) | Phase 1 closed. §7 phasing table: Phase 1 marked **closed 2026-05-11**; Phase 2 promoted from "not started" to "spec drafting". Header status line updated. ADRs 0007 (Blender attribution discipline) + 0008 (composite asset entries) accepted in-phase; reflected in earlier change-log entries via the dispatch trail. Retro at `docs/orchestrator/retros/phase-1-retro.md`. | Orchestrator |
